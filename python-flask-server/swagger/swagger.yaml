@@ -1,0 +1,55 @@
+---
+swagger: "2.0"
+info:
+  description: "This REST Api allows you to submit chemical identifiers in one format\
+    \ and translate it into another format (e.g. SMILES -> InChi)"
+  version: "1.0.0"
+  title: "ChemIdConvert - Chemical identifier conversion service"
+host: "chemidconvert"
+basePath: "/v1"
+schemes:
+- "http"
+produces:
+- "application/json"
+paths:
+  /smiles/toInchi:
+    get:
+      tags:
+      - "SMILES, InChI"
+      summary: "Converts from a SMILES format into InChI format"
+      description: "Converts from a SMILES format into InChI format"
+      operationId: "controllers.default_controller.smiles_to_inchi_get"
+      parameters:
+      - name: "smiles"
+        in: "query"
+        description: "Compound structure notated using SMILES notation"
+        required: true
+        type: "string"
+        x-ontology: "http://edamontology.org/format_1196"
+      responses:
+        200:
+          description: "An array of rows"
+          schema:
+            $ref: "#/definitions/inline_response_200"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/inline_response_default"
+      x-tags:
+      - tag: "SMILES, InChI"
+definitions:
+  inline_response_default:
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+      message:
+        type: "string"
+      fields:
+        type: "string"
+  inline_response_200:
+    properties:
+      inchi:
+        type: "string"
+        description: "Compound structure notated using InChI notation"
+        x-ontology: "http://edamontology.org/format_1197"
