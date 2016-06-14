@@ -1,9 +1,11 @@
 from rdkit import Chem
 import rdkit.Chem.inchi
+from urllib.error import HTTPError
+import cirpy
 
 # In-Process conversions using rdkit:
 
-def inchi_to_inchikey_get(inchi) -> str:
+def inchi_to_inchikey_get(inchi: str) -> str:
     inchikey = rdkit.Chem.inchi.InchiToInchiKey(inchi)
     if inchikey == None:
         return ("Could not parse input: " + inchi, 500)
@@ -11,7 +13,7 @@ def inchi_to_inchikey_get(inchi) -> str:
     return {"inchikey": inchikey}
 
 
-def inchi_to_smiles_get(inchi) -> str:
+def inchi_to_smiles_get(inchi: str) -> str:
     m = rdkit.Chem.inchi.MolFromInchi(inchi)
     if (m == None):
         return ("Could not parse input: " + inchi, 500)
@@ -19,7 +21,7 @@ def inchi_to_smiles_get(inchi) -> str:
     return {"smiles": Chem.MolToSmiles(m)}
 
 
-def smiles_to_inchi_get(smiles) -> str:
+def smiles_to_inchi_get(smiles: str) -> str:
     m = Chem.MolFromSmiles(smiles)
     if (m == None):
         return ("Could not parse input: " + smiles, 500)
@@ -27,7 +29,7 @@ def smiles_to_inchi_get(smiles) -> str:
     return {"inchi": rdkit.Chem.inchi.MolToInchi(m)}
 
 
-def smiles_to_inchikey_get(smiles) -> str:
+def smiles_to_inchikey_get(smiles: str) -> str:
     m = Chem.MolFromSmiles(smiles)
     if (m == None):
         return ("Could not parse input: " + smiles, 500)
@@ -39,36 +41,85 @@ def smiles_to_inchikey_get(smiles) -> str:
 # conversions using external REST services
 
 
+class CirpyError(Exception):
+    def __init__(self, code, message):
+        self.code = code
+        self.message = message
+
+
+def resolve_via_cirpy(identifier: str, target: str, source: str,) -> str:
+    try:
+        converted = cirpy.resolve(identifier, target, [source])
+        return converted
+    except HTTPError as err:
+        if err.code == 504 or err.code == 408:
+            raise CirpyError(504, "Timeout while waiting for identifier resolution service")
+        raise CirpyError(500, "HTTPError while communicating with identifier resolution service")
+
+
 def inchikey_to_inchi_get(inchikey) -> str:
-    return 'do some magic!'
+    try:
+        inchi = resolve_via_cirpy(inchikey, 'stdinchi', 'stdinchikey')
+        return {"inchi": inchi}
+    except CirpyError as err:
+        return (err.message, err.code)
+
 
 
 def inchi_to_cas_get(inchi) -> str:
-    return 'do some magic!'
+    try:
+        cas = resolve_via_cirpy(inchi, 'cas', 'stdinchi')
+        return {"cas": cas}
+    except CirpyError as err:
+        return (err.message, err.code)
 
 
 def inchikey_to_cas_get(inchikey) -> str:
-    return 'do some magic!'
+    try:
+        cas = resolve_via_cirpy(inchikey, 'cas', 'stdinchikey')
+        return {"cas": cas}
+    except CirpyError as err:
+        return (err.message, err.code)
 
 
 def cas_to_inchi_get(cas) -> str:
-    return 'do some magic!'
+    try:
+        inchi = resolve_via_cirpy(cas, 'stdinchi', 'cas_number')
+        return {"inchi": inchi}
+    except CirpyError as err:
+        return (err.message, err.code)
 
 
 def cas_to_inchikey_get(cas) -> str:
-    return 'do some magic!'
+    try:
+        inchikey = resolve_via_cirpy(cas, 'stdinchikey', 'cas_number')
+        return {"inchikey": inchikey}
+    except CirpyError as err:
+        return (err.message, err.code)
 
 
 def cas_to_smiles_get(cas) -> str:
-    return 'do some magic!'
+    try:
+        smiles = resolve_via_cirpy(cas, 'smiles', 'cas_number')
+        return {"smiles": smiles}
+    except CirpyError as err:
+        return (err.message, err.code)
 
 
 def smiles_to_cas_get(smiles) -> str:
-    return 'do some magic!'
+    try:
+        cas = resolve_via_cirpy(smiles, 'cas', 'smiles')
+        return {"cas": cas}
+    except CirpyError as err:
+        return (err.message, err.code)
 
 
 def inchikey_to_smiles_get(inchikey) -> str:
-    return 'do some magic!'
+    try:
+        smiles = resolve_via_cirpy(inchikey, 'smiles', 'stdinchikey')
+        return {"smiles": smiles}
+    except CirpyError as err:
+        return (err.message, err.code)
 
 
 

@@ -96,6 +96,10 @@ paths:
           description: Invalid request (typically a mandatory parameter was missing or malformed)
           schema:
             $ref: '#/definitions/simpleError'
+        500:
+          description: Error in conversion by external webservice
+          schema:
+            $ref: '#/definitions/simpleError'
         504:
           description: Upstream service timeout
           schema:
@@ -142,6 +146,10 @@ paths:
           description: Invalid request (typically a mandatory parameter was missing or malformed)
           schema:
             $ref: '#/definitions/simpleError'
+        500:
+          description: Error in conversion by external webservice
+          schema:
+            $ref: '#/definitions/simpleError'
         504:
           description: Upstream service timeout
           schema:
@@ -166,6 +174,10 @@ paths:
           $ref: "#/responses/cas"
         400:
           description: Invalid request (typically a mandatory parameter was missing or malformed)
+          schema:
+            $ref: '#/definitions/simpleError'
+        500:
+          description: Error in conversion by external webservice
           schema:
             $ref: '#/definitions/simpleError'
         504:
@@ -194,6 +206,10 @@ paths:
           description: Invalid request (typically a mandatory parameter was missing or malformed)
           schema:
             $ref: '#/definitions/simpleError'
+        500:
+          description: Error in conversion by external webservice
+          schema:
+            $ref: '#/definitions/simpleError'
         504:
           description: Upstream service timeout
           schema:
@@ -218,6 +234,10 @@ paths:
           $ref: "#/responses/cas"
         400:
           description: Invalid request (typically a mandatory parameter was missing or malformed)
+          schema:
+            $ref: '#/definitions/simpleError'
+        500:
+          description: Error in conversion by external webservice
           schema:
             $ref: '#/definitions/simpleError'
         504:
@@ -246,6 +266,10 @@ paths:
           description: Invalid request (typically a mandatory parameter was missing or malformed)
           schema:
             $ref: '#/definitions/simpleError'
+        500:
+          description: Error in conversion by external webservice
+          schema:
+            $ref: '#/definitions/simpleError'
         504:
           description: Upstream service timeout
           schema:
@@ -272,6 +296,10 @@ paths:
           description: Invalid request (typically a mandatory parameter was missing or malformed)
           schema:
             $ref: '#/definitions/simpleError'
+        500:
+          description: Error in conversion by external webservice
+          schema:
+            $ref: '#/definitions/simpleError'
         504:
           description: Upstream service timeout
           schema:
@@ -296,6 +324,10 @@ paths:
           $ref: "#/responses/inchikey"
         400:
           description: Invalid request (typically a mandatory parameter was missing or malformed)
+          schema:
+            $ref: '#/definitions/simpleError'
+        500:
+          description: Error in conversion by external webservice
           schema:
             $ref: '#/definitions/simpleError'
         504:
@@ -375,7 +407,4 @@ responses:
           x-ontology: http://edamontology.org/data_3102
 definitions:
   simpleError:
-    type: object
-    properties:
-      message:
-        type: string
+    type: string
