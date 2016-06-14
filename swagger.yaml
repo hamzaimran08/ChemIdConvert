@@ -14,38 +14,368 @@ basePath: /v1
 produces:
   - application/json
 paths:
-  /smiles/toInchi:
+  /smiles/to/inchi:
     get:
       summary: Converts from a SMILES format into InChI format
-      description: Converts from a SMILES format into InChI format
+      description: >
+        Converts from a SMILES format into InChI format. Only a single match is
+        returned if there is an ambiguity in the conversion. The conversion is
+        performed in process via rdkit.
       tags:
         - SMILES, InChI
       parameters:
-        - name: smiles
-          in: query
-          type: string
-          description: Compound structure notated using SMILES notation
-          required: true
-          x-ontology: http://edamontology.org/format_1196
+        - $ref: "#/parameters/smiles"
       responses:
         200:
-          description: An array of rows
+          $ref: "#/responses/inchi"
+        400:
+          description: Invalid request (typically a mandatory parameter was missing or malformed)
           schema:
-            type: object
-            properties:
-              inchi:
-                type: string
-                description: Compound structure notated using InChI notation
-                x-ontology: http://edamontology.org/format_1197
+            $ref: '#/definitions/simpleError'
         default:
           description: Unexpected error
           schema:
-            type: object
-            properties:
-              code:
-                type: integer
-                format: int32
-              message:
-                type: string
-              fields:
-                type: string
+            $ref: '#/definitions/simpleError'
+  /inchi/to/smiles:
+    get:
+      summary: Converts from a InChI format into (canonical) SMILES format
+      description: >
+        Converts from InChI format into (canonical) SMILES. Only a single match is
+        returned if there is an ambiguity in the conversion. The conversion is
+        performed in process via rdkit.
+      tags:
+        - SMILES, InChI
+      parameters:
+        - $ref: "#/parameters/inchi"
+      responses:
+        200:
+          $ref: "#/responses/smiles"
+        400:
+          description: Invalid request (typically a mandatory parameter was missing or malformed)
+          schema:
+            $ref: '#/definitions/simpleError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/simpleError'
+  /inchi/to/inchikey:
+    get:
+      summary: Converts from a InChI format into InChIKey format
+      description: >
+        Converts from InChI format into InChIKey. The conversion is
+        performed in process via rdkit.
+      tags:
+        - InChI, InChIKey
+      parameters:
+        - $ref: "#/parameters/inchi"
+      responses:
+        200:
+          $ref: "#/responses/inchikey"
+        400:
+          description: Invalid request (typically a mandatory parameter was missing or malformed)
+          schema:
+            $ref: '#/definitions/simpleError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/simpleError'
+  /inchikey/to/inchi:
+    get:
+      summary: Converts from a InChIKey format into InChI format
+      description: >
+        Converts from InChIKey format into InChI. The conversion is
+        performed by using an external webservice and has relatively high latency.
+      tags:
+        - InChI, InChIKey
+      parameters:
+        - $ref: "#/parameters/inchikey"
+      responses:
+        200:
+          $ref: "#/responses/inchi"
+        400:
+          description: Invalid request (typically a mandatory parameter was missing or malformed)
+          schema:
+            $ref: '#/definitions/simpleError'
+        504:
+          description: Upstream service timeout
+          schema:
+            $ref: '#/definitions/simpleError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/simpleError'
+  /smiles/to/inchikey:
+    get:
+      summary: Converts from a SMILES format into InChIKey format
+      description: >
+        Converts from SMILES format into InChIKey. The conversion is
+        performed in process via rdkit.
+      tags:
+        - SMILES, InChIKey
+      parameters:
+        - $ref: "#/parameters/smiles"
+      responses:
+        200:
+          $ref: "#/responses/inchikey"
+        400:
+          description: Invalid request (typically a mandatory parameter was missing or malformed)
+          schema:
+            $ref: '#/definitions/simpleError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/simpleError'
+  /inchikey/to/smiles:
+    get:
+      summary: Converts from a InChIKey format into (canonical) SMILES format
+      description: >
+        Converts from InChIKey format into (canonical) SMILES. The conversion is
+        performed by using an external webservice and has relatively high latency.
+      tags:
+        - SMILES, InChIKey
+      parameters:
+        - $ref: "#/parameters/inchikey"
+      responses:
+        200:
+          $ref: "#/responses/smiles"
+        400:
+          description: Invalid request (typically a mandatory parameter was missing or malformed)
+          schema:
+            $ref: '#/definitions/simpleError'
+        504:
+          description: Upstream service timeout
+          schema:
+            $ref: '#/definitions/simpleError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/simpleError'
+  /smiles/to/cas:
+    get:
+      summary: Converts from a SMILES format into a CAS number
+      description: >
+        Converts from a SMILES format into a CAS number. Only a single match is
+        returned if there is an ambiguity in the conversion. The conversion is
+        performed by using an external webservice and has relatively high latency.
+      tags:
+        - SMILES, CAS
+      parameters:
+        - $ref: "#/parameters/smiles"
+      responses:
+        200:
+          $ref: "#/responses/cas"
+        400:
+          description: Invalid request (typically a mandatory parameter was missing or malformed)
+          schema:
+            $ref: '#/definitions/simpleError'
+        504:
+          description: Upstream service timeout
+          schema:
+            $ref: '#/definitions/simpleError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/simpleError'
+  /cas/to/smiles:
+    get:
+      summary: Converts from a CAS number into (canonical) SMILES format
+      description: >
+        Converts from a CAS number into (canonical) SMILES. Only a single match is
+        returned if there is an ambiguity in the conversion. The conversion is
+        performed by using an external webservice and has relatively high latency.
+      tags:
+        - SMILES, CAS
+      parameters:
+        - $ref: "#/parameters/cas"
+      responses:
+        200:
+          $ref: "#/responses/smiles"
+        400:
+          description: Invalid request (typically a mandatory parameter was missing or malformed)
+          schema:
+            $ref: '#/definitions/simpleError'
+        504:
+          description: Upstream service timeout
+          schema:
+            $ref: '#/definitions/simpleError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/simpleError'
+  /inchi/to/cas:
+    get:
+      summary: Converts from a InChI format into a CAS number
+      description: >
+        Converts from a InChI format into a CAS number. Only a single match is
+        returned if there is an ambiguity in the conversion. The conversion is
+        performed by using an external webservice and has relatively high latency.
+      tags:
+        - CAS, InChI
+      parameters:
+        - $ref: "#/parameters/inchi"
+      responses:
+        200:
+          $ref: "#/responses/cas"
+        400:
+          description: Invalid request (typically a mandatory parameter was missing or malformed)
+          schema:
+            $ref: '#/definitions/simpleError'
+        504:
+          description: Upstream service timeout
+          schema:
+            $ref: '#/definitions/simpleError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/simpleError'
+  /cas/to/inchi:
+    get:
+      summary: Converts from a CAS number into InChI format
+      description: >
+        Converts from a CAS number into InChI. Only a single match is
+        returned if there is an ambiguity in the conversion. The conversion is
+        performed by using an external webservice and has relatively high latency.
+      tags:
+        - InChI, CAS
+      parameters:
+        - $ref: "#/parameters/cas"
+      responses:
+        200:
+          $ref: "#/responses/inchi"
+        400:
+          description: Invalid request (typically a mandatory parameter was missing or malformed)
+          schema:
+            $ref: '#/definitions/simpleError'
+        504:
+          description: Upstream service timeout
+          schema:
+            $ref: '#/definitions/simpleError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/simpleError'
+  /inchikey/to/cas:
+    get:
+      summary: Converts from a InChIKey format into a CAS number
+      description: >
+        Converts from a InChIKey format into a CAS number. Only a single match is
+        returned if there is an ambiguity in the conversion. The conversion is
+        performed by using an external webservice and has relatively high latency.
+      tags:
+        - CAS, InChIKey
+      parameters:
+        - $ref: "#/parameters/inchikey"
+      responses:
+        200:
+          $ref: "#/responses/cas"
+        400:
+          description: Invalid request (typically a mandatory parameter was missing or malformed)
+          schema:
+            $ref: '#/definitions/simpleError'
+        504:
+          description: Upstream service timeout
+          schema:
+            $ref: '#/definitions/simpleError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/simpleError'
+  /cas/to/inchikey:
+    get:
+      summary: Converts from a CAS number into InChIKey format
+      description: >
+        Converts from a CAS number into InChIKey. Only a single match is
+        returned if there is an ambiguity in the conversion. The conversion is
+        performed by using an external webservice and has relatively high latency.
+      tags:
+        - InChiKey, CAS
+      parameters:
+        - $ref: "#/parameters/cas"
+      responses:
+        200:
+          $ref: "#/responses/inchikey"
+        400:
+          description: Invalid request (typically a mandatory parameter was missing or malformed)
+          schema:
+            $ref: '#/definitions/simpleError'
+        504:
+          description: Upstream service timeout
+          schema:
+            $ref: '#/definitions/simpleError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/simpleError'
+parameters:
+  smiles:
+    name: smiles
+    in: query
+    type: string
+    format: smiles
+    description: Compound structure notated using SMILES notation
+    required: true
+    x-ontology: http://edamontology.org/format_1196
+  inchi:
+    name: inchi
+    in: query
+    type: string
+    description: Compound structure notated using InChI notation
+    required: true
+    x-ontology: http://edamontology.org/format_1197
+  inchikey:
+    name: inchikey
+    in: query
+    type: string
+    description: Compound structure notated using InChIKey notation
+    required: true
+    x-ontology: http://edamontology.org/format_1199
+  cas:
+    name: cas
+    in: query
+    type: string
+    description: Compound structure notated as a CAS number (3 groups of numbers separated by dashes)
+    required: true
+    x-ontology: http://edamontology.org/data_3102
+responses:
+  inchi:
+    description: The converted InChI string
+    schema:
+      type: object
+      properties:
+        inchi:
+          type: string
+          description: Compound structure notated using InChI notation
+          x-ontology: http://edamontology.org/format_1197
+  smiles:
+    description: The converted SMILES string
+    schema:
+      type: object
+      properties:
+        inchi:
+          type: string
+          description: Compound structure notated using (canonical) SMILES notation
+          x-ontology: http://edamontology.org/format_1196
+  inchikey:
+    description: The converted InChIKey string
+    schema:
+      type: object
+      properties:
+        inchikey:
+          type: string
+          description: Compound structure notated using InChIKey
+          x-ontology: http://edamontology.org/format_1199
+  cas:
+    description: The converted CAS number (3 groups of numbers separated by dashes)
+    schema:
+      type: object
+      properties:
+        cas:
+          type: string
+          description: Compound structure notated using a CAS number
+          x-ontology: http://edamontology.org/data_3102
+definitions:
+  simpleError:
+    type: object
+    properties:
+      message:
+        type: string
