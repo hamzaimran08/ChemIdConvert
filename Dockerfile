@@ -1,4 +1,4 @@
-FROM continuumio/miniconda3
+FROM jupyter/scipy-notebook
 MAINTAINER Daniel Bachler <daniel@douglasconnect.com>
 
 ENV PATH /opt/conda/bin:$PATH
