@@ -41,3 +41,15 @@ on linux or the ip of your docker-machine if running locally on windows/osx)
 http://HOSTNAME:8080/v1/smiles/to/inchi?smiles=CCO
 ```
 
+Generating Documentation
+------------------------
+
+To update the documentation you need bootprint:
+```
+npm install -g bootprint bootprint-openapi
+```
+
+Then run it like this:
+```
+bootprint openapi swagger.yaml api-docs
+```

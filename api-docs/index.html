@@ -1,0 +1,2406 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="main.css">
+    <meta charset="UTF-8">
+    <title>ChemIdConvert - Chemical identifier conversion service</title>
+</head>
+<body>
+<div class="container">
+    <h1>ChemIdConvert - Chemical identifier conversion service</h1>
+    <p class="sw-info-version">Version: <span>1.0.0</span></p>
+    <p><p>This REST Api allows you to submit chemical identifiers in one format and translate it into another format (e.g. SMILES -&gt; InChi)</p>
+    </p>
+    
+        <div id="sw-default-produces" class="sw-default-value">
+            <span class="sw-default-value-header">Default response content-types:</span>
+            application/json
+        </div>
+    
+    <div id="sw-schemes" class="sw-default-value">
+        <span class="sw-default-value-header">Schemes:</span>
+        http
+    </div>
+    
+        
+        <h2 id="swagger--summary-tags">Summary</h2>
+            <h3 id="tag-SMILES--InChI" class="swagger-summary-tag">Tag: SMILES, InChI</h3>
+            
+        
+            <table class="table table-bordered table-condensed swagger--summary">
+                <thead>
+                <tr>
+                    <th>Operation</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><a href="#operation--smiles-to-inchi-get">GET /smiles/to/inchi</a></td>
+                        <td><p>Converts from a SMILES format into InChI format</p>
+        </td>
+                    </tr>
+                    <tr>
+                        <td><a href="#operation--inchi-to-smiles-get">GET /inchi/to/smiles</a></td>
+                        <td><p>Converts from a InChI format into (canonical) SMILES format</p>
+        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <h3 id="tag-InChI--InChIKey" class="swagger-summary-tag">Tag: InChI, InChIKey</h3>
+            
+        
+            <table class="table table-bordered table-condensed swagger--summary">
+                <thead>
+                <tr>
+                    <th>Operation</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><a href="#operation--inchi-to-inchikey-get">GET /inchi/to/inchikey</a></td>
+                        <td><p>Converts from a InChI format into InChIKey format</p>
+        </td>
+                    </tr>
+                    <tr>
+                        <td><a href="#operation--inchikey-to-inchi-get">GET /inchikey/to/inchi</a></td>
+                        <td><p>Converts from a InChIKey format into InChI format</p>
+        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <h3 id="tag-SMILES--InChIKey" class="swagger-summary-tag">Tag: SMILES, InChIKey</h3>
+            
+        
+            <table class="table table-bordered table-condensed swagger--summary">
+                <thead>
+                <tr>
+                    <th>Operation</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><a href="#operation--smiles-to-inchikey-get">GET /smiles/to/inchikey</a></td>
+                        <td><p>Converts from a SMILES format into InChIKey format</p>
+        </td>
+                    </tr>
+                    <tr>
+                        <td><a href="#operation--inchikey-to-smiles-get">GET /inchikey/to/smiles</a></td>
+                        <td><p>Converts from a InChIKey format into (canonical) SMILES format</p>
+        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <h3 id="tag-SMILES--CAS" class="swagger-summary-tag">Tag: SMILES, CAS</h3>
+            
+        
+            <table class="table table-bordered table-condensed swagger--summary">
+                <thead>
+                <tr>
+                    <th>Operation</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><a href="#operation--smiles-to-cas-get">GET /smiles/to/cas</a></td>
+                        <td><p>Converts from a SMILES format into a CAS number</p>
+        </td>
+                    </tr>
+                    <tr>
+                        <td><a href="#operation--cas-to-smiles-get">GET /cas/to/smiles</a></td>
+                        <td><p>Converts from a CAS number into (canonical) SMILES format</p>
+        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <h3 id="tag-CAS--InChI" class="swagger-summary-tag">Tag: CAS, InChI</h3>
+            
+        
+            <table class="table table-bordered table-condensed swagger--summary">
+                <thead>
+                <tr>
+                    <th>Operation</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><a href="#operation--inchi-to-cas-get">GET /inchi/to/cas</a></td>
+                        <td><p>Converts from a InChI format into a CAS number</p>
+        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <h3 id="tag-InChI--CAS" class="swagger-summary-tag">Tag: InChI, CAS</h3>
+            
+        
+            <table class="table table-bordered table-condensed swagger--summary">
+                <thead>
+                <tr>
+                    <th>Operation</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><a href="#operation--cas-to-inchi-get">GET /cas/to/inchi</a></td>
+                        <td><p>Converts from a CAS number into InChI format</p>
+        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <h3 id="tag-CAS--InChIKey" class="swagger-summary-tag">Tag: CAS, InChIKey</h3>
+            
+        
+            <table class="table table-bordered table-condensed swagger--summary">
+                <thead>
+                <tr>
+                    <th>Operation</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><a href="#operation--inchikey-to-cas-get">GET /inchikey/to/cas</a></td>
+                        <td><p>Converts from a InChIKey format into a CAS number</p>
+        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <h3 id="tag-InChiKey--CAS" class="swagger-summary-tag">Tag: InChiKey, CAS</h3>
+            
+        
+            <table class="table table-bordered table-condensed swagger--summary">
+                <thead>
+                <tr>
+                    <th>Operation</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><a href="#operation--cas-to-inchikey-get">GET /cas/to/inchikey</a></td>
+                        <td><p>Converts from a CAS number into InChIKey format</p>
+        </td>
+                    </tr>
+                </tbody>
+            </table>
+        
+    
+    
+    
+    <h2>Paths</h2>
+    
+        
+        <span id="path--cas-to-inchi"></span>
+            <div id="operation--cas-to-inchi-get" class="swagger--panel-operation-get panel">
+                <div class="panel-heading">
+                    <div class="operation-summary">Converts from a CAS number into InChI format</div>
+                    <h3 class="panel-title"><span class="operation-name">GET</span> <strong>/cas/to/inchi</strong></h3>
+                        Tags:
+                            <a href="#tag-InChI--CAS">InChI, CAS</a>
+                </div>
+                <div class="panel-body">
+                    <section class="sw-operation-description">
+                        <p>Converts from a CAS number into InChI. Only a single match is returned if there is an ambiguity in the conversion. The conversion is performed by using an external webservice and has relatively high latency.</p>
+            
+                    </section>
+                    
+                        <section class="sw-request-params">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="sw-param-name"></th>
+                                    <th class="sw-param-description"></th>
+                                    <th class="sw-param-type"></th>
+                                    <th class="sw-param-data-type"></th>
+                                    <th class="sw-param-annotation"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                            <td>
+                                                cas
+                                            <td><p>Compound structure notated as a CAS number (3 groups of numbers separated by dashes)</p>
+                                        </td>
+                                            <td>query</td>
+                                            <td><span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                                    <span class="json-property-required"></span>
+                                                    <span class="swagger--global"></span> <span class="json-schema--reference"><a href="#/parameters/cas">#/parameters/cas</a></span>
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </section>
+                    
+                        <section class="sw-responses">
+                                <p><a href="#sw-default-produces">Uses default content-types: </a>
+                                    <span class="label label-default">application/json</span> 
+                                </p>
+                            
+                            <dl>
+                                    <dt class="sw-response-200">
+                                        200 OK
+                                            <span class="swagger--global"></span> <span class="json-schema--reference"><a href="#/responses/inchi">#/responses/inchi</a></span>
+                                    
+                                    </dt>
+                                    <dd class="sw-response-200">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>The converted InChI string</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                            
+                                                                    <section class="json-schema-properties">
+                                                                        <dl>
+                                                                                <dt data-property-name="inchi">
+                                                                                    <span class="json-property-name">inchi:</span>
+                                                                                    <span class="json-property-type">string</span>
+                                                                                    <span class="json-property-range" title="Value limits"></span>
+                                                                                    
+                                                                                </dt>
+                                                                                <dd>
+                                                                                    <p>Compound structure notated using InChI notation</p>
+                                                                    
+                                                                                    <div class="json-inner-schema">
+                                                                                        
+                                                                                    </div>
+                                                                                </dd>
+                                                                        </dl>
+                                                                    </section>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                                    <dt class="sw-response-400">
+                                        400 Bad Request
+                                    
+                                    </dt>
+                                    <dd class="sw-response-400">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Invalid request (typically a mandatory parameter was missing or malformed)</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                                <a class="json-schema-ref" href="#/definitions/simpleError">simpleError</a>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                                    <dt class="sw-response-500">
+                                        500 Internal Server Error
+                                    
+                                    </dt>
+                                    <dd class="sw-response-500">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Error in conversion by external webservice</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                                <a class="json-schema-ref" href="#/definitions/simpleError">simpleError</a>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                                    <dt class="sw-response-504">
+                                        504 Gateway Timeout
+                                    
+                                    </dt>
+                                    <dd class="sw-response-504">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Upstream service timeout</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                                <a class="json-schema-ref" href="#/definitions/simpleError">simpleError</a>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                                    <dt class="sw-response-default">
+                                        default 
+                                    
+                                    </dt>
+                                    <dd class="sw-response-default">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Unexpected error</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                                <a class="json-schema-ref" href="#/definitions/simpleError">simpleError</a>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                            </dl>
+                        </section>
+                </div>
+            </div>    
+        <span id="path--cas-to-inchikey"></span>
+            <div id="operation--cas-to-inchikey-get" class="swagger--panel-operation-get panel">
+                <div class="panel-heading">
+                    <div class="operation-summary">Converts from a CAS number into InChIKey format</div>
+                    <h3 class="panel-title"><span class="operation-name">GET</span> <strong>/cas/to/inchikey</strong></h3>
+                        Tags:
+                            <a href="#tag-InChiKey--CAS">InChiKey, CAS</a>
+                </div>
+                <div class="panel-body">
+                    <section class="sw-operation-description">
+                        <p>Converts from a CAS number into InChIKey. Only a single match is returned if there is an ambiguity in the conversion. The conversion is performed by using an external webservice and has relatively high latency.</p>
+            
+                    </section>
+                    
+                        <section class="sw-request-params">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="sw-param-name"></th>
+                                    <th class="sw-param-description"></th>
+                                    <th class="sw-param-type"></th>
+                                    <th class="sw-param-data-type"></th>
+                                    <th class="sw-param-annotation"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                            <td>
+                                                cas
+                                            <td><p>Compound structure notated as a CAS number (3 groups of numbers separated by dashes)</p>
+                                        </td>
+                                            <td>query</td>
+                                            <td><span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                                    <span class="json-property-required"></span>
+                                                    <span class="swagger--global"></span> <span class="json-schema--reference"><a href="#/parameters/cas">#/parameters/cas</a></span>
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </section>
+                    
+                        <section class="sw-responses">
+                                <p><a href="#sw-default-produces">Uses default content-types: </a>
+                                    <span class="label label-default">application/json</span> 
+                                </p>
+                            
+                            <dl>
+                                    <dt class="sw-response-200">
+                                        200 OK
+                                            <span class="swagger--global"></span> <span class="json-schema--reference"><a href="#/responses/inchikey">#/responses/inchikey</a></span>
+                                    
+                                    </dt>
+                                    <dd class="sw-response-200">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>The converted InChIKey string</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                            
+                                                                    <section class="json-schema-properties">
+                                                                        <dl>
+                                                                                <dt data-property-name="inchikey">
+                                                                                    <span class="json-property-name">inchikey:</span>
+                                                                                    <span class="json-property-type">string</span>
+                                                                                    <span class="json-property-range" title="Value limits"></span>
+                                                                                    
+                                                                                </dt>
+                                                                                <dd>
+                                                                                    <p>Compound structure notated using InChIKey</p>
+                                                                    
+                                                                                    <div class="json-inner-schema">
+                                                                                        
+                                                                                    </div>
+                                                                                </dd>
+                                                                        </dl>
+                                                                    </section>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                                    <dt class="sw-response-400">
+                                        400 Bad Request
+                                    
+                                    </dt>
+                                    <dd class="sw-response-400">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Invalid request (typically a mandatory parameter was missing or malformed)</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                                <a class="json-schema-ref" href="#/definitions/simpleError">simpleError</a>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                                    <dt class="sw-response-500">
+                                        500 Internal Server Error
+                                    
+                                    </dt>
+                                    <dd class="sw-response-500">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Error in conversion by external webservice</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                                <a class="json-schema-ref" href="#/definitions/simpleError">simpleError</a>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                                    <dt class="sw-response-504">
+                                        504 Gateway Timeout
+                                    
+                                    </dt>
+                                    <dd class="sw-response-504">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Upstream service timeout</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                                <a class="json-schema-ref" href="#/definitions/simpleError">simpleError</a>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                                    <dt class="sw-response-default">
+                                        default 
+                                    
+                                    </dt>
+                                    <dd class="sw-response-default">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Unexpected error</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                                <a class="json-schema-ref" href="#/definitions/simpleError">simpleError</a>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                            </dl>
+                        </section>
+                </div>
+            </div>    
+        <span id="path--cas-to-smiles"></span>
+            <div id="operation--cas-to-smiles-get" class="swagger--panel-operation-get panel">
+                <div class="panel-heading">
+                    <div class="operation-summary">Converts from a CAS number into (canonical) SMILES format</div>
+                    <h3 class="panel-title"><span class="operation-name">GET</span> <strong>/cas/to/smiles</strong></h3>
+                        Tags:
+                            <a href="#tag-SMILES--CAS">SMILES, CAS</a>
+                </div>
+                <div class="panel-body">
+                    <section class="sw-operation-description">
+                        <p>Converts from a CAS number into (canonical) SMILES. Only a single match is returned if there is an ambiguity in the conversion. The conversion is performed by using an external webservice and has relatively high latency.</p>
+            
+                    </section>
+                    
+                        <section class="sw-request-params">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="sw-param-name"></th>
+                                    <th class="sw-param-description"></th>
+                                    <th class="sw-param-type"></th>
+                                    <th class="sw-param-data-type"></th>
+                                    <th class="sw-param-annotation"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                            <td>
+                                                cas
+                                            <td><p>Compound structure notated as a CAS number (3 groups of numbers separated by dashes)</p>
+                                        </td>
+                                            <td>query</td>
+                                            <td><span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                                    <span class="json-property-required"></span>
+                                                    <span class="swagger--global"></span> <span class="json-schema--reference"><a href="#/parameters/cas">#/parameters/cas</a></span>
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </section>
+                    
+                        <section class="sw-responses">
+                                <p><a href="#sw-default-produces">Uses default content-types: </a>
+                                    <span class="label label-default">application/json</span> 
+                                </p>
+                            
+                            <dl>
+                                    <dt class="sw-response-200">
+                                        200 OK
+                                            <span class="swagger--global"></span> <span class="json-schema--reference"><a href="#/responses/smiles">#/responses/smiles</a></span>
+                                    
+                                    </dt>
+                                    <dd class="sw-response-200">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>The converted SMILES string</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                            
+                                                                    <section class="json-schema-properties">
+                                                                        <dl>
+                                                                                <dt data-property-name="smiles">
+                                                                                    <span class="json-property-name">smiles:</span>
+                                                                                    <span class="json-property-type">string</span>
+                                                                                    <span class="json-property-range" title="Value limits"></span>
+                                                                                    
+                                                                                </dt>
+                                                                                <dd>
+                                                                                    <p>Compound structure notated using (canonical) SMILES notation</p>
+                                                                    
+                                                                                    <div class="json-inner-schema">
+                                                                                        
+                                                                                    </div>
+                                                                                </dd>
+                                                                        </dl>
+                                                                    </section>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                                    <dt class="sw-response-400">
+                                        400 Bad Request
+                                    
+                                    </dt>
+                                    <dd class="sw-response-400">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Invalid request (typically a mandatory parameter was missing or malformed)</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                                <a class="json-schema-ref" href="#/definitions/simpleError">simpleError</a>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                                    <dt class="sw-response-500">
+                                        500 Internal Server Error
+                                    
+                                    </dt>
+                                    <dd class="sw-response-500">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Error in conversion by external webservice</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                                <a class="json-schema-ref" href="#/definitions/simpleError">simpleError</a>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                                    <dt class="sw-response-504">
+                                        504 Gateway Timeout
+                                    
+                                    </dt>
+                                    <dd class="sw-response-504">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Upstream service timeout</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                                <a class="json-schema-ref" href="#/definitions/simpleError">simpleError</a>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                                    <dt class="sw-response-default">
+                                        default 
+                                    
+                                    </dt>
+                                    <dd class="sw-response-default">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Unexpected error</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                                <a class="json-schema-ref" href="#/definitions/simpleError">simpleError</a>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                            </dl>
+                        </section>
+                </div>
+            </div>    
+        <span id="path--inchi-to-cas"></span>
+            <div id="operation--inchi-to-cas-get" class="swagger--panel-operation-get panel">
+                <div class="panel-heading">
+                    <div class="operation-summary">Converts from a InChI format into a CAS number</div>
+                    <h3 class="panel-title"><span class="operation-name">GET</span> <strong>/inchi/to/cas</strong></h3>
+                        Tags:
+                            <a href="#tag-CAS--InChI">CAS, InChI</a>
+                </div>
+                <div class="panel-body">
+                    <section class="sw-operation-description">
+                        <p>Converts from a InChI format into a CAS number. Only a single match is returned if there is an ambiguity in the conversion. The conversion is performed by using an external webservice and has relatively high latency.</p>
+            
+                    </section>
+                    
+                        <section class="sw-request-params">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="sw-param-name"></th>
+                                    <th class="sw-param-description"></th>
+                                    <th class="sw-param-type"></th>
+                                    <th class="sw-param-data-type"></th>
+                                    <th class="sw-param-annotation"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                            <td>
+                                                inchi
+                                            <td><p>Compound structure notated using InChI notation</p>
+                                        </td>
+                                            <td>query</td>
+                                            <td><span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                                    <span class="json-property-required"></span>
+                                                    <span class="swagger--global"></span> <span class="json-schema--reference"><a href="#/parameters/inchi">#/parameters/inchi</a></span>
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </section>
+                    
+                        <section class="sw-responses">
+                                <p><a href="#sw-default-produces">Uses default content-types: </a>
+                                    <span class="label label-default">application/json</span> 
+                                </p>
+                            
+                            <dl>
+                                    <dt class="sw-response-200">
+                                        200 OK
+                                            <span class="swagger--global"></span> <span class="json-schema--reference"><a href="#/responses/cas">#/responses/cas</a></span>
+                                    
+                                    </dt>
+                                    <dd class="sw-response-200">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>The converted CAS number (3 groups of numbers separated by dashes)</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                            
+                                                                    <section class="json-schema-properties">
+                                                                        <dl>
+                                                                                <dt data-property-name="cas">
+                                                                                    <span class="json-property-name">cas:</span>
+                                                                                    <span class="json-property-type">string</span>
+                                                                                    <span class="json-property-range" title="Value limits"></span>
+                                                                                    
+                                                                                </dt>
+                                                                                <dd>
+                                                                                    <p>Compound structure notated using a CAS number</p>
+                                                                    
+                                                                                    <div class="json-inner-schema">
+                                                                                        
+                                                                                    </div>
+                                                                                </dd>
+                                                                        </dl>
+                                                                    </section>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                                    <dt class="sw-response-400">
+                                        400 Bad Request
+                                    
+                                    </dt>
+                                    <dd class="sw-response-400">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Invalid request (typically a mandatory parameter was missing or malformed)</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                                <a class="json-schema-ref" href="#/definitions/simpleError">simpleError</a>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                                    <dt class="sw-response-500">
+                                        500 Internal Server Error
+                                    
+                                    </dt>
+                                    <dd class="sw-response-500">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Error in conversion by external webservice</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                                <a class="json-schema-ref" href="#/definitions/simpleError">simpleError</a>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                                    <dt class="sw-response-504">
+                                        504 Gateway Timeout
+                                    
+                                    </dt>
+                                    <dd class="sw-response-504">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Upstream service timeout</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                                <a class="json-schema-ref" href="#/definitions/simpleError">simpleError</a>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                                    <dt class="sw-response-default">
+                                        default 
+                                    
+                                    </dt>
+                                    <dd class="sw-response-default">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Unexpected error</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                                <a class="json-schema-ref" href="#/definitions/simpleError">simpleError</a>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                            </dl>
+                        </section>
+                </div>
+            </div>    
+        <span id="path--inchi-to-inchikey"></span>
+            <div id="operation--inchi-to-inchikey-get" class="swagger--panel-operation-get panel">
+                <div class="panel-heading">
+                    <div class="operation-summary">Converts from a InChI format into InChIKey format</div>
+                    <h3 class="panel-title"><span class="operation-name">GET</span> <strong>/inchi/to/inchikey</strong></h3>
+                        Tags:
+                            <a href="#tag-InChI--InChIKey">InChI, InChIKey</a>
+                </div>
+                <div class="panel-body">
+                    <section class="sw-operation-description">
+                        <p>Converts from InChI format into InChIKey. The conversion is performed in process via rdkit.</p>
+            
+                    </section>
+                    
+                        <section class="sw-request-params">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="sw-param-name"></th>
+                                    <th class="sw-param-description"></th>
+                                    <th class="sw-param-type"></th>
+                                    <th class="sw-param-data-type"></th>
+                                    <th class="sw-param-annotation"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                            <td>
+                                                inchi
+                                            <td><p>Compound structure notated using InChI notation</p>
+                                        </td>
+                                            <td>query</td>
+                                            <td><span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                                    <span class="json-property-required"></span>
+                                                    <span class="swagger--global"></span> <span class="json-schema--reference"><a href="#/parameters/inchi">#/parameters/inchi</a></span>
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </section>
+                    
+                        <section class="sw-responses">
+                                <p><a href="#sw-default-produces">Uses default content-types: </a>
+                                    <span class="label label-default">application/json</span> 
+                                </p>
+                            
+                            <dl>
+                                    <dt class="sw-response-200">
+                                        200 OK
+                                            <span class="swagger--global"></span> <span class="json-schema--reference"><a href="#/responses/inchikey">#/responses/inchikey</a></span>
+                                    
+                                    </dt>
+                                    <dd class="sw-response-200">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>The converted InChIKey string</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                            
+                                                                    <section class="json-schema-properties">
+                                                                        <dl>
+                                                                                <dt data-property-name="inchikey">
+                                                                                    <span class="json-property-name">inchikey:</span>
+                                                                                    <span class="json-property-type">string</span>
+                                                                                    <span class="json-property-range" title="Value limits"></span>
+                                                                                    
+                                                                                </dt>
+                                                                                <dd>
+                                                                                    <p>Compound structure notated using InChIKey</p>
+                                                                    
+                                                                                    <div class="json-inner-schema">
+                                                                                        
+                                                                                    </div>
+                                                                                </dd>
+                                                                        </dl>
+                                                                    </section>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                                    <dt class="sw-response-400">
+                                        400 Bad Request
+                                    
+                                    </dt>
+                                    <dd class="sw-response-400">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Invalid request (typically a mandatory parameter was missing or malformed)</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                                <a class="json-schema-ref" href="#/definitions/simpleError">simpleError</a>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                                    <dt class="sw-response-default">
+                                        default 
+                                    
+                                    </dt>
+                                    <dd class="sw-response-default">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Unexpected error</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                                <a class="json-schema-ref" href="#/definitions/simpleError">simpleError</a>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                            </dl>
+                        </section>
+                </div>
+            </div>    
+        <span id="path--inchi-to-smiles"></span>
+            <div id="operation--inchi-to-smiles-get" class="swagger--panel-operation-get panel">
+                <div class="panel-heading">
+                    <div class="operation-summary">Converts from a InChI format into (canonical) SMILES format</div>
+                    <h3 class="panel-title"><span class="operation-name">GET</span> <strong>/inchi/to/smiles</strong></h3>
+                        Tags:
+                            <a href="#tag-SMILES--InChI">SMILES, InChI</a>
+                </div>
+                <div class="panel-body">
+                    <section class="sw-operation-description">
+                        <p>Converts from InChI format into (canonical) SMILES. Only a single match is returned if there is an ambiguity in the conversion. The conversion is performed in process via rdkit.</p>
+            
+                    </section>
+                    
+                        <section class="sw-request-params">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="sw-param-name"></th>
+                                    <th class="sw-param-description"></th>
+                                    <th class="sw-param-type"></th>
+                                    <th class="sw-param-data-type"></th>
+                                    <th class="sw-param-annotation"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                            <td>
+                                                inchi
+                                            <td><p>Compound structure notated using InChI notation</p>
+                                        </td>
+                                            <td>query</td>
+                                            <td><span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                                    <span class="json-property-required"></span>
+                                                    <span class="swagger--global"></span> <span class="json-schema--reference"><a href="#/parameters/inchi">#/parameters/inchi</a></span>
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </section>
+                    
+                        <section class="sw-responses">
+                                <p><a href="#sw-default-produces">Uses default content-types: </a>
+                                    <span class="label label-default">application/json</span> 
+                                </p>
+                            
+                            <dl>
+                                    <dt class="sw-response-200">
+                                        200 OK
+                                            <span class="swagger--global"></span> <span class="json-schema--reference"><a href="#/responses/smiles">#/responses/smiles</a></span>
+                                    
+                                    </dt>
+                                    <dd class="sw-response-200">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>The converted SMILES string</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                            
+                                                                    <section class="json-schema-properties">
+                                                                        <dl>
+                                                                                <dt data-property-name="smiles">
+                                                                                    <span class="json-property-name">smiles:</span>
+                                                                                    <span class="json-property-type">string</span>
+                                                                                    <span class="json-property-range" title="Value limits"></span>
+                                                                                    
+                                                                                </dt>
+                                                                                <dd>
+                                                                                    <p>Compound structure notated using (canonical) SMILES notation</p>
+                                                                    
+                                                                                    <div class="json-inner-schema">
+                                                                                        
+                                                                                    </div>
+                                                                                </dd>
+                                                                        </dl>
+                                                                    </section>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                                    <dt class="sw-response-400">
+                                        400 Bad Request
+                                    
+                                    </dt>
+                                    <dd class="sw-response-400">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Invalid request (typically a mandatory parameter was missing or malformed)</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                                <a class="json-schema-ref" href="#/definitions/simpleError">simpleError</a>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                                    <dt class="sw-response-default">
+                                        default 
+                                    
+                                    </dt>
+                                    <dd class="sw-response-default">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Unexpected error</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                                <a class="json-schema-ref" href="#/definitions/simpleError">simpleError</a>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                            </dl>
+                        </section>
+                </div>
+            </div>    
+        <span id="path--inchikey-to-cas"></span>
+            <div id="operation--inchikey-to-cas-get" class="swagger--panel-operation-get panel">
+                <div class="panel-heading">
+                    <div class="operation-summary">Converts from a InChIKey format into a CAS number</div>
+                    <h3 class="panel-title"><span class="operation-name">GET</span> <strong>/inchikey/to/cas</strong></h3>
+                        Tags:
+                            <a href="#tag-CAS--InChIKey">CAS, InChIKey</a>
+                </div>
+                <div class="panel-body">
+                    <section class="sw-operation-description">
+                        <p>Converts from a InChIKey format into a CAS number. Only a single match is returned if there is an ambiguity in the conversion. The conversion is performed by using an external webservice and has relatively high latency.</p>
+            
+                    </section>
+                    
+                        <section class="sw-request-params">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="sw-param-name"></th>
+                                    <th class="sw-param-description"></th>
+                                    <th class="sw-param-type"></th>
+                                    <th class="sw-param-data-type"></th>
+                                    <th class="sw-param-annotation"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                            <td>
+                                                inchikey
+                                            <td><p>Compound structure notated using InChIKey notation</p>
+                                        </td>
+                                            <td>query</td>
+                                            <td><span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                                    <span class="json-property-required"></span>
+                                                    <span class="swagger--global"></span> <span class="json-schema--reference"><a href="#/parameters/inchikey">#/parameters/inchikey</a></span>
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </section>
+                    
+                        <section class="sw-responses">
+                                <p><a href="#sw-default-produces">Uses default content-types: </a>
+                                    <span class="label label-default">application/json</span> 
+                                </p>
+                            
+                            <dl>
+                                    <dt class="sw-response-200">
+                                        200 OK
+                                            <span class="swagger--global"></span> <span class="json-schema--reference"><a href="#/responses/cas">#/responses/cas</a></span>
+                                    
+                                    </dt>
+                                    <dd class="sw-response-200">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>The converted CAS number (3 groups of numbers separated by dashes)</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                            
+                                                                    <section class="json-schema-properties">
+                                                                        <dl>
+                                                                                <dt data-property-name="cas">
+                                                                                    <span class="json-property-name">cas:</span>
+                                                                                    <span class="json-property-type">string</span>
+                                                                                    <span class="json-property-range" title="Value limits"></span>
+                                                                                    
+                                                                                </dt>
+                                                                                <dd>
+                                                                                    <p>Compound structure notated using a CAS number</p>
+                                                                    
+                                                                                    <div class="json-inner-schema">
+                                                                                        
+                                                                                    </div>
+                                                                                </dd>
+                                                                        </dl>
+                                                                    </section>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                                    <dt class="sw-response-400">
+                                        400 Bad Request
+                                    
+                                    </dt>
+                                    <dd class="sw-response-400">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Invalid request (typically a mandatory parameter was missing or malformed)</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                                <a class="json-schema-ref" href="#/definitions/simpleError">simpleError</a>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                                    <dt class="sw-response-500">
+                                        500 Internal Server Error
+                                    
+                                    </dt>
+                                    <dd class="sw-response-500">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Error in conversion by external webservice</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                                <a class="json-schema-ref" href="#/definitions/simpleError">simpleError</a>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                                    <dt class="sw-response-504">
+                                        504 Gateway Timeout
+                                    
+                                    </dt>
+                                    <dd class="sw-response-504">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Upstream service timeout</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                                <a class="json-schema-ref" href="#/definitions/simpleError">simpleError</a>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                                    <dt class="sw-response-default">
+                                        default 
+                                    
+                                    </dt>
+                                    <dd class="sw-response-default">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Unexpected error</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                                <a class="json-schema-ref" href="#/definitions/simpleError">simpleError</a>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                            </dl>
+                        </section>
+                </div>
+            </div>    
+        <span id="path--inchikey-to-inchi"></span>
+            <div id="operation--inchikey-to-inchi-get" class="swagger--panel-operation-get panel">
+                <div class="panel-heading">
+                    <div class="operation-summary">Converts from a InChIKey format into InChI format</div>
+                    <h3 class="panel-title"><span class="operation-name">GET</span> <strong>/inchikey/to/inchi</strong></h3>
+                        Tags:
+                            <a href="#tag-InChI--InChIKey">InChI, InChIKey</a>
+                </div>
+                <div class="panel-body">
+                    <section class="sw-operation-description">
+                        <p>Converts from InChIKey format into InChI. The conversion is performed by using an external webservice and has relatively high latency.</p>
+            
+                    </section>
+                    
+                        <section class="sw-request-params">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="sw-param-name"></th>
+                                    <th class="sw-param-description"></th>
+                                    <th class="sw-param-type"></th>
+                                    <th class="sw-param-data-type"></th>
+                                    <th class="sw-param-annotation"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                            <td>
+                                                inchikey
+                                            <td><p>Compound structure notated using InChIKey notation</p>
+                                        </td>
+                                            <td>query</td>
+                                            <td><span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                                    <span class="json-property-required"></span>
+                                                    <span class="swagger--global"></span> <span class="json-schema--reference"><a href="#/parameters/inchikey">#/parameters/inchikey</a></span>
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </section>
+                    
+                        <section class="sw-responses">
+                                <p><a href="#sw-default-produces">Uses default content-types: </a>
+                                    <span class="label label-default">application/json</span> 
+                                </p>
+                            
+                            <dl>
+                                    <dt class="sw-response-200">
+                                        200 OK
+                                            <span class="swagger--global"></span> <span class="json-schema--reference"><a href="#/responses/inchi">#/responses/inchi</a></span>
+                                    
+                                    </dt>
+                                    <dd class="sw-response-200">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>The converted InChI string</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                            
+                                                                    <section class="json-schema-properties">
+                                                                        <dl>
+                                                                                <dt data-property-name="inchi">
+                                                                                    <span class="json-property-name">inchi:</span>
+                                                                                    <span class="json-property-type">string</span>
+                                                                                    <span class="json-property-range" title="Value limits"></span>
+                                                                                    
+                                                                                </dt>
+                                                                                <dd>
+                                                                                    <p>Compound structure notated using InChI notation</p>
+                                                                    
+                                                                                    <div class="json-inner-schema">
+                                                                                        
+                                                                                    </div>
+                                                                                </dd>
+                                                                        </dl>
+                                                                    </section>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                                    <dt class="sw-response-400">
+                                        400 Bad Request
+                                    
+                                    </dt>
+                                    <dd class="sw-response-400">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Invalid request (typically a mandatory parameter was missing or malformed)</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                                <a class="json-schema-ref" href="#/definitions/simpleError">simpleError</a>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                                    <dt class="sw-response-500">
+                                        500 Internal Server Error
+                                    
+                                    </dt>
+                                    <dd class="sw-response-500">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Error in conversion by external webservice</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                                <a class="json-schema-ref" href="#/definitions/simpleError">simpleError</a>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                                    <dt class="sw-response-504">
+                                        504 Gateway Timeout
+                                    
+                                    </dt>
+                                    <dd class="sw-response-504">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Upstream service timeout</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                                <a class="json-schema-ref" href="#/definitions/simpleError">simpleError</a>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                                    <dt class="sw-response-default">
+                                        default 
+                                    
+                                    </dt>
+                                    <dd class="sw-response-default">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Unexpected error</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                                <a class="json-schema-ref" href="#/definitions/simpleError">simpleError</a>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                            </dl>
+                        </section>
+                </div>
+            </div>    
+        <span id="path--inchikey-to-smiles"></span>
+            <div id="operation--inchikey-to-smiles-get" class="swagger--panel-operation-get panel">
+                <div class="panel-heading">
+                    <div class="operation-summary">Converts from a InChIKey format into (canonical) SMILES format</div>
+                    <h3 class="panel-title"><span class="operation-name">GET</span> <strong>/inchikey/to/smiles</strong></h3>
+                        Tags:
+                            <a href="#tag-SMILES--InChIKey">SMILES, InChIKey</a>
+                </div>
+                <div class="panel-body">
+                    <section class="sw-operation-description">
+                        <p>Converts from InChIKey format into (canonical) SMILES. The conversion is performed by using an external webservice and has relatively high latency.</p>
+            
+                    </section>
+                    
+                        <section class="sw-request-params">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="sw-param-name"></th>
+                                    <th class="sw-param-description"></th>
+                                    <th class="sw-param-type"></th>
+                                    <th class="sw-param-data-type"></th>
+                                    <th class="sw-param-annotation"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                            <td>
+                                                inchikey
+                                            <td><p>Compound structure notated using InChIKey notation</p>
+                                        </td>
+                                            <td>query</td>
+                                            <td><span class="json-property-type">string</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                                    <span class="json-property-required"></span>
+                                                    <span class="swagger--global"></span> <span class="json-schema--reference"><a href="#/parameters/inchikey">#/parameters/inchikey</a></span>
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </section>
+                    
+                        <section class="sw-responses">
+                                <p><a href="#sw-default-produces">Uses default content-types: </a>
+                                    <span class="label label-default">application/json</span> 
+                                </p>
+                            
+                            <dl>
+                                    <dt class="sw-response-200">
+                                        200 OK
+                                            <span class="swagger--global"></span> <span class="json-schema--reference"><a href="#/responses/smiles">#/responses/smiles</a></span>
+                                    
+                                    </dt>
+                                    <dd class="sw-response-200">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>The converted SMILES string</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                            
+                                                                    <section class="json-schema-properties">
+                                                                        <dl>
+                                                                                <dt data-property-name="smiles">
+                                                                                    <span class="json-property-name">smiles:</span>
+                                                                                    <span class="json-property-type">string</span>
+                                                                                    <span class="json-property-range" title="Value limits"></span>
+                                                                                    
+                                                                                </dt>
+                                                                                <dd>
+                                                                                    <p>Compound structure notated using (canonical) SMILES notation</p>
+                                                                    
+                                                                                    <div class="json-inner-schema">
+                                                                                        
+                                                                                    </div>
+                                                                                </dd>
+                                                                        </dl>
+                                                                    </section>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                                    <dt class="sw-response-400">
+                                        400 Bad Request
+                                    
+                                    </dt>
+                                    <dd class="sw-response-400">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Invalid request (typically a mandatory parameter was missing or malformed)</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                                <a class="json-schema-ref" href="#/definitions/simpleError">simpleError</a>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                                    <dt class="sw-response-500">
+                                        500 Internal Server Error
+                                    
+                                    </dt>
+                                    <dd class="sw-response-500">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Error in conversion by external webservice</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                                <a class="json-schema-ref" href="#/definitions/simpleError">simpleError</a>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                                    <dt class="sw-response-504">
+                                        504 Gateway Timeout
+                                    
+                                    </dt>
+                                    <dd class="sw-response-504">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Upstream service timeout</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                                <a class="json-schema-ref" href="#/definitions/simpleError">simpleError</a>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                                    <dt class="sw-response-default">
+                                        default 
+                                    
+                                    </dt>
+                                    <dd class="sw-response-default">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Unexpected error</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                                <a class="json-schema-ref" href="#/definitions/simpleError">simpleError</a>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                            </dl>
+                        </section>
+                </div>
+            </div>    
+        <span id="path--smiles-to-cas"></span>
+            <div id="operation--smiles-to-cas-get" class="swagger--panel-operation-get panel">
+                <div class="panel-heading">
+                    <div class="operation-summary">Converts from a SMILES format into a CAS number</div>
+                    <h3 class="panel-title"><span class="operation-name">GET</span> <strong>/smiles/to/cas</strong></h3>
+                        Tags:
+                            <a href="#tag-SMILES--CAS">SMILES, CAS</a>
+                </div>
+                <div class="panel-body">
+                    <section class="sw-operation-description">
+                        <p>Converts from a SMILES format into a CAS number. Only a single match is returned if there is an ambiguity in the conversion. The conversion is performed by using an external webservice and has relatively high latency.</p>
+            
+                    </section>
+                    
+                        <section class="sw-request-params">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="sw-param-name"></th>
+                                    <th class="sw-param-description"></th>
+                                    <th class="sw-param-type"></th>
+                                    <th class="sw-param-data-type"></th>
+                                    <th class="sw-param-annotation"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                            <td>
+                                                smiles
+                                            <td><p>Compound structure notated using SMILES notation</p>
+                                        </td>
+                                            <td>query</td>
+                                            <td><span class="json-property-type">string</span>    <span class="json-property-format">(smiles)</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                                    <span class="json-property-required"></span>
+                                                    <span class="swagger--global"></span> <span class="json-schema--reference"><a href="#/parameters/smiles">#/parameters/smiles</a></span>
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </section>
+                    
+                        <section class="sw-responses">
+                                <p><a href="#sw-default-produces">Uses default content-types: </a>
+                                    <span class="label label-default">application/json</span> 
+                                </p>
+                            
+                            <dl>
+                                    <dt class="sw-response-200">
+                                        200 OK
+                                            <span class="swagger--global"></span> <span class="json-schema--reference"><a href="#/responses/cas">#/responses/cas</a></span>
+                                    
+                                    </dt>
+                                    <dd class="sw-response-200">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>The converted CAS number (3 groups of numbers separated by dashes)</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                            
+                                                                    <section class="json-schema-properties">
+                                                                        <dl>
+                                                                                <dt data-property-name="cas">
+                                                                                    <span class="json-property-name">cas:</span>
+                                                                                    <span class="json-property-type">string</span>
+                                                                                    <span class="json-property-range" title="Value limits"></span>
+                                                                                    
+                                                                                </dt>
+                                                                                <dd>
+                                                                                    <p>Compound structure notated using a CAS number</p>
+                                                                    
+                                                                                    <div class="json-inner-schema">
+                                                                                        
+                                                                                    </div>
+                                                                                </dd>
+                                                                        </dl>
+                                                                    </section>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                                    <dt class="sw-response-400">
+                                        400 Bad Request
+                                    
+                                    </dt>
+                                    <dd class="sw-response-400">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Invalid request (typically a mandatory parameter was missing or malformed)</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                                <a class="json-schema-ref" href="#/definitions/simpleError">simpleError</a>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                                    <dt class="sw-response-500">
+                                        500 Internal Server Error
+                                    
+                                    </dt>
+                                    <dd class="sw-response-500">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Error in conversion by external webservice</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                                <a class="json-schema-ref" href="#/definitions/simpleError">simpleError</a>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                                    <dt class="sw-response-504">
+                                        504 Gateway Timeout
+                                    
+                                    </dt>
+                                    <dd class="sw-response-504">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Upstream service timeout</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                                <a class="json-schema-ref" href="#/definitions/simpleError">simpleError</a>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                                    <dt class="sw-response-default">
+                                        default 
+                                    
+                                    </dt>
+                                    <dd class="sw-response-default">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Unexpected error</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                                <a class="json-schema-ref" href="#/definitions/simpleError">simpleError</a>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                            </dl>
+                        </section>
+                </div>
+            </div>    
+        <span id="path--smiles-to-inchi"></span>
+            <div id="operation--smiles-to-inchi-get" class="swagger--panel-operation-get panel">
+                <div class="panel-heading">
+                    <div class="operation-summary">Converts from a SMILES format into InChI format</div>
+                    <h3 class="panel-title"><span class="operation-name">GET</span> <strong>/smiles/to/inchi</strong></h3>
+                        Tags:
+                            <a href="#tag-SMILES--InChI">SMILES, InChI</a>
+                </div>
+                <div class="panel-body">
+                    <section class="sw-operation-description">
+                        <p>Converts from a SMILES format into InChI format. Only a single match is returned if there is an ambiguity in the conversion. The conversion is performed in process via rdkit.</p>
+            
+                    </section>
+                    
+                        <section class="sw-request-params">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="sw-param-name"></th>
+                                    <th class="sw-param-description"></th>
+                                    <th class="sw-param-type"></th>
+                                    <th class="sw-param-data-type"></th>
+                                    <th class="sw-param-annotation"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                            <td>
+                                                smiles
+                                            <td><p>Compound structure notated using SMILES notation</p>
+                                        </td>
+                                            <td>query</td>
+                                            <td><span class="json-property-type">string</span>    <span class="json-property-format">(smiles)</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                                    <span class="json-property-required"></span>
+                                                    <span class="swagger--global"></span> <span class="json-schema--reference"><a href="#/parameters/smiles">#/parameters/smiles</a></span>
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </section>
+                    
+                        <section class="sw-responses">
+                                <p><a href="#sw-default-produces">Uses default content-types: </a>
+                                    <span class="label label-default">application/json</span> 
+                                </p>
+                            
+                            <dl>
+                                    <dt class="sw-response-200">
+                                        200 OK
+                                            <span class="swagger--global"></span> <span class="json-schema--reference"><a href="#/responses/inchi">#/responses/inchi</a></span>
+                                    
+                                    </dt>
+                                    <dd class="sw-response-200">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>The converted InChI string</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                            
+                                                                    <section class="json-schema-properties">
+                                                                        <dl>
+                                                                                <dt data-property-name="inchi">
+                                                                                    <span class="json-property-name">inchi:</span>
+                                                                                    <span class="json-property-type">string</span>
+                                                                                    <span class="json-property-range" title="Value limits"></span>
+                                                                                    
+                                                                                </dt>
+                                                                                <dd>
+                                                                                    <p>Compound structure notated using InChI notation</p>
+                                                                    
+                                                                                    <div class="json-inner-schema">
+                                                                                        
+                                                                                    </div>
+                                                                                </dd>
+                                                                        </dl>
+                                                                    </section>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                                    <dt class="sw-response-400">
+                                        400 Bad Request
+                                    
+                                    </dt>
+                                    <dd class="sw-response-400">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Invalid request (typically a mandatory parameter was missing or malformed)</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                                <a class="json-schema-ref" href="#/definitions/simpleError">simpleError</a>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                                    <dt class="sw-response-default">
+                                        default 
+                                    
+                                    </dt>
+                                    <dd class="sw-response-default">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Unexpected error</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                                <a class="json-schema-ref" href="#/definitions/simpleError">simpleError</a>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                            </dl>
+                        </section>
+                </div>
+            </div>    
+        <span id="path--smiles-to-inchikey"></span>
+            <div id="operation--smiles-to-inchikey-get" class="swagger--panel-operation-get panel">
+                <div class="panel-heading">
+                    <div class="operation-summary">Converts from a SMILES format into InChIKey format</div>
+                    <h3 class="panel-title"><span class="operation-name">GET</span> <strong>/smiles/to/inchikey</strong></h3>
+                        Tags:
+                            <a href="#tag-SMILES--InChIKey">SMILES, InChIKey</a>
+                </div>
+                <div class="panel-body">
+                    <section class="sw-operation-description">
+                        <p>Converts from SMILES format into InChIKey. The conversion is performed in process via rdkit.</p>
+            
+                    </section>
+                    
+                        <section class="sw-request-params">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="sw-param-name"></th>
+                                    <th class="sw-param-description"></th>
+                                    <th class="sw-param-type"></th>
+                                    <th class="sw-param-data-type"></th>
+                                    <th class="sw-param-annotation"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                            <td>
+                                                smiles
+                                            <td><p>Compound structure notated using SMILES notation</p>
+                                        </td>
+                                            <td>query</td>
+                                            <td><span class="json-property-type">string</span>    <span class="json-property-format">(smiles)</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                                    <span class="json-property-required"></span>
+                                                    <span class="swagger--global"></span> <span class="json-schema--reference"><a href="#/parameters/smiles">#/parameters/smiles</a></span>
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </section>
+                    
+                        <section class="sw-responses">
+                                <p><a href="#sw-default-produces">Uses default content-types: </a>
+                                    <span class="label label-default">application/json</span> 
+                                </p>
+                            
+                            <dl>
+                                    <dt class="sw-response-200">
+                                        200 OK
+                                            <span class="swagger--global"></span> <span class="json-schema--reference"><a href="#/responses/inchikey">#/responses/inchikey</a></span>
+                                    
+                                    </dt>
+                                    <dd class="sw-response-200">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>The converted InChIKey string</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                            
+                                                                    <section class="json-schema-properties">
+                                                                        <dl>
+                                                                                <dt data-property-name="inchikey">
+                                                                                    <span class="json-property-name">inchikey:</span>
+                                                                                    <span class="json-property-type">string</span>
+                                                                                    <span class="json-property-range" title="Value limits"></span>
+                                                                                    
+                                                                                </dt>
+                                                                                <dd>
+                                                                                    <p>Compound structure notated using InChIKey</p>
+                                                                    
+                                                                                    <div class="json-inner-schema">
+                                                                                        
+                                                                                    </div>
+                                                                                </dd>
+                                                                        </dl>
+                                                                    </section>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                                    <dt class="sw-response-400">
+                                        400 Bad Request
+                                    
+                                    </dt>
+                                    <dd class="sw-response-400">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Invalid request (typically a mandatory parameter was missing or malformed)</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                                <a class="json-schema-ref" href="#/definitions/simpleError">simpleError</a>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                                    <dt class="sw-response-default">
+                                        default 
+                                    
+                                    </dt>
+                                    <dd class="sw-response-default">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Unexpected error</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                                <a class="json-schema-ref" href="#/definitions/simpleError">simpleError</a>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                            </dl>
+                        </section>
+                </div>
+            </div>
+        <h2>Parameter definitions</h2>
+        <table id="table-parameter-definitions" class="table">
+            <thead>
+            <tr>
+                <th class="sw-param-key"></th>
+                <th class="sw-param-name"></th>
+                <th class="sw-param-description"></th>
+                <th class="sw-param-type"></th>
+                <th class="sw-param-data-type"></th>
+                <th class="sw-param-annotation"></th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                        <td><a name="/parameters/smiles"></a>smiles</td>
+                    <td>
+                        smiles
+                    <td><p>Compound structure notated using SMILES notation</p>
+                </td>
+                    <td>query</td>
+                    <td><span class="json-property-type">string</span>    <span class="json-property-format">(smiles)</span>
+                <span class="json-property-range" title="Value limits"></span>
+                
+                    </td>
+                    <td>
+                            <span class="json-property-required"></span>
+                    </td>
+                </tr>
+                <tr>
+                        <td><a name="/parameters/inchi"></a>inchi</td>
+                    <td>
+                        inchi
+                    <td><p>Compound structure notated using InChI notation</p>
+                </td>
+                    <td>query</td>
+                    <td><span class="json-property-type">string</span>
+                <span class="json-property-range" title="Value limits"></span>
+                
+                    </td>
+                    <td>
+                            <span class="json-property-required"></span>
+                    </td>
+                </tr>
+                <tr>
+                        <td><a name="/parameters/inchikey"></a>inchikey</td>
+                    <td>
+                        inchikey
+                    <td><p>Compound structure notated using InChIKey notation</p>
+                </td>
+                    <td>query</td>
+                    <td><span class="json-property-type">string</span>
+                <span class="json-property-range" title="Value limits"></span>
+                
+                    </td>
+                    <td>
+                            <span class="json-property-required"></span>
+                    </td>
+                </tr>
+                <tr>
+                        <td><a name="/parameters/cas"></a>cas</td>
+                    <td>
+                        cas
+                    <td><p>Compound structure notated as a CAS number (3 groups of numbers separated by dashes)</p>
+                </td>
+                    <td>query</td>
+                    <td><span class="json-property-type">string</span>
+                <span class="json-property-range" title="Value limits"></span>
+                
+                    </td>
+                    <td>
+                            <span class="json-property-required"></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+     
+    <h2>Response definitions</h2>
+    
+    <dl id="sw-response-definitions">
+            <dt><a name=""></a>inchi</dt>
+            <dd>
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>The converted InChI string</p>
+                
+                    </div>
+                </div>
+                <div class="row">
+                    
+                    <div class="col-md-6 sw-response-model">
+                    <div  class="panel panel-definition">
+                        <div class="panel-body">
+                                
+                                        <section class="json-schema-properties">
+                                            <dl>
+                                                    <dt data-property-name="inchi">
+                                                        <span class="json-property-name">inchi:</span>
+                                                        <span class="json-property-type">string</span>
+                                                        <span class="json-property-range" title="Value limits"></span>
+                                                        
+                                                    </dt>
+                                                    <dd>
+                                                        <p>Compound structure notated using InChI notation</p>
+                                        
+                                                        <div class="json-inner-schema">
+                                                            
+                                                        </div>
+                                                    </dd>
+                                            </dl>
+                                        </section>
+                        </div>
+                    </div></div>
+                
+                </div>        </dd>
+            <dt><a name=""></a>smiles</dt>
+            <dd>
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>The converted SMILES string</p>
+                
+                    </div>
+                </div>
+                <div class="row">
+                    
+                    <div class="col-md-6 sw-response-model">
+                    <div  class="panel panel-definition">
+                        <div class="panel-body">
+                                
+                                        <section class="json-schema-properties">
+                                            <dl>
+                                                    <dt data-property-name="smiles">
+                                                        <span class="json-property-name">smiles:</span>
+                                                        <span class="json-property-type">string</span>
+                                                        <span class="json-property-range" title="Value limits"></span>
+                                                        
+                                                    </dt>
+                                                    <dd>
+                                                        <p>Compound structure notated using (canonical) SMILES notation</p>
+                                        
+                                                        <div class="json-inner-schema">
+                                                            
+                                                        </div>
+                                                    </dd>
+                                            </dl>
+                                        </section>
+                        </div>
+                    </div></div>
+                
+                </div>        </dd>
+            <dt><a name=""></a>inchikey</dt>
+            <dd>
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>The converted InChIKey string</p>
+                
+                    </div>
+                </div>
+                <div class="row">
+                    
+                    <div class="col-md-6 sw-response-model">
+                    <div  class="panel panel-definition">
+                        <div class="panel-body">
+                                
+                                        <section class="json-schema-properties">
+                                            <dl>
+                                                    <dt data-property-name="inchikey">
+                                                        <span class="json-property-name">inchikey:</span>
+                                                        <span class="json-property-type">string</span>
+                                                        <span class="json-property-range" title="Value limits"></span>
+                                                        
+                                                    </dt>
+                                                    <dd>
+                                                        <p>Compound structure notated using InChIKey</p>
+                                        
+                                                        <div class="json-inner-schema">
+                                                            
+                                                        </div>
+                                                    </dd>
+                                            </dl>
+                                        </section>
+                        </div>
+                    </div></div>
+                
+                </div>        </dd>
+            <dt><a name=""></a>cas</dt>
+            <dd>
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>The converted CAS number (3 groups of numbers separated by dashes)</p>
+                
+                    </div>
+                </div>
+                <div class="row">
+                    
+                    <div class="col-md-6 sw-response-model">
+                    <div  class="panel panel-definition">
+                        <div class="panel-body">
+                                
+                                        <section class="json-schema-properties">
+                                            <dl>
+                                                    <dt data-property-name="cas">
+                                                        <span class="json-property-name">cas:</span>
+                                                        <span class="json-property-type">string</span>
+                                                        <span class="json-property-range" title="Value limits"></span>
+                                                        
+                                                    </dt>
+                                                    <dd>
+                                                        <p>Compound structure notated using a CAS number</p>
+                                        
+                                                        <div class="json-inner-schema">
+                                                            
+                                                        </div>
+                                                    </dd>
+                                            </dl>
+                                        </section>
+                        </div>
+                    </div></div>
+                
+                </div>        </dd>
+    </dl>
+    
+                       
+        <h2>Schema definitions</h2>
+    
+            
+                <div id="definition-simpleError" class="panel panel-definition">
+                        <div class="panel-heading">
+                                <h3 class="panel-title"><a name="/definitions/simpleError"></a>simpleError:
+                                    <span class="json-property-type"><span class="json-property-type">string</span>
+                <span class="json-property-range" title="Value limits"></span>
+                
+                </span>
+                                </h3>
+                        </div>
+                    <div class="panel-body">
+                            
+                    </div>
+                </div>
+</div>
+</body>
+</html>
