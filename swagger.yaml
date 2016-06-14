@@ -383,7 +383,7 @@ responses:
     schema:
       type: object
       properties:
-        inchi:
+        smiles:
           type: string
           description: Compound structure notated using (canonical) SMILES notation
           x-ontology: http://edamontology.org/format_1196

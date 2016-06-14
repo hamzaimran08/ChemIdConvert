@@ -38,6 +38,6 @@ The url will then be: (HOSTNAME is either localhost if running docker locally
 on linux or the ip of your docker-machine if running locally on windows/osx)
 
 ```
-http://HOSTNAME:8080/v1/smiles/toInchi?smiles=CCO
+http://HOSTNAME:8080/v1/smiles/to/inchi?smiles=CCO
 ```
 
