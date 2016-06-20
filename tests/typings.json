@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "bluebird": "registry:npm/bluebird#3.3.4+20160531224558",
+    "request": "registry:npm/request#2.69.0+20160428223725",
+    "tape": "registry:npm/tape#4.0.0+20160607230938"
+  },
+  "globalDependencies": {
+    "node-4": "registry:dt/node-4#4.0.0+20160608055420"
+  }
+}
