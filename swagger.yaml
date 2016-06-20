@@ -256,7 +256,7 @@ paths:
         returned if there is an ambiguity in the conversion. The conversion is
         performed by using an external webservice and has relatively high latency.
       tags:
-        - InChI, CAS
+        - CAS, InChI
       parameters:
         - $ref: "#/parameters/cas"
       responses:
@@ -316,7 +316,7 @@ paths:
         returned if there is an ambiguity in the conversion. The conversion is
         performed by using an external webservice and has relatively high latency.
       tags:
-        - InChiKey, CAS
+        - CAS, InChIKey
       parameters:
         - $ref: "#/parameters/cas"
       responses:
