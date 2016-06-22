@@ -47,7 +47,7 @@ function testInchiToSmiles(t : Test) : void {
 function testSmilesToCas(t : Test) : void {
     const api = new SMILESCASApi(basePath)
     api.smilesToCasGet(ethanolSmiles)
-      .then(value => verifyInchi(value.body.cas, t))
+      .then(value => verifyCas(value.body.cas, t))
       .then(_ => t.end())
       .error((error: any) => t.fail("Api call failed"))
 }
@@ -71,7 +71,7 @@ function testInchiKeyToInchi(t : Test) : void {
 function testInchiToInchiKey(t : Test) : void {
     const api = new InChIInChIKeyApi(basePath)
     api.inchiToInchikeyGet(ethanolInchi)
-      .then(value => verifySmiles(value.body.inchikey, t))
+      .then(value => verifyInchiKey(value.body.inchikey, t))
       .then(_ => t.end())
       .error((error: any) => t.fail("Api call failed"))
 }
@@ -79,14 +79,14 @@ function testInchiToInchiKey(t : Test) : void {
 function testSmilesToInchiKey(t : Test) : void {
     const api = new SMILESInChIKeyApi(basePath)
     api.smilesToInchikeyGet(ethanolSmiles)
-      .then(value => verifyInchi(value.body.inchikey, t))
+      .then(value => verifyInchiKey(value.body.inchikey, t))
       .then(_ => t.end())
       .error((error: any) => t.fail("Api call failed"))
 }
 
 function testInchiKeyToSmiles(t : Test) : void {
     const api = new SMILESInChIKeyApi(basePath)
-    api.inchikeyToSmilesGet(ethanolCas)
+    api.inchikeyToSmilesGet(ethanolInchiKey)
       .then(value => verifySmiles(value.body.smiles, t))
       .then(_ => t.end())
       .error((error: any) => t.fail("Api call failed"))
@@ -95,7 +95,7 @@ function testInchiKeyToSmiles(t : Test) : void {
 function testCasToInchiKey(t : Test) : void {
     const api = new CASInChIKeyApi(basePath)
     api.casToInchikeyGet(ethanolCas)
-      .then(value => verifyInchi(value.body.inchikey, t))
+      .then(value => verifyInchiKey(value.body.inchikey, t))
       .then(_ => t.end())
       .error((error: any) => t.fail("Api call failed"))
 }
@@ -103,7 +103,7 @@ function testCasToInchiKey(t : Test) : void {
 function testInchiKeyToCas(t : Test) : void {
     const api = new CASInChIKeyApi(basePath)
     api.inchikeyToCasGet(ethanolInchiKey)
-      .then(value => verifySmiles(value.body.cas, t))
+      .then(value => verifyCas(value.body.cas, t))
       .then(_ => t.end())
       .error((error: any) => t.fail("Api call failed"))
 }
@@ -118,8 +118,8 @@ function testCasToInchi(t : Test) : void {
 
 function testInchiToCas(t : Test) : void {
     const api = new CASInChIApi(basePath)
-    api.inchiToCasGet(ethanolInchiKey)
-      .then(value => verifySmiles(value.body.cas, t))
+    api.inchiToCasGet(ethanolInchi)
+      .then(value => verifyCas(value.body.cas, t))
       .then(_ => t.end())
       .error((error: any) => t.fail("Api call failed"))
 }
@@ -134,3 +134,5 @@ test.test('smiles to inchikey', testSmilesToInchiKey);
 test.test('inchikey to smiles', testInchiKeyToSmiles);
 test.test('inchi to cas', testInchiToCas);
 test.test('cas to inchi', testCasToInchi);
+test.test('inchikey to cas', testInchiKeyToCas);
+test.test('cas to inchikey', testCasToInchiKey);
