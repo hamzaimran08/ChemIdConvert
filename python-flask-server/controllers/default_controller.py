@@ -2,6 +2,7 @@ from rdkit import Chem
 import rdkit.Chem.inchi
 from urllib.error import HTTPError
 import cirpy
+import re
 
 # In-Process conversions using rdkit:
 
@@ -92,7 +93,7 @@ def cas_to_inchi_get(cas) -> str:
 
 def cas_to_inchikey_get(cas) -> str:
     try:
-        inchikey = resolve_via_cirpy(cas, 'stdinchikey', 'cas_number')
+        inchikey = clean_inchi_key(resolve_via_cirpy(cas, 'stdinchikey', 'cas_number'))
         return {"inchikey": inchikey}
     except CirpyError as err:
         return (err.message, err.code)
@@ -121,5 +122,5 @@ def inchikey_to_smiles_get(inchikey) -> str:
     except CirpyError as err:
         return (err.message, err.code)
 
-
-
+def clean_inchi_key(inchikey):
+    return re.sub("(?i)InChiKey=", "", inchikey)
