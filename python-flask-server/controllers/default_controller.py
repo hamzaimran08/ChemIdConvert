@@ -3,6 +3,31 @@ import rdkit.Chem.inchi
 from urllib.error import HTTPError
 import cirpy
 import re
+from werkzeug.contrib.cache import SimpleCache
+
+cas_to_inchi_cache = SimpleCache()
+cas_to_inchikey_cache = SimpleCache()
+cas_to_smiles_cache = SimpleCache()
+inchi_to_cas_cache = SimpleCache()
+inchikey_to_cas_cache = SimpleCache()
+inchikey_to_smiles_cache = SimpleCache()
+inchikey_to_inchi_cache = SimpleCache()
+smiles_to_cas_cache = SimpleCache()
+
+caches = {}
+caches['cas'] = {}
+caches['cas']['smiles'] = cas_to_smiles_cache
+caches['cas']['stdinchi'] = cas_to_inchi_cache
+caches['cas']['stdinchikey'] = cas_to_inchikey_cache
+caches['stdinchi'] = {}
+caches['stdinchi']['cas'] = inchi_to_cas_cache
+caches['stdinchikey'] = {}
+caches['stdinchikey']['cas'] = inchikey_to_cas_cache
+caches['stdinchikey']['stdinchi'] = inchikey_to_cas_cache
+caches['stdinchikey']['smiles'] = inchikey_to_cas_cache
+caches['smiles'] = {}
+caches['smiles']['cas'] = smiles_to_cas_cache
+
 
 # In-Process conversions using rdkit:
 
@@ -50,7 +75,11 @@ class CirpyError(Exception):
 
 def resolve_via_cirpy(identifier: str, target: str, source: str,) -> str:
     try:
-        converted = cirpy.resolve(identifier, target, [source])
+        converted = caches[source][target].get(identifier)
+        if converted is None:
+            sourcehint = 'cas_number' if source == 'cas' else source
+            converted = cirpy.resolve(identifier, target, [sourcehint])
+            caches[source][target].set(identifier, converted)
         return converted
     except HTTPError as err:
         if err.code == 504 or err.code == 408:
@@ -85,7 +114,7 @@ def inchikey_to_cas_get(inchikey) -> str:
 
 def cas_to_inchi_get(cas) -> str:
     try:
-        inchi = resolve_via_cirpy(cas, 'stdinchi', 'cas_number')
+        inchi = resolve_via_cirpy(cas, 'stdinchi', 'cas')
         return {"inchi": inchi}
     except CirpyError as err:
         return (err.message, err.code)
@@ -93,7 +122,7 @@ def cas_to_inchi_get(cas) -> str:
 
 def cas_to_inchikey_get(cas) -> str:
     try:
-        inchikey = clean_inchi_key(resolve_via_cirpy(cas, 'stdinchikey', 'cas_number'))
+        inchikey = clean_inchi_key(resolve_via_cirpy(cas, 'stdinchikey', 'cas'))
         return {"inchikey": inchikey}
     except CirpyError as err:
         return (err.message, err.code)
@@ -101,7 +130,7 @@ def cas_to_inchikey_get(cas) -> str:
 
 def cas_to_smiles_get(cas) -> str:
     try:
-        smiles = resolve_via_cirpy(cas, 'smiles', 'cas_number')
+        smiles = resolve_via_cirpy(cas, 'smiles', 'cas')
         return {"smiles": smiles}
     except CirpyError as err:
         return (err.message, err.code)
