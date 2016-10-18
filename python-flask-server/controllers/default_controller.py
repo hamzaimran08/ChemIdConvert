@@ -23,8 +23,8 @@ caches['stdinchi'] = {}
 caches['stdinchi']['cas'] = inchi_to_cas_cache
 caches['stdinchikey'] = {}
 caches['stdinchikey']['cas'] = inchikey_to_cas_cache
-caches['stdinchikey']['stdinchi'] = inchikey_to_cas_cache
-caches['stdinchikey']['smiles'] = inchikey_to_cas_cache
+caches['stdinchikey']['stdinchi'] = inchikey_to_inchi_cache
+caches['stdinchikey']['smiles'] = inchikey_to_smiles_cache
 caches['smiles'] = {}
 caches['smiles']['cas'] = smiles_to_cas_cache
 
@@ -84,7 +84,7 @@ def resolve_via_cirpy(identifier: str, target: str, source: str,) -> str:
     except HTTPError as err:
         if err.code == 504 or err.code == 408:
             raise CirpyError(504, "Timeout while waiting for identifier resolution service")
-        raise CirpyError(500, "HTTPError while communicating with identifier resolution service")
+        raise CirpyError(500, "HTTPError while communicating with identifier resolution service" + err.reason)
 
 
 def inchikey_to_inchi_get(inchikey) -> str:
