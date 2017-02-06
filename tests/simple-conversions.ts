@@ -1,7 +1,7 @@
 import { Test, test } from 'tape'
 import { CASInChIApi, CASInChIKeyApi, SMILESInChIApi, SMILESCASApi, InChIInChIKeyApi, SMILESInChIKeyApi } from './typescript-node-client/api'
 
-const basePath : string = "http://192.168.99.100:8080/v1"
+const basePath : string = "http://docker:8080/v1"
 
 const ethanolInchi = "InChI=1S/C2H6O/c1-2-3/h3H,2H2,1H3"
 const ethanolSmiles = "CCO"

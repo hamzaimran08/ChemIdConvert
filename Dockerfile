@@ -1,17 +1,13 @@
-FROM jupyter/scipy-notebook
+FROM informaticsmatters/rdkit:Release_2016_09_2
 MAINTAINER Daniel Bachler <daniel@douglasconnect.com>
 
-ENV PATH /opt/conda/bin:$PATH
-ENV LANG C
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends python-pip && \
+    pip install connexion cirpy && \
+    apt-get remove -y python-pip && \
+    rm -rf /var/lib/apt/lists/*
 
-# install the RDKit:
-RUN conda config --add channels  https://conda.anaconda.org/rdkit
-RUN conda install -y nomkl rdkit pandas cairo cairocffi
-RUN pip install connexion cirpy
-
-ADD ./python-flask-server/ /python-flask-server/
+COPY python-flask-server/ /python-flask-server/
 
 EXPOSE 8080
-ENTRYPOINT ["python", "/python-flask-server/app.py"]
-
-
+CMD ["python", "/python-flask-server/app.py"]

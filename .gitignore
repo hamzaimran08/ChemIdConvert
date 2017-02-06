@@ -1,2 +1,3 @@
 python-flask-server/.idea/
 python-flask-server/.swagger-codegen-ignore
+.idea/
