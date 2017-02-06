@@ -1,5 +1,6 @@
 from rdkit import Chem
 import rdkit.Chem.inchi
+from rdkit.Chem.Descriptors import MolWt
 from urllib2 import HTTPError
 import cirpy
 import re
@@ -30,6 +31,14 @@ caches['smiles']['cas'] = smiles_to_cas_cache
 
 
 # In-Process conversions using rdkit:
+
+def molweight_get(smiles):
+    m = Chem.MolFromSmiles(smiles)
+    if (m is None):
+        return ("Could not parse input: " + smiles, 500)
+
+    return {"smiles": smiles, "molWeight": MolWt(m)}
+
 
 def inchi_to_inchikey_get(inchi):
     inchikey = rdkit.Chem.inchi.InchiToInchiKey(inchi)

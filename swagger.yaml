@@ -14,6 +14,18 @@ basePath: /v1
 produces:
   - application/json
 paths:
+  /molWeight:
+    get:
+      summary: Returns the molecular weight (calculated with rdkit)
+      parameters:
+        - $ref: "#/parameters/smiles"
+      responses:
+        200:
+          $ref: "#/responses/molWeight"
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/simpleError'
   /smiles/to/inchi:
     get:
       summary: Converts from a SMILES format into InChI format
@@ -405,6 +417,18 @@ responses:
           type: string
           description: Compound structure notated using a CAS number
           x-ontology: http://edamontology.org/data_3102
+  molWeight:
+    description: The molecular weight (caluclated with rdkit)
+    schema:
+      type: object
+      properties:
+        smiles:
+          type: string
+          description: Compound structure notated using (canonical) SMILES notation
+          x-ontology: http://edamontology.org/format_1196
+        molWeight:
+          type: number
+          description: The molecular weight (caluclated with rdkit)
 definitions:
   simpleError:
     type: string
