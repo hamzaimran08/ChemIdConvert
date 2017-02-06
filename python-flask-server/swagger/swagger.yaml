@@ -12,60 +12,49 @@ schemes:
 produces:
 - "application/json"
 paths:
-  /cas/to/inchi:
+  /molWeight:
     get:
-      tags:
-      - "InChI, CAS"
-      summary: "Converts from a CAS number into InChI format"
-      description: "Converts from a CAS number into InChI. Only a single match is\
-        \ returned if there is an ambiguity in the conversion. The conversion is performed\
-        \ by using an external webservice and has relatively high latency.\n"
-      operationId: "controllers.default_controller.cas_to_inchi_get"
+      summary: "Returns the molecular weight (calculated with rdkit)"
+      operationId: "controllers.default_controller.mol_weight_get"
       parameters:
-      - name: "cas"
+      - name: "smiles"
         in: "query"
-        description: "Compound structure notated as a CAS number (3 groups of numbers\
-          \ separated by dashes)"
+        description: "Compound structure notated using SMILES notation"
         required: true
         type: "string"
-        x-ontology: "http://edamontology.org/data_3102"
+        format: "smiles"
+        x-ontology: "http://edamontology.org/format_1196"
+      responses:
+        200:
+          description: "The molecular weight (caluclated with rdkit)"
+          schema:
+            $ref: "#/definitions/inline_response_200"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/simpleError"
+
+  /smiles/to/inchi:
+    get:
+      tags:
+      - "SMILES, InChI"
+      summary: "Converts from a SMILES format into InChI format"
+      description: "Converts from a SMILES format into InChI format. Only a single\
+        \ match is returned if there is an ambiguity in the conversion. The conversion\
+        \ is performed in process via rdkit.\n"
+      operationId: "controllers.default_controller.smiles_to_inchi_get"
+      parameters:
+      - name: "smiles"
+        in: "query"
+        description: "Compound structure notated using SMILES notation"
+        required: true
+        type: "string"
+        format: "smiles"
+        x-ontology: "http://edamontology.org/format_1196"
       responses:
         200:
           description: "The converted InChI string"
           schema:
-            $ref: "#/definitions/inline_response_200"
-        400:
-          description: "Invalid request (typically a mandatory parameter was missing\
-            \ or malformed)"
-          schema:
-            $ref: "#/definitions/simpleError"
-        default:
-          description: "Unexpected error"
-          schema:
-            $ref: "#/definitions/simpleError"
-      x-tags:
-      - tag: "InChI, CAS"
-  /cas/to/inchikey:
-    get:
-      tags:
-      - "InChiKey, CAS"
-      summary: "Converts from a CAS number into InChIKey format"
-      description: "Converts from a CAS number into InChIKey. Only a single match\
-        \ is returned if there is an ambiguity in the conversion. The conversion is\
-        \ performed by using an external webservice and has relatively high latency.\n"
-      operationId: "controllers.default_controller.cas_to_inchikey_get"
-      parameters:
-      - name: "cas"
-        in: "query"
-        description: "Compound structure notated as a CAS number (3 groups of numbers\
-          \ separated by dashes)"
-        required: true
-        type: "string"
-        x-ontology: "http://edamontology.org/data_3102"
-      responses:
-        200:
-          description: "The converted InChIKey string"
-          schema:
             $ref: "#/definitions/inline_response_200_1"
         400:
           description: "Invalid request (typically a mandatory parameter was missing\
@@ -76,105 +65,7 @@ paths:
           description: "Unexpected error"
           schema:
             $ref: "#/definitions/simpleError"
-      x-tags:
-      - tag: "InChiKey, CAS"
-  /cas/to/smiles:
-    get:
-      tags:
-      - "SMILES, CAS"
-      summary: "Converts from a CAS number into (canonical) SMILES format"
-      description: "Converts from a CAS number into (canonical) SMILES. Only a single\
-        \ match is returned if there is an ambiguity in the conversion. The conversion\
-        \ is performed by using an external webservice and has relatively high latency.\n"
-      operationId: "controllers.default_controller.cas_to_smiles_get"
-      parameters:
-      - name: "cas"
-        in: "query"
-        description: "Compound structure notated as a CAS number (3 groups of numbers\
-          \ separated by dashes)"
-        required: true
-        type: "string"
-        x-ontology: "http://edamontology.org/data_3102"
-      responses:
-        200:
-          description: "The converted SMILES string"
-          schema:
-            $ref: "#/definitions/inline_response_200_2"
-        400:
-          description: "Invalid request (typically a mandatory parameter was missing\
-            \ or malformed)"
-          schema:
-            $ref: "#/definitions/simpleError"
-        default:
-          description: "Unexpected error"
-          schema:
-            $ref: "#/definitions/simpleError"
-      x-tags:
-      - tag: "SMILES, CAS"
-  /inchi/to/cas:
-    get:
-      tags:
-      - "CAS, InChI"
-      summary: "Converts from a InChI format into a CAS number"
-      description: "Converts from a InChI format into a CAS number. Only a single\
-        \ match is returned if there is an ambiguity in the conversion. The conversion\
-        \ is performed by using an external webservice and has relatively high latency.\n"
-      operationId: "controllers.default_controller.inchi_to_cas_get"
-      parameters:
-      - name: "inchi"
-        in: "query"
-        description: "Compound structure notated using InChI notation"
-        required: true
-        type: "string"
-        x-ontology: "http://edamontology.org/format_1197"
-      responses:
-        200:
-          description: "The converted CAS number (3 groups of numbers separated by\
-            \ dashes)"
-          schema:
-            $ref: "#/definitions/inline_response_200_3"
-        400:
-          description: "Invalid request (typically a mandatory parameter was missing\
-            \ or malformed)"
-          schema:
-            $ref: "#/definitions/simpleError"
-        default:
-          description: "Unexpected error"
-          schema:
-            $ref: "#/definitions/simpleError"
-      x-tags:
-      - tag: "CAS, InChI"
-  /inchi/to/inchikey:
-    get:
-      tags:
-      - "InChI, InChIKey"
-      summary: "Converts from a InChI format into InChIKey format"
-      description: "Converts from InChI format into InChIKey. The conversion is performed\
-        \ in process via rdkit.\n"
-      operationId: "controllers.default_controller.inchi_to_inchikey_get"
-      parameters:
-      - name: "inchi"
-        in: "query"
-        description: "Compound structure notated using InChI notation"
-        required: true
-        type: "string"
-        x-ontology: "http://edamontology.org/format_1197"
-      responses:
-        200:
-          description: "The converted InChIKey string"
-          schema:
-            $ref: "#/definitions/inline_response_200_1"
-        400:
-          description: "Invalid request (typically a mandatory parameter was missing\
-            \ or malformed)"
-          schema:
-            $ref: "#/definitions/simpleError"
-        default:
-          description: "Unexpected error"
-          schema:
-            $ref: "#/definitions/simpleError"
-      x-tags:
-      - tag: "InChI, InChIKey"
+
   /inchi/to/smiles:
     get:
       tags:
@@ -205,28 +96,25 @@ paths:
           description: "Unexpected error"
           schema:
             $ref: "#/definitions/simpleError"
-      x-tags:
-      - tag: "SMILES, InChI"
-  /inchikey/to/cas:
+
+  /inchi/to/inchikey:
     get:
       tags:
-      - "CAS, InChIKey"
-      summary: "Converts from a InChIKey format into a CAS number"
-      description: "Converts from a InChIKey format into a CAS number. Only a single\
-        \ match is returned if there is an ambiguity in the conversion. The conversion\
-        \ is performed by using an external webservice and has relatively high latency.\n"
-      operationId: "controllers.default_controller.inchikey_to_cas_get"
+      - "InChI, InChIKey"
+      summary: "Converts from a InChI format into InChIKey format"
+      description: "Converts from InChI format into InChIKey. The conversion is performed\
+        \ in process via rdkit.\n"
+      operationId: "controllers.default_controller.inchi_to_inchikey_get"
       parameters:
-      - name: "inchikey"
+      - name: "inchi"
         in: "query"
-        description: "Compound structure notated using InChIKey notation"
+        description: "Compound structure notated using InChI notation"
         required: true
         type: "string"
-        x-ontology: "http://edamontology.org/format_1199"
+        x-ontology: "http://edamontology.org/format_1197"
       responses:
         200:
-          description: "The converted CAS number (3 groups of numbers separated by\
-            \ dashes)"
+          description: "The converted InChIKey string"
           schema:
             $ref: "#/definitions/inline_response_200_3"
         400:
@@ -238,8 +126,7 @@ paths:
           description: "Unexpected error"
           schema:
             $ref: "#/definitions/simpleError"
-      x-tags:
-      - tag: "CAS, InChIKey"
+
   /inchikey/to/inchi:
     get:
       tags:
@@ -259,10 +146,14 @@ paths:
         200:
           description: "The converted InChI string"
           schema:
-            $ref: "#/definitions/inline_response_200"
+            $ref: "#/definitions/inline_response_200_1"
         400:
           description: "Invalid request (typically a mandatory parameter was missing\
             \ or malformed)"
+          schema:
+            $ref: "#/definitions/simpleError"
+        500:
+          description: "Error in conversion by external webservice"
           schema:
             $ref: "#/definitions/simpleError"
         504:
@@ -273,8 +164,38 @@ paths:
           description: "Unexpected error"
           schema:
             $ref: "#/definitions/simpleError"
-      x-tags:
-      - tag: "InChI, InChIKey"
+
+  /smiles/to/inchikey:
+    get:
+      tags:
+      - "SMILES, InChIKey"
+      summary: "Converts from a SMILES format into InChIKey format"
+      description: "Converts from SMILES format into InChIKey. The conversion is performed\
+        \ in process via rdkit.\n"
+      operationId: "controllers.default_controller.smiles_to_inchikey_get"
+      parameters:
+      - name: "smiles"
+        in: "query"
+        description: "Compound structure notated using SMILES notation"
+        required: true
+        type: "string"
+        format: "smiles"
+        x-ontology: "http://edamontology.org/format_1196"
+      responses:
+        200:
+          description: "The converted InChIKey string"
+          schema:
+            $ref: "#/definitions/inline_response_200_3"
+        400:
+          description: "Invalid request (typically a mandatory parameter was missing\
+            \ or malformed)"
+          schema:
+            $ref: "#/definitions/simpleError"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/simpleError"
+
   /inchikey/to/smiles:
     get:
       tags:
@@ -300,6 +221,10 @@ paths:
             \ or malformed)"
           schema:
             $ref: "#/definitions/simpleError"
+        500:
+          description: "Error in conversion by external webservice"
+          schema:
+            $ref: "#/definitions/simpleError"
         504:
           description: "Upstream service timeout"
           schema:
@@ -308,8 +233,7 @@ paths:
           description: "Unexpected error"
           schema:
             $ref: "#/definitions/simpleError"
-      x-tags:
-      - tag: "SMILES, InChIKey"
+
   /smiles/to/cas:
     get:
       tags:
@@ -332,70 +256,125 @@ paths:
           description: "The converted CAS number (3 groups of numbers separated by\
             \ dashes)"
           schema:
-            $ref: "#/definitions/inline_response_200_3"
+            $ref: "#/definitions/inline_response_200_4"
         400:
           description: "Invalid request (typically a mandatory parameter was missing\
             \ or malformed)"
+          schema:
+            $ref: "#/definitions/simpleError"
+        500:
+          description: "Error in conversion by external webservice"
+          schema:
+            $ref: "#/definitions/simpleError"
+        504:
+          description: "Upstream service timeout"
           schema:
             $ref: "#/definitions/simpleError"
         default:
           description: "Unexpected error"
           schema:
             $ref: "#/definitions/simpleError"
-      x-tags:
-      - tag: "SMILES, CAS"
-  /smiles/to/inchi:
+
+  /cas/to/smiles:
     get:
       tags:
-      - "SMILES, InChI"
-      summary: "Converts from a SMILES format into InChI format"
-      description: "Converts from a SMILES format into InChI format. Only a single\
+      - "SMILES, CAS"
+      summary: "Converts from a CAS number into (canonical) SMILES format"
+      description: "Converts from a CAS number into (canonical) SMILES. Only a single\
         \ match is returned if there is an ambiguity in the conversion. The conversion\
-        \ is performed in process via rdkit.\n"
-      operationId: "controllers.default_controller.smiles_to_inchi_get"
+        \ is performed by using an external webservice and has relatively high latency.\n"
+      operationId: "controllers.default_controller.cas_to_smiles_get"
       parameters:
-      - name: "smiles"
+      - name: "cas"
         in: "query"
-        description: "Compound structure notated using SMILES notation"
+        description: "Compound structure notated as a CAS number (3 groups of numbers\
+          \ separated by dashes)"
         required: true
         type: "string"
-        format: "smiles"
-        x-ontology: "http://edamontology.org/format_1196"
+        x-ontology: "http://edamontology.org/data_3102"
+      responses:
+        200:
+          description: "The converted SMILES string"
+          schema:
+            $ref: "#/definitions/inline_response_200_2"
+        400:
+          description: "Invalid request (typically a mandatory parameter was missing\
+            \ or malformed)"
+          schema:
+            $ref: "#/definitions/simpleError"
+        500:
+          description: "Error in conversion by external webservice"
+          schema:
+            $ref: "#/definitions/simpleError"
+        504:
+          description: "Upstream service timeout"
+          schema:
+            $ref: "#/definitions/simpleError"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/simpleError"
+
+  /inchi/to/cas:
+    get:
+      tags:
+      - "CAS, InChI"
+      summary: "Converts from a InChI format into a CAS number"
+      description: "Converts from a InChI format into a CAS number. Only a single\
+        \ match is returned if there is an ambiguity in the conversion. The conversion\
+        \ is performed by using an external webservice and has relatively high latency.\n"
+      operationId: "controllers.default_controller.inchi_to_cas_get"
+      parameters:
+      - name: "inchi"
+        in: "query"
+        description: "Compound structure notated using InChI notation"
+        required: true
+        type: "string"
+        x-ontology: "http://edamontology.org/format_1197"
+      responses:
+        200:
+          description: "The converted CAS number (3 groups of numbers separated by\
+            \ dashes)"
+          schema:
+            $ref: "#/definitions/inline_response_200_4"
+        400:
+          description: "Invalid request (typically a mandatory parameter was missing\
+            \ or malformed)"
+          schema:
+            $ref: "#/definitions/simpleError"
+        500:
+          description: "Error in conversion by external webservice"
+          schema:
+            $ref: "#/definitions/simpleError"
+        504:
+          description: "Upstream service timeout"
+          schema:
+            $ref: "#/definitions/simpleError"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/simpleError"
+
+  /cas/to/inchi:
+    get:
+      tags:
+      - "CAS, InChI"
+      summary: "Converts from a CAS number into InChI format"
+      description: "Converts from a CAS number into InChI. Only a single match is\
+        \ returned if there is an ambiguity in the conversion. The conversion is performed\
+        \ by using an external webservice and has relatively high latency.\n"
+      operationId: "controllers.default_controller.cas_to_inchi_get"
+      parameters:
+      - name: "cas"
+        in: "query"
+        description: "Compound structure notated as a CAS number (3 groups of numbers\
+          \ separated by dashes)"
+        required: true
+        type: "string"
+        x-ontology: "http://edamontology.org/data_3102"
       responses:
         200:
           description: "The converted InChI string"
-          schema:
-            $ref: "#/definitions/inline_response_200"
-        400:
-          description: "Invalid request (typically a mandatory parameter was missing\
-            \ or malformed)"
-          schema:
-            $ref: "#/definitions/simpleError"
-        default:
-          description: "Unexpected error"
-          schema:
-            $ref: "#/definitions/simpleError"
-      x-tags:
-      - tag: "SMILES, InChI"
-  /smiles/to/inchikey:
-    get:
-      tags:
-      - "SMILES, InChIKey"
-      summary: "Converts from a SMILES format into InChIKey format"
-      description: "Converts from SMILES format into InChIKey. The conversion is performed\
-        \ in process via rdkit.\n"
-      operationId: "controllers.default_controller.smiles_to_inchikey_get"
-      parameters:
-      - name: "smiles"
-        in: "query"
-        description: "Compound structure notated using SMILES notation"
-        required: true
-        type: "string"
-        format: "smiles"
-        x-ontology: "http://edamontology.org/format_1196"
-      responses:
-        200:
-          description: "The converted InChIKey string"
           schema:
             $ref: "#/definitions/inline_response_200_1"
         400:
@@ -403,37 +382,130 @@ paths:
             \ or malformed)"
           schema:
             $ref: "#/definitions/simpleError"
+        500:
+          description: "Error in conversion by external webservice"
+          schema:
+            $ref: "#/definitions/simpleError"
+        504:
+          description: "Upstream service timeout"
+          schema:
+            $ref: "#/definitions/simpleError"
         default:
           description: "Unexpected error"
           schema:
             $ref: "#/definitions/simpleError"
-      x-tags:
-      - tag: "SMILES, InChIKey"
+
+  /inchikey/to/cas:
+    get:
+      tags:
+      - "CAS, InChIKey"
+      summary: "Converts from a InChIKey format into a CAS number"
+      description: "Converts from a InChIKey format into a CAS number. Only a single\
+        \ match is returned if there is an ambiguity in the conversion. The conversion\
+        \ is performed by using an external webservice and has relatively high latency.\n"
+      operationId: "controllers.default_controller.inchikey_to_cas_get"
+      parameters:
+      - name: "inchikey"
+        in: "query"
+        description: "Compound structure notated using InChIKey notation"
+        required: true
+        type: "string"
+        x-ontology: "http://edamontology.org/format_1199"
+      responses:
+        200:
+          description: "The converted CAS number (3 groups of numbers separated by\
+            \ dashes)"
+          schema:
+            $ref: "#/definitions/inline_response_200_4"
+        400:
+          description: "Invalid request (typically a mandatory parameter was missing\
+            \ or malformed)"
+          schema:
+            $ref: "#/definitions/simpleError"
+        500:
+          description: "Error in conversion by external webservice"
+          schema:
+            $ref: "#/definitions/simpleError"
+        504:
+          description: "Upstream service timeout"
+          schema:
+            $ref: "#/definitions/simpleError"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/simpleError"
+
+  /cas/to/inchikey:
+    get:
+      tags:
+      - "CAS, InChIKey"
+      summary: "Converts from a CAS number into InChIKey format"
+      description: "Converts from a CAS number into InChIKey. Only a single match\
+        \ is returned if there is an ambiguity in the conversion. The conversion is\
+        \ performed by using an external webservice and has relatively high latency.\n"
+      operationId: "controllers.default_controller.cas_to_inchikey_get"
+      parameters:
+      - name: "cas"
+        in: "query"
+        description: "Compound structure notated as a CAS number (3 groups of numbers\
+          \ separated by dashes)"
+        required: true
+        type: "string"
+        x-ontology: "http://edamontology.org/data_3102"
+      responses:
+        200:
+          description: "The converted InChIKey string"
+          schema:
+            $ref: "#/definitions/inline_response_200_3"
+        400:
+          description: "Invalid request (typically a mandatory parameter was missing\
+            \ or malformed)"
+          schema:
+            $ref: "#/definitions/simpleError"
+        500:
+          description: "Error in conversion by external webservice"
+          schema:
+            $ref: "#/definitions/simpleError"
+        504:
+          description: "Upstream service timeout"
+          schema:
+            $ref: "#/definitions/simpleError"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/simpleError"
+
 definitions:
   simpleError:
-    type: "object"
-    properties:
-      message:
-        type: "string"
+    type: "string"
   inline_response_200:
+    properties:
+      smiles:
+        type: "string"
+        description: "Compound structure notated using (canonical) SMILES notation"
+        x-ontology: "http://edamontology.org/format_1196"
+      molWeight:
+        type: "number"
+        description: "The molecular weight (caluclated with rdkit)"
+  inline_response_200_1:
     properties:
       inchi:
         type: "string"
         description: "Compound structure notated using InChI notation"
         x-ontology: "http://edamontology.org/format_1197"
-  inline_response_200_1:
+  inline_response_200_2:
+    properties:
+      smiles:
+        type: "string"
+        description: "Compound structure notated using (canonical) SMILES notation"
+        x-ontology: "http://edamontology.org/format_1196"
+  inline_response_200_3:
     properties:
       inchikey:
         type: "string"
         description: "Compound structure notated using InChIKey"
         x-ontology: "http://edamontology.org/format_1199"
-  inline_response_200_2:
-    properties:
-      inchi:
-        type: "string"
-        description: "Compound structure notated using (canonical) SMILES notation"
-        x-ontology: "http://edamontology.org/format_1196"
-  inline_response_200_3:
+  inline_response_200_4:
     properties:
       cas:
         type: "string"
@@ -474,7 +546,7 @@ responses:
   inchi:
     description: "The converted InChI string"
     schema:
-      $ref: "#/definitions/inline_response_200"
+      $ref: "#/definitions/inline_response_200_1"
   smiles:
     description: "The converted SMILES string"
     schema:
@@ -482,8 +554,12 @@ responses:
   inchikey:
     description: "The converted InChIKey string"
     schema:
-      $ref: "#/definitions/inline_response_200_1"
+      $ref: "#/definitions/inline_response_200_3"
   cas:
     description: "The converted CAS number (3 groups of numbers separated by dashes)"
     schema:
-      $ref: "#/definitions/inline_response_200_3"
+      $ref: "#/definitions/inline_response_200_4"
+  molWeight:
+    description: "The molecular weight (caluclated with rdkit)"
+    schema:
+      $ref: "#/definitions/inline_response_200"
