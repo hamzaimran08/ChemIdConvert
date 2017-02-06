@@ -32,7 +32,7 @@ caches['smiles']['cas'] = smiles_to_cas_cache
 
 # In-Process conversions using rdkit:
 
-def molweight_get(smiles):
+def mol_weight_get(smiles):
     m = Chem.MolFromSmiles(smiles)
     if (m is None):
         return ("Could not parse input: " + smiles, 500)
