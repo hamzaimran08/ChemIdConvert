@@ -3,10 +3,9 @@ MAINTAINER Daniel Bachler <daniel@douglasconnect.com>
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends python-pip && \
-    pip install connexion cirpy && \
-    apt-get remove -y python-pip && \
     rm -rf /var/lib/apt/lists/*
-
+COPY python-flask-server/requirements.txt /python-flask-server/requirements.txt
+RUN pip install -r /python-flask-server/requirements.txt --upgrade
 COPY python-flask-server/ /python-flask-server/
 
 EXPOSE 8080
