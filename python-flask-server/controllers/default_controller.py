@@ -5,6 +5,8 @@ from urllib2 import HTTPError
 import cirpy
 import re
 from werkzeug.contrib.cache import SimpleCache
+from rdkit.Chem import rdDepictor
+from rdkit.Chem.Draw import rdMolDraw2D
 
 cas_to_inchi_cache = SimpleCache()
 cas_to_inchikey_cache = SimpleCache()
@@ -31,6 +33,30 @@ caches['smiles']['cas'] = smiles_to_cas_cache
 
 
 # In-Process conversions using rdkit:
+def as_svg_get(smiles):
+    mol = Chem.MolFromSmiles(smiles)
+    if (mol is None):
+        return ("Could not parse input: " + smiles, 500)
+
+    molSize = (450, 150)
+    kekulize = True
+    mc = Chem.Mol(mol.ToBinary())
+    if kekulize:
+        try:
+            Chem.Kekulize(mc)
+        except:
+            mc = Chem.Mol(mol.ToBinary())
+    if not mc.GetNumConformers():
+        rdDepictor.Compute2DCoords(mc)
+    drawer = rdMolDraw2D.MolDraw2DSVG(molSize[0], molSize[1])
+    drawer.DrawMolecule(mc)
+    drawer.FinishDrawing()
+    svg = drawer.GetDrawingText()
+    # It seems that the svg renderer used doesn't quite hit the spec.
+    # Here are some fixes to make it work in the notebook, although I think
+    # the underlying issue needs to be resolved at the generation step
+    return svg.replace('svg:', '').replace('xmlns:svg=', 'xmlns=')
+
 
 def mol_weight_get(smiles):
     m = Chem.MolFromSmiles(smiles)

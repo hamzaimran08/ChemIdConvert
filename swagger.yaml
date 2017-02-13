@@ -14,6 +14,23 @@ basePath: /v1
 produces:
   - application/json
 paths:
+  /asSvg:
+    get:
+      summary: Returns an svg text of the given molecule
+      produces:
+        - image/svg+xml
+      parameters:
+        - $ref: "#/parameters/smiles"
+      responses:
+        200:
+          description: Successfully created an svg represenatation
+          schema:
+            type: string
+            description: The text representation of the svg of the molecule
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/simpleError'
   /molWeight:
     get:
       summary: Returns the molecular weight (calculated with rdkit)
