@@ -38,7 +38,7 @@ def as_svg_get(smiles):
     if (mol is None):
         return ("Could not parse input: " + smiles, 500)
 
-    molSize = (450, 150)
+    molSize = (450, 450)
     kekulize = True
     mc = Chem.Mol(mol.ToBinary())
     if kekulize:
