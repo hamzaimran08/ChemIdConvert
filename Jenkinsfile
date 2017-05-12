@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Docker build image') {
       steps {
-        sh '''docker build -t douglasconnect/chemidconvert-orn build'''
+        sh '''docker build -t douglasconnect/chemidconvert-orn .'''
       }
     }
   }
