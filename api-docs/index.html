@@ -4,11 +4,11 @@
     <link rel="stylesheet" href="main.css">
     <meta charset="UTF-8">
     <title>ChemIdConvert - Chemical identifier conversion service</title>
-</head>
+                                                         </head>
 <body>
 <div class="container">
     <h1>ChemIdConvert - Chemical identifier conversion service</h1>
-    <p class="sw-info-version">Version: <span>1.0.0</span></p>
+    <p class="sw-info">Base URL: <span class="sw-info-basePath">/v1</span>, Version: <span class="sw-info-version">1.0.0</span></p>
     <p><p>This REST Api allows you to submit chemical identifiers in one format and translate it into another format (e.g. SMILES -&gt; InChi)</p>
     </p>
     
@@ -24,6 +24,29 @@
     
         
         <h2 id="swagger--summary-tags">Summary</h2>
+            <h3 id="tag-default" class="swagger-summary-tag">Tag: default</h3>
+            
+        
+            <table class="table table-bordered table-condensed swagger--summary">
+                <thead>
+                <tr>
+                    <th>Operation</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><a href="#operation--asSvg-get">GET /asSvg</a></td>
+                        <td><p>Returns an svg text of the given molecule</p>
+        </td>
+                    </tr>
+                    <tr>
+                        <td><a href="#operation--molWeight-get">GET /molWeight</a></td>
+                        <td><p>Returns the molecular weight (calculated with rdkit)</p>
+        </td>
+                    </tr>
+                </tbody>
+            </table>
             <h3 id="tag-SMILES--InChI" class="swagger-summary-tag">Tag: SMILES, InChI</h3>
             
         
@@ -132,19 +155,6 @@
                         <td><p>Converts from a InChI format into a CAS number</p>
         </td>
                     </tr>
-                </tbody>
-            </table>
-            <h3 id="tag-InChI--CAS" class="swagger-summary-tag">Tag: InChI, CAS</h3>
-            
-        
-            <table class="table table-bordered table-condensed swagger--summary">
-                <thead>
-                <tr>
-                    <th>Operation</th>
-                    <th>Description</th>
-                </tr>
-                </thead>
-                <tbody>
                     <tr>
                         <td><a href="#operation--cas-to-inchi-get">GET /cas/to/inchi</a></td>
                         <td><p>Converts from a CAS number into InChI format</p>
@@ -168,19 +178,6 @@
                         <td><p>Converts from a InChIKey format into a CAS number</p>
         </td>
                     </tr>
-                </tbody>
-            </table>
-            <h3 id="tag-InChiKey--CAS" class="swagger-summary-tag">Tag: InChiKey, CAS</h3>
-            
-        
-            <table class="table table-bordered table-condensed swagger--summary">
-                <thead>
-                <tr>
-                    <th>Operation</th>
-                    <th>Description</th>
-                </tr>
-                </thead>
-                <tbody>
                     <tr>
                         <td><a href="#operation--cas-to-inchikey-get">GET /cas/to/inchikey</a></td>
                         <td><p>Converts from a CAS number into InChIKey format</p>
@@ -195,13 +192,141 @@
     <h2>Paths</h2>
     
         
+        <span id="path--asSvg"></span>
+            <div id="operation--asSvg-get" class="swagger--panel-operation-get panel">
+                <div class="panel-heading">
+                    <div class="operation-summary">Returns an svg text of the given molecule</div>
+                    <h3 class="panel-title"><span class="operation-name">GET</span> <strong>/asSvg</strong></h3>
+                </div>
+                <div class="panel-body">
+                    <section class="sw-operation-description">
+                        
+                    </section>
+                    
+                        <section class="sw-request-params">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="sw-param-name"></th>
+                                    <th class="sw-param-description"></th>
+                                    <th class="sw-param-type"></th>
+                                    <th class="sw-param-data-type"></th>
+                                    <th class="sw-param-annotation"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                            <td>
+                                                smiles
+                                            <td><p>Compound structure notated using SMILES notation</p>
+                                        </td>
+                                            <td>query</td>
+                                            <td>
+                                        <span class="json-property-type">string</span>    <span class="json-property-format">(smiles)</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                                    <span class="json-property-required"></span>
+                                                    <span class="swagger--global"></span> <span class="json-schema--reference"><a href="#/parameters/smiles">#/parameters/smiles</a></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                width
+                                            <td><p>SVG image width</p>
+                                        </td>
+                                            <td>query</td>
+                                            <td>
+                                        <span class="json-property-type">integer</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                                <span class="json-property-default-value">450</span>
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                height
+                                            <td><p>SVG image height</p>
+                                        </td>
+                                            <td>query</td>
+                                            <td>
+                                        <span class="json-property-type">integer</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                                <span class="json-property-default-value">450</span>
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </section>
+                    
+                        <section class="sw-responses">
+                                <p><span class="label label-default">image/svg+xml</span> 
+                    </p>
+                    
+                            <dl>
+                                    <dt class="sw-response-200">
+                                        200 OK
+                                    
+                                    </dt>
+                                    <dd class="sw-response-200">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Successfully created an svg represenatation</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                                <section class="json-schema-description">
+                                                                    <p>The text representation of the svg of the molecule</p>
+                                                            
+                                                                </section>
+                                                            
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                                    <dt class="sw-response-default">
+                                        default 
+                                    
+                                    </dt>
+                                    <dd class="sw-response-default">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Unexpected error</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                                <a class="json-schema-ref" href="#/definitions/simpleError">simpleError</a>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                            </dl>
+                        </section>
+                </div>
+            </div>    
         <span id="path--cas-to-inchi"></span>
             <div id="operation--cas-to-inchi-get" class="swagger--panel-operation-get panel">
                 <div class="panel-heading">
                     <div class="operation-summary">Converts from a CAS number into InChI format</div>
                     <h3 class="panel-title"><span class="operation-name">GET</span> <strong>/cas/to/inchi</strong></h3>
                         Tags:
-                            <a href="#tag-InChI--CAS">InChI, CAS</a>
+                            <a href="#tag-CAS--InChI">CAS, InChI</a>
                 </div>
                 <div class="panel-body">
                     <section class="sw-operation-description">
@@ -227,7 +352,8 @@
                                             <td><p>Compound structure notated as a CAS number (3 groups of numbers separated by dashes)</p>
                                         </td>
                                             <td>query</td>
-                                            <td><span class="json-property-type">string</span>
+                                            <td>
+                                        <span class="json-property-type">string</span>
                                         <span class="json-property-range" title="Value limits"></span>
                                         
                                             </td>
@@ -268,6 +394,7 @@
                                                                         <dl>
                                                                                 <dt data-property-name="inchi">
                                                                                     <span class="json-property-name">inchi:</span>
+                                                                                    
                                                                                     <span class="json-property-type">string</span>
                                                                                     <span class="json-property-range" title="Value limits"></span>
                                                                                     
@@ -379,7 +506,7 @@
                     <div class="operation-summary">Converts from a CAS number into InChIKey format</div>
                     <h3 class="panel-title"><span class="operation-name">GET</span> <strong>/cas/to/inchikey</strong></h3>
                         Tags:
-                            <a href="#tag-InChiKey--CAS">InChiKey, CAS</a>
+                            <a href="#tag-CAS--InChIKey">CAS, InChIKey</a>
                 </div>
                 <div class="panel-body">
                     <section class="sw-operation-description">
@@ -405,7 +532,8 @@
                                             <td><p>Compound structure notated as a CAS number (3 groups of numbers separated by dashes)</p>
                                         </td>
                                             <td>query</td>
-                                            <td><span class="json-property-type">string</span>
+                                            <td>
+                                        <span class="json-property-type">string</span>
                                         <span class="json-property-range" title="Value limits"></span>
                                         
                                             </td>
@@ -446,6 +574,7 @@
                                                                         <dl>
                                                                                 <dt data-property-name="inchikey">
                                                                                     <span class="json-property-name">inchikey:</span>
+                                                                                    
                                                                                     <span class="json-property-type">string</span>
                                                                                     <span class="json-property-range" title="Value limits"></span>
                                                                                     
@@ -583,7 +712,8 @@
                                             <td><p>Compound structure notated as a CAS number (3 groups of numbers separated by dashes)</p>
                                         </td>
                                             <td>query</td>
-                                            <td><span class="json-property-type">string</span>
+                                            <td>
+                                        <span class="json-property-type">string</span>
                                         <span class="json-property-range" title="Value limits"></span>
                                         
                                             </td>
@@ -624,6 +754,7 @@
                                                                         <dl>
                                                                                 <dt data-property-name="smiles">
                                                                                     <span class="json-property-name">smiles:</span>
+                                                                                    
                                                                                     <span class="json-property-type">string</span>
                                                                                     <span class="json-property-range" title="Value limits"></span>
                                                                                     
@@ -761,7 +892,8 @@
                                             <td><p>Compound structure notated using InChI notation</p>
                                         </td>
                                             <td>query</td>
-                                            <td><span class="json-property-type">string</span>
+                                            <td>
+                                        <span class="json-property-type">string</span>
                                         <span class="json-property-range" title="Value limits"></span>
                                         
                                             </td>
@@ -802,6 +934,7 @@
                                                                         <dl>
                                                                                 <dt data-property-name="cas">
                                                                                     <span class="json-property-name">cas:</span>
+                                                                                    
                                                                                     <span class="json-property-type">string</span>
                                                                                     <span class="json-property-range" title="Value limits"></span>
                                                                                     
@@ -939,7 +1072,8 @@
                                             <td><p>Compound structure notated using InChI notation</p>
                                         </td>
                                             <td>query</td>
-                                            <td><span class="json-property-type">string</span>
+                                            <td>
+                                        <span class="json-property-type">string</span>
                                         <span class="json-property-range" title="Value limits"></span>
                                         
                                             </td>
@@ -980,6 +1114,7 @@
                                                                         <dl>
                                                                                 <dt data-property-name="inchikey">
                                                                                     <span class="json-property-name">inchikey:</span>
+                                                                                    
                                                                                     <span class="json-property-type">string</span>
                                                                                     <span class="json-property-range" title="Value limits"></span>
                                                                                     
@@ -1075,7 +1210,8 @@
                                             <td><p>Compound structure notated using InChI notation</p>
                                         </td>
                                             <td>query</td>
-                                            <td><span class="json-property-type">string</span>
+                                            <td>
+                                        <span class="json-property-type">string</span>
                                         <span class="json-property-range" title="Value limits"></span>
                                         
                                             </td>
@@ -1116,6 +1252,7 @@
                                                                         <dl>
                                                                                 <dt data-property-name="smiles">
                                                                                     <span class="json-property-name">smiles:</span>
+                                                                                    
                                                                                     <span class="json-property-type">string</span>
                                                                                     <span class="json-property-range" title="Value limits"></span>
                                                                                     
@@ -1211,7 +1348,8 @@
                                             <td><p>Compound structure notated using InChIKey notation</p>
                                         </td>
                                             <td>query</td>
-                                            <td><span class="json-property-type">string</span>
+                                            <td>
+                                        <span class="json-property-type">string</span>
                                         <span class="json-property-range" title="Value limits"></span>
                                         
                                             </td>
@@ -1252,6 +1390,7 @@
                                                                         <dl>
                                                                                 <dt data-property-name="cas">
                                                                                     <span class="json-property-name">cas:</span>
+                                                                                    
                                                                                     <span class="json-property-type">string</span>
                                                                                     <span class="json-property-range" title="Value limits"></span>
                                                                                     
@@ -1389,7 +1528,8 @@
                                             <td><p>Compound structure notated using InChIKey notation</p>
                                         </td>
                                             <td>query</td>
-                                            <td><span class="json-property-type">string</span>
+                                            <td>
+                                        <span class="json-property-type">string</span>
                                         <span class="json-property-range" title="Value limits"></span>
                                         
                                             </td>
@@ -1430,6 +1570,7 @@
                                                                         <dl>
                                                                                 <dt data-property-name="inchi">
                                                                                     <span class="json-property-name">inchi:</span>
+                                                                                    
                                                                                     <span class="json-property-type">string</span>
                                                                                     <span class="json-property-range" title="Value limits"></span>
                                                                                     
@@ -1567,7 +1708,8 @@
                                             <td><p>Compound structure notated using InChIKey notation</p>
                                         </td>
                                             <td>query</td>
-                                            <td><span class="json-property-type">string</span>
+                                            <td>
+                                        <span class="json-property-type">string</span>
                                         <span class="json-property-range" title="Value limits"></span>
                                         
                                             </td>
@@ -1608,6 +1750,7 @@
                                                                         <dl>
                                                                                 <dt data-property-name="smiles">
                                                                                     <span class="json-property-name">smiles:</span>
+                                                                                    
                                                                                     <span class="json-property-type">string</span>
                                                                                     <span class="json-property-range" title="Value limits"></span>
                                                                                     
@@ -1713,6 +1856,134 @@
                         </section>
                 </div>
             </div>    
+        <span id="path--molWeight"></span>
+            <div id="operation--molWeight-get" class="swagger--panel-operation-get panel">
+                <div class="panel-heading">
+                    <div class="operation-summary">Returns the molecular weight (calculated with rdkit)</div>
+                    <h3 class="panel-title"><span class="operation-name">GET</span> <strong>/molWeight</strong></h3>
+                </div>
+                <div class="panel-body">
+                    <section class="sw-operation-description">
+                        
+                    </section>
+                    
+                        <section class="sw-request-params">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="sw-param-name"></th>
+                                    <th class="sw-param-description"></th>
+                                    <th class="sw-param-type"></th>
+                                    <th class="sw-param-data-type"></th>
+                                    <th class="sw-param-annotation"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                            <td>
+                                                smiles
+                                            <td><p>Compound structure notated using SMILES notation</p>
+                                        </td>
+                                            <td>query</td>
+                                            <td>
+                                        <span class="json-property-type">string</span>    <span class="json-property-format">(smiles)</span>
+                                        <span class="json-property-range" title="Value limits"></span>
+                                        
+                                            </td>
+                                            <td>
+                                                    <span class="json-property-required"></span>
+                                                    <span class="swagger--global"></span> <span class="json-schema--reference"><a href="#/parameters/smiles">#/parameters/smiles</a></span>
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </section>
+                    
+                        <section class="sw-responses">
+                                <p><a href="#sw-default-produces">Uses default content-types: </a>
+                                    <span class="label label-default">application/json</span> 
+                                </p>
+                            
+                            <dl>
+                                    <dt class="sw-response-200">
+                                        200 OK
+                                            <span class="swagger--global"></span> <span class="json-schema--reference"><a href="#/responses/molWeight">#/responses/molWeight</a></span>
+                                    
+                                    </dt>
+                                    <dd class="sw-response-200">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>The molecular weight (caluclated with rdkit)</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                            
+                                                                    <section class="json-schema-properties">
+                                                                        <dl>
+                                                                                <dt data-property-name="smiles">
+                                                                                    <span class="json-property-name">smiles:</span>
+                                                                                    
+                                                                                    <span class="json-property-type">string</span>
+                                                                                    <span class="json-property-range" title="Value limits"></span>
+                                                                                    
+                                                                                </dt>
+                                                                                <dd>
+                                                                                    <p>Compound structure notated using (canonical) SMILES notation</p>
+                                                                    
+                                                                                    <div class="json-inner-schema">
+                                                                                        
+                                                                                    </div>
+                                                                                </dd>
+                                                                                <dt data-property-name="molWeight">
+                                                                                    <span class="json-property-name">molWeight:</span>
+                                                                                    
+                                                                                    <span class="json-property-type">number</span>
+                                                                                    <span class="json-property-range" title="Value limits"></span>
+                                                                                    
+                                                                                </dt>
+                                                                                <dd>
+                                                                                    <p>The molecular weight (caluclated with rdkit)</p>
+                                                                    
+                                                                                    <div class="json-inner-schema">
+                                                                                        
+                                                                                    </div>
+                                                                                </dd>
+                                                                        </dl>
+                                                                    </section>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                                    <dt class="sw-response-default">
+                                        default 
+                                    
+                                    </dt>
+                                    <dd class="sw-response-default">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>Unexpected error</p>
+                                            
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-6 sw-response-model">
+                                                <div  class="panel panel-definition">
+                                                    <div class="panel-body">
+                                                                <a class="json-schema-ref" href="#/definitions/simpleError">simpleError</a>
+                                                    </div>
+                                                </div></div>
+                                            
+                                            </div>                </dd>
+                            </dl>
+                        </section>
+                </div>
+            </div>    
         <span id="path--smiles-to-cas"></span>
             <div id="operation--smiles-to-cas-get" class="swagger--panel-operation-get panel">
                 <div class="panel-heading">
@@ -1745,7 +2016,8 @@
                                             <td><p>Compound structure notated using SMILES notation</p>
                                         </td>
                                             <td>query</td>
-                                            <td><span class="json-property-type">string</span>    <span class="json-property-format">(smiles)</span>
+                                            <td>
+                                        <span class="json-property-type">string</span>    <span class="json-property-format">(smiles)</span>
                                         <span class="json-property-range" title="Value limits"></span>
                                         
                                             </td>
@@ -1786,6 +2058,7 @@
                                                                         <dl>
                                                                                 <dt data-property-name="cas">
                                                                                     <span class="json-property-name">cas:</span>
+                                                                                    
                                                                                     <span class="json-property-type">string</span>
                                                                                     <span class="json-property-range" title="Value limits"></span>
                                                                                     
@@ -1923,7 +2196,8 @@
                                             <td><p>Compound structure notated using SMILES notation</p>
                                         </td>
                                             <td>query</td>
-                                            <td><span class="json-property-type">string</span>    <span class="json-property-format">(smiles)</span>
+                                            <td>
+                                        <span class="json-property-type">string</span>    <span class="json-property-format">(smiles)</span>
                                         <span class="json-property-range" title="Value limits"></span>
                                         
                                             </td>
@@ -1964,6 +2238,7 @@
                                                                         <dl>
                                                                                 <dt data-property-name="inchi">
                                                                                     <span class="json-property-name">inchi:</span>
+                                                                                    
                                                                                     <span class="json-property-type">string</span>
                                                                                     <span class="json-property-range" title="Value limits"></span>
                                                                                     
@@ -2059,7 +2334,8 @@
                                             <td><p>Compound structure notated using SMILES notation</p>
                                         </td>
                                             <td>query</td>
-                                            <td><span class="json-property-type">string</span>    <span class="json-property-format">(smiles)</span>
+                                            <td>
+                                        <span class="json-property-type">string</span>    <span class="json-property-format">(smiles)</span>
                                         <span class="json-property-range" title="Value limits"></span>
                                         
                                             </td>
@@ -2100,6 +2376,7 @@
                                                                         <dl>
                                                                                 <dt data-property-name="inchikey">
                                                                                     <span class="json-property-name">inchikey:</span>
+                                                                                    
                                                                                     <span class="json-property-type">string</span>
                                                                                     <span class="json-property-range" title="Value limits"></span>
                                                                                     
@@ -2183,7 +2460,8 @@
                     <td><p>Compound structure notated using SMILES notation</p>
                 </td>
                     <td>query</td>
-                    <td><span class="json-property-type">string</span>    <span class="json-property-format">(smiles)</span>
+                    <td>
+                <span class="json-property-type">string</span>    <span class="json-property-format">(smiles)</span>
                 <span class="json-property-range" title="Value limits"></span>
                 
                     </td>
@@ -2198,7 +2476,8 @@
                     <td><p>Compound structure notated using InChI notation</p>
                 </td>
                     <td>query</td>
-                    <td><span class="json-property-type">string</span>
+                    <td>
+                <span class="json-property-type">string</span>
                 <span class="json-property-range" title="Value limits"></span>
                 
                     </td>
@@ -2213,7 +2492,8 @@
                     <td><p>Compound structure notated using InChIKey notation</p>
                 </td>
                     <td>query</td>
-                    <td><span class="json-property-type">string</span>
+                    <td>
+                <span class="json-property-type">string</span>
                 <span class="json-property-range" title="Value limits"></span>
                 
                     </td>
@@ -2228,7 +2508,8 @@
                     <td><p>Compound structure notated as a CAS number (3 groups of numbers separated by dashes)</p>
                 </td>
                     <td>query</td>
-                    <td><span class="json-property-type">string</span>
+                    <td>
+                <span class="json-property-type">string</span>
                 <span class="json-property-range" title="Value limits"></span>
                 
                     </td>
@@ -2260,6 +2541,7 @@
                                             <dl>
                                                     <dt data-property-name="inchi">
                                                         <span class="json-property-name">inchi:</span>
+                                                        
                                                         <span class="json-property-type">string</span>
                                                         <span class="json-property-range" title="Value limits"></span>
                                                         
@@ -2295,6 +2577,7 @@
                                             <dl>
                                                     <dt data-property-name="smiles">
                                                         <span class="json-property-name">smiles:</span>
+                                                        
                                                         <span class="json-property-type">string</span>
                                                         <span class="json-property-range" title="Value limits"></span>
                                                         
@@ -2330,6 +2613,7 @@
                                             <dl>
                                                     <dt data-property-name="inchikey">
                                                         <span class="json-property-name">inchikey:</span>
+                                                        
                                                         <span class="json-property-type">string</span>
                                                         <span class="json-property-range" title="Value limits"></span>
                                                         
@@ -2365,12 +2649,63 @@
                                             <dl>
                                                     <dt data-property-name="cas">
                                                         <span class="json-property-name">cas:</span>
+                                                        
                                                         <span class="json-property-type">string</span>
                                                         <span class="json-property-range" title="Value limits"></span>
                                                         
                                                     </dt>
                                                     <dd>
                                                         <p>Compound structure notated using a CAS number</p>
+                                        
+                                                        <div class="json-inner-schema">
+                                                            
+                                                        </div>
+                                                    </dd>
+                                            </dl>
+                                        </section>
+                        </div>
+                    </div></div>
+                
+                </div>        </dd>
+            <dt><a name=""></a>molWeight</dt>
+            <dd>
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>The molecular weight (caluclated with rdkit)</p>
+                
+                    </div>
+                </div>
+                <div class="row">
+                    
+                    <div class="col-md-6 sw-response-model">
+                    <div  class="panel panel-definition">
+                        <div class="panel-body">
+                                
+                                        <section class="json-schema-properties">
+                                            <dl>
+                                                    <dt data-property-name="smiles">
+                                                        <span class="json-property-name">smiles:</span>
+                                                        
+                                                        <span class="json-property-type">string</span>
+                                                        <span class="json-property-range" title="Value limits"></span>
+                                                        
+                                                    </dt>
+                                                    <dd>
+                                                        <p>Compound structure notated using (canonical) SMILES notation</p>
+                                        
+                                                        <div class="json-inner-schema">
+                                                            
+                                                        </div>
+                                                    </dd>
+                                                    <dt data-property-name="molWeight">
+                                                        <span class="json-property-name">molWeight:</span>
+                                                        
+                                                        <span class="json-property-type">number</span>
+                                                        <span class="json-property-range" title="Value limits"></span>
+                                                        
+                                                    </dt>
+                                                    <dd>
+                                                        <p>The molecular weight (caluclated with rdkit)</p>
                                         
                                                         <div class="json-inner-schema">
                                                             
@@ -2391,7 +2726,8 @@
                 <div id="definition-simpleError" class="panel panel-definition">
                         <div class="panel-heading">
                                 <h3 class="panel-title"><a name="/definitions/simpleError"></a>simpleError:
-                                    <span class="json-property-type"><span class="json-property-type">string</span>
+                                    <span class="json-property-type">
+                <span class="json-property-type">string</span>
                 <span class="json-property-range" title="Value limits"></span>
                 
                 </span>
@@ -2402,5 +2738,6 @@
                     </div>
                 </div>
 </div>
+<script src="bundle.js" type="application/javascript"></script>
 </body>
 </html>

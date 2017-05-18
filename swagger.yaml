@@ -21,6 +21,18 @@ paths:
         - image/svg+xml
       parameters:
         - $ref: "#/parameters/smiles"
+        - name: width
+          in: query
+          type: integer
+          description: SVG image width
+          required: false
+          default: 450
+        - name: height
+          in: query
+          type: integer
+          description: SVG image height
+          required: false
+          default: 450
       responses:
         200:
           description: Successfully created an svg represenatation

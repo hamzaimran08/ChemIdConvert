@@ -33,12 +33,11 @@ caches['smiles']['cas'] = smiles_to_cas_cache
 
 
 # In-Process conversions using rdkit:
-def as_svg_get(smiles):
+def as_svg_get(smiles, width, height):
     mol = Chem.MolFromSmiles(smiles)
     if (mol is None):
         return ("Could not parse input: " + smiles, 500)
 
-    molSize = (450, 450)
     kekulize = True
     mc = Chem.Mol(mol.ToBinary())
     if kekulize:
@@ -48,7 +47,7 @@ def as_svg_get(smiles):
             mc = Chem.Mol(mol.ToBinary())
     if not mc.GetNumConformers():
         rdDepictor.Compute2DCoords(mc)
-    drawer = rdMolDraw2D.MolDraw2DSVG(molSize[0], molSize[1])
+    drawer = rdMolDraw2D.MolDraw2DSVG(width, height)
     drawer.DrawMolecule(mc)
     drawer.FinishDrawing()
     svg = drawer.GetDrawingText()
