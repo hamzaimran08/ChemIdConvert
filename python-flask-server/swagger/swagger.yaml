@@ -67,7 +67,8 @@ paths:
   /smiles/to/inchi:
     get:
       tags:
-      - "SMILES, InChI"
+      - SMILES
+      - InChI
       summary: "Converts from a SMILES format into InChI format"
       description: "Converts from a SMILES format into InChI format. Only a single\
         \ match is returned if there is an ambiguity in the conversion. The conversion\
@@ -99,7 +100,8 @@ paths:
   /inchi/to/smiles:
     get:
       tags:
-      - "SMILES, InChI"
+      - SMILES
+      - InChI
       summary: "Converts from a InChI format into (canonical) SMILES format"
       description: "Converts from InChI format into (canonical) SMILES. Only a single\
         \ match is returned if there is an ambiguity in the conversion. The conversion\
@@ -130,7 +132,8 @@ paths:
   /inchi/to/inchikey:
     get:
       tags:
-      - "InChI, InChIKey"
+      - InChI
+      - InChIKey
       summary: "Converts from a InChI format into InChIKey format"
       description: "Converts from InChI format into InChIKey. The conversion is performed\
         \ in process via rdkit.\n"
@@ -160,7 +163,8 @@ paths:
   /inchikey/to/inchi:
     get:
       tags:
-      - "InChI, InChIKey"
+      - InChI
+      - InChIKey
       summary: "Converts from a InChIKey format into InChI format"
       description: "Converts from InChIKey format into InChI. The conversion is performed\
         \ by using an external webservice and has relatively high latency.\n"
@@ -198,7 +202,8 @@ paths:
   /smiles/to/inchikey:
     get:
       tags:
-      - "SMILES, InChIKey"
+      - SMILES
+      - InChIKey
       summary: "Converts from a SMILES format into InChIKey format"
       description: "Converts from SMILES format into InChIKey. The conversion is performed\
         \ in process via rdkit.\n"
@@ -229,7 +234,8 @@ paths:
   /inchikey/to/smiles:
     get:
       tags:
-      - "SMILES, InChIKey"
+      - SMILES
+      - InChIKey
       summary: "Converts from a InChIKey format into (canonical) SMILES format"
       description: "Converts from InChIKey format into (canonical) SMILES. The conversion\
         \ is performed by using an external webservice and has relatively high latency.\n"
@@ -267,7 +273,8 @@ paths:
   /smiles/to/cas:
     get:
       tags:
-      - "SMILES, CAS"
+      - SMILES
+      - CAS
       summary: "Converts from a SMILES format into a CAS number"
       description: "Converts from a SMILES format into a CAS number. Only a single\
         \ match is returned if there is an ambiguity in the conversion. The conversion\
@@ -308,7 +315,8 @@ paths:
   /cas/to/smiles:
     get:
       tags:
-      - "SMILES, CAS"
+      - SMILES
+      - CAS
       summary: "Converts from a CAS number into (canonical) SMILES format"
       description: "Converts from a CAS number into (canonical) SMILES. Only a single\
         \ match is returned if there is an ambiguity in the conversion. The conversion\
@@ -348,7 +356,8 @@ paths:
   /inchi/to/cas:
     get:
       tags:
-      - "CAS, InChI"
+      - CAS
+      - InChI
       summary: "Converts from a InChI format into a CAS number"
       description: "Converts from a InChI format into a CAS number. Only a single\
         \ match is returned if there is an ambiguity in the conversion. The conversion\
@@ -388,7 +397,8 @@ paths:
   /cas/to/inchi:
     get:
       tags:
-      - "CAS, InChI"
+      - CAS
+      - InChI
       summary: "Converts from a CAS number into InChI format"
       description: "Converts from a CAS number into InChI. Only a single match is\
         \ returned if there is an ambiguity in the conversion. The conversion is performed\
@@ -428,7 +438,8 @@ paths:
   /inchikey/to/cas:
     get:
       tags:
-      - "CAS, InChIKey"
+      - CAS
+      - InChIKey
       summary: "Converts from a InChIKey format into a CAS number"
       description: "Converts from a InChIKey format into a CAS number. Only a single\
         \ match is returned if there is an ambiguity in the conversion. The conversion\
@@ -468,7 +479,8 @@ paths:
   /cas/to/inchikey:
     get:
       tags:
-      - "CAS, InChIKey"
+      - CAS
+      - InChIKey
       summary: "Converts from a CAS number into InChIKey format"
       description: "Converts from a CAS number into InChIKey. Only a single match\
         \ is returned if there is an ambiguity in the conversion. The conversion is\

@@ -63,7 +63,8 @@ paths:
         returned if there is an ambiguity in the conversion. The conversion is
         performed in process via rdkit.
       tags:
-        - SMILES, InChI
+        - SMILES
+        - InChI
       parameters:
         - $ref: "#/parameters/smiles"
       responses:
@@ -85,7 +86,8 @@ paths:
         returned if there is an ambiguity in the conversion. The conversion is
         performed in process via rdkit.
       tags:
-        - SMILES, InChI
+        - SMILES
+        - InChI
       parameters:
         - $ref: "#/parameters/inchi"
       responses:
@@ -106,7 +108,8 @@ paths:
         Converts from InChI format into InChIKey. The conversion is
         performed in process via rdkit.
       tags:
-        - InChI, InChIKey
+        - InChI
+        - InChIKey
       parameters:
         - $ref: "#/parameters/inchi"
       responses:
@@ -127,7 +130,8 @@ paths:
         Converts from InChIKey format into InChI. The conversion is
         performed by using an external webservice and has relatively high latency.
       tags:
-        - InChI, InChIKey
+        - InChI
+        - InChIKey
       parameters:
         - $ref: "#/parameters/inchikey"
       responses:
@@ -156,7 +160,8 @@ paths:
         Converts from SMILES format into InChIKey. The conversion is
         performed in process via rdkit.
       tags:
-        - SMILES, InChIKey
+        - SMILES
+        - InChIKey
       parameters:
         - $ref: "#/parameters/smiles"
       responses:
@@ -177,7 +182,8 @@ paths:
         Converts from InChIKey format into (canonical) SMILES. The conversion is
         performed by using an external webservice and has relatively high latency.
       tags:
-        - SMILES, InChIKey
+        - SMILES
+        - InChIKey
       parameters:
         - $ref: "#/parameters/inchikey"
       responses:
@@ -207,7 +213,8 @@ paths:
         returned if there is an ambiguity in the conversion. The conversion is
         performed by using an external webservice and has relatively high latency.
       tags:
-        - SMILES, CAS
+        - SMILES
+        - CAS
       parameters:
         - $ref: "#/parameters/smiles"
       responses:
@@ -237,7 +244,8 @@ paths:
         returned if there is an ambiguity in the conversion. The conversion is
         performed by using an external webservice and has relatively high latency.
       tags:
-        - SMILES, CAS
+        - SMILES
+        - CAS
       parameters:
         - $ref: "#/parameters/cas"
       responses:
@@ -267,7 +275,8 @@ paths:
         returned if there is an ambiguity in the conversion. The conversion is
         performed by using an external webservice and has relatively high latency.
       tags:
-        - CAS, InChI
+        - CAS
+        - InChI
       parameters:
         - $ref: "#/parameters/inchi"
       responses:
@@ -297,7 +306,8 @@ paths:
         returned if there is an ambiguity in the conversion. The conversion is
         performed by using an external webservice and has relatively high latency.
       tags:
-        - CAS, InChI
+        - CAS
+        - InChI
       parameters:
         - $ref: "#/parameters/cas"
       responses:
@@ -327,7 +337,8 @@ paths:
         returned if there is an ambiguity in the conversion. The conversion is
         performed by using an external webservice and has relatively high latency.
       tags:
-        - CAS, InChIKey
+        - CAS
+        - InChIKey
       parameters:
         - $ref: "#/parameters/inchikey"
       responses:
@@ -357,7 +368,8 @@ paths:
         returned if there is an ambiguity in the conversion. The conversion is
         performed by using an external webservice and has relatively high latency.
       tags:
-        - CAS, InChIKey
+        - CAS
+        - InChIKey
       parameters:
         - $ref: "#/parameters/cas"
       responses:
