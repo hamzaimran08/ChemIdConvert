@@ -1,0 +1,27 @@
+{ "@context":
+  { "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dc": "http://www.douglasconnect.com/schema/",
+    "items": "http://www.douglasconnect.com/items/",
+    "base": "http://www.douglasconnect.com/predicates/",
+    "pubchemCID": "https://pubchem.ncbi.nlm.nih.gov/rest/rdf/compound/CID",
+    "cheminf": "http://semanticscience.org/resource/",
+    "name": {
+      "@type": "xsd:string"
+    },
+    "position": {
+      "@type": "xsd:int"
+    },
+    "isID": {
+      "@type": "xsd:boolean"
+    },
+    "type": {
+      "@type": "@id"
+    },
+    "description": {
+      "@type": "xsd:string"
+    },
+    "class": {
+      "@type": "@id"
+    }
+  }
+}
