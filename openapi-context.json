@@ -1,10 +1,14 @@
 { "@context":
   { "xsd": "http://www.w3.org/2001/XMLSchema#",
-    "dc": "http://www.douglasconnect.com/schema/",
-    "items": "http://www.douglasconnect.com/items/",
-    "base": "http://www.douglasconnect.com/predicates/",
-    "pubchemCID": "https://pubchem.ncbi.nlm.nih.gov/rest/rdf/compound/CID",
+    "x-orn": "http://www.openrisknet.org/schema/",
     "cheminf": "http://semanticscience.org/resource/",
+    "dc": "http://purl.org/dc/",
+    "title": "dc:title",
+    "x-orn-@id": "@id",
+    "x-orn-@type": "@type",
+    "get": "http://www.w3.org/2011/http-methods#GET",
+    "smiles": "http://edamontology.org/format_1196",
+    "molecularMass": "http://purl.obolibrary.org/obo/FIX_0000270",
     "name": {
       "@type": "xsd:string"
     },
