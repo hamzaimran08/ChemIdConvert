@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Simple RDF/XML representation of the Json-LD version of the openapi/json-LD file -->
+<rdf:RDF
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:x-orn="http://openrisknet.org/schema/"
+>
+  <rdf:Description rdf:about="https://chemidconvert/v2">
+    <x-orn:info rdf:nodeID="N190d249855d347808e4438c9552b4eb0"/>
+    <rdf:type rdf:resource="http://openrisknet.org/schema/Service"/>
+    <x-orn:Endpoint rdf:resource="https://chemidconvert/v2/molWeight"/>
+    <x-orn:paths rdf:resource="https://chemidconvert/v2"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N0c869996535141559b573cf947821b27">
+    <x-orn:Smiles rdf:nodeID="N03350852ea784263ab903843682238e4"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N1756b1bb94e64edeb12c679546e7b81a">
+    <x-orn:StatusCode rdf:nodeID="N734644a96d474c39ba8060f6a12b52c8"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N98f6553bad2b4db783a2ff7a8eebb84d">
+    <x-orn:OperationResponses rdf:nodeID="N1756b1bb94e64edeb12c679546e7b81a"/>
+    <x-orn:OperationParameters rdf:nodeID="N0c869996535141559b573cf947821b27"/>
+    <x-orn:returns>molecularMass</x-orn:returns>
+    <x-orn:expects>x-orn:Compound</x-orn:expects>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N03350852ea784263ab903843682238e4">
+    <rdf:type rdf:resource="http://openrisknet.org/schema/Smiles"/>
+    <x-orn:description>Compound structure notated using SMILES notation</x-orn:description>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N190d249855d347808e4438c9552b4eb0">
+    <x-orn:title>Test title</x-orn:title>
+    <x-orn:description>Desc</x-orn:description>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://chemidconvert/v2/molWeight">
+    <rdf:type rdf:resource="http://openrisknet.org/schema/Prediction"/>
+    <x-orn:Get rdf:nodeID="N98f6553bad2b4db783a2ff7a8eebb84d"/>
+  </rdf:Description>
+</rdf:RDF>
