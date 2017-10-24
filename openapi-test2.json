@@ -1,0 +1,91 @@
+{ "@context": {
+    "x-orn": "http://openrisknet.org/schema/",
+    "title": "x-orn:title",
+    "info": "x-orn:info",
+  	"paths": "x-orn:paths",
+  	"description": "x-orn:description",
+  	"/molWeight": "x-orn:Endpoint",
+  	"get": "x-orn:Get",
+  	"smiles": "x-orn:Smiles",
+  	"parameters": "x-orn:OperationParameters",
+  	"responses":"x-orn:OperationResponses",
+  	"200": "x-orn:StatusCode"
+  },
+  "@id": "https://chemidconvert/v2",
+  "@type": "x-orn:Service",
+  "info": {
+    "title": "Test title",
+    "description": "Desc"
+  },
+  "paths": {
+    "@id": "https://chemidconvert/v2",
+    "/molWeight": {
+      "@id": "https://chemidconvert/v2/molWeight",
+      "@type": "x-orn:Prediction",
+      "get": {
+        "summary": "Summary of molweight",
+        "x-orn:expects": "x-orn:Compound",
+      	"x-orn:returns": "molecularMass",
+        "parameters": [
+          {
+            "smiles": {
+              "name": "smiles",
+              "@type": "x-orn:Smiles",
+              "in": "query",
+              "description": "Compound structure notated using SMILES notation",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+         "responses": {
+          "200": {
+            "molWeight": {
+              "description": "The molecular weight (caluclated with rdkit)",
+              "content": {
+
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "x-orn:@context": "https://chemidconvert/v2/context.json",
+                    "properties": {
+                      "@id": {
+                        "type": "string",
+                        "description": "The Json-LD id of the prediction"
+                      },
+                      "@type": {
+                        "type": "string",
+                        "description": "The Json-LD type of this value"
+                      },
+                      "smiles": {
+                        "@type": "x-orn:Inchi",
+                        "type": "string",
+                        "description": "Compound structure notated using (canonical) SMILES notation"
+                      },
+                      "molWeight": {
+                        "type": "number",
+                        "description": "The molecular weight (caluclated with rdkit)"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+   	   }
+   	 }
+  	}
+  }
+}
