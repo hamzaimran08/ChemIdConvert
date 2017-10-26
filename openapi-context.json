@@ -1,31 +1,11 @@
 { "@context":
-  { "xsd": "http://www.w3.org/2001/XMLSchema#",
-    "x-orn": "http://www.openrisknet.org/schema/",
-    "cheminf": "http://semanticscience.org/resource/",
-    "dc": "http://purl.org/dc/",
-    "title": "dc:title",
+  { "x-orn": "http://www.openrisknet.org/schema/",
     "x-orn-@id": "@id",
     "x-orn-@type": "@type",
+    "dc": "http://purl.org/dc/",
+    "title": "dc:title",
     "get": "http://www.w3.org/2011/http-methods#GET",
     "smiles": "http://edamontology.org/format_1196",
-    "molecularMass": "http://purl.obolibrary.org/obo/FIX_0000270",
-    "name": {
-      "@type": "xsd:string"
-    },
-    "position": {
-      "@type": "xsd:int"
-    },
-    "isID": {
-      "@type": "xsd:boolean"
-    },
-    "type": {
-      "@type": "@id"
-    },
-    "description": {
-      "@type": "xsd:string"
-    },
-    "class": {
-      "@type": "@id"
-    }
+    "molecularMass": "http://purl.obolibrary.org/obo/FIX_0000270"
   }
 }
