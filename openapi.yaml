@@ -11,8 +11,10 @@ paths:
   /molWeight:
     x-orn-@id: "https://chemidconvert/v2/molWeight"
     x-orn-@type: "x-orn:Prediction"
-    x-orn:expects: "x-orn:Compound"
-    x-orn:returns: "molecularMass"
+    x-orn:expects:
+      x-orn-@id: "x-orn:Compound"
+    x-orn:returns:
+      x-orn-@id: "x-orn:molecularMass"
     get:
       summary: Returns the molecular weight (calculated with rdkit)
       parameters:
@@ -27,41 +29,18 @@ paths:
         '200':
           description: The molecular weight (caluclated with rdkit)
           content:
-            application/json-ld:
-              schema:
-                type: object
-                properties:
-                  "@context":
-                    type: object
-                    description: The Json-LD context
-                  "@id":
-                    type: string
-                    description: The Json-LD id of the prediction
-                  "@type":
-                    type: string
-                    description: The Json-LD type of this value
-                  smiles:
-                    type: string
-                    description: Compound structure notated using (canonical) SMILES notation
-                    x-orn-ontology-term: 'http://edamontology.org/format_1196'
-                  molWeight:
-                    type: number
-                    description: The molecular weight (caluclated with rdkit)
             application/json:
               schema:
                 type: object
-                x-orn:@context: "https://chemidconvert/v2/context.json"
+                x-orn-@context: 'https://chemidconvert/v2/context.json'
+                x-orn-@type: 'x-orn:Prediction'
                 properties:
-                  "@id":
-                    type: string
-                    description: The Json-LD id of the prediction
-                  "@type":
-                    type: string
-                    description: The Json-LD type of this value
                   smiles:
+                    x-orn-@type: 'x-orn:Smiles'
                     type: string
                     description: Compound structure notated using (canonical) SMILES notation
                   molWeight:
+                    x-orn-@type: 'x-orn:Prediction'
                     type: number
                     description: The molecular weight (caluclated with rdkit)
         default:
@@ -71,6 +50,12 @@ paths:
               schema:
                 type: string
   /smiles/to/inchi:
+    x-orn-@id: "https://chemidconvert/v2/smiles/to/inchi"
+    x-orn-@type: "x-orn:Conversion"
+    x-orn:expects:
+      x-orn-@id: "x-orn:Compound"
+    x-orn:returns:
+      x-orn-@id: "x-orn:Compound"
     get:
       summary: Converts from a SMILES format into InChI format
       description: >
@@ -94,12 +79,14 @@ paths:
           content:
             application/json:
               schema:
+                x-orn-@context: 'https://chemidconvert/v2/context.json'
+                x-orn-@type: 'x-orn:Conversion'
                 type: object
                 properties:
                   inchi:
+                    x-orn-@type: 'x-orn:Inchi'
                     type: string
                     description: Compound structure notated using InChI notation
-                    x-ontology: 'http://edamontology.org/format_1197'
         '400':
           description: Invalid request (typically a mandatory parameter was missing or malformed)
           content:

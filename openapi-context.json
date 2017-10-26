@@ -1,11 +1,22 @@
 { "@context":
-  { "x-orn": "http://www.openrisknet.org/schema/",
+  { "x-orn": "http://openrisknet.org/schema/",
     "x-orn-@id": "@id",
-    "x-orn-@type": "@type",
-    "dc": "http://purl.org/dc/",
-    "title": "dc:title",
-    "get": "http://www.w3.org/2011/http-methods#GET",
-    "smiles": "http://edamontology.org/format_1196",
-    "molecularMass": "http://purl.obolibrary.org/obo/FIX_0000270"
+    "x-orn-@type":"@type",
+    "title": "x-orn:title",
+    "info": "x-orn:info",
+    "paths":
+    	{ "@id": "x-orn:paths",
+        "@container": "@index"
+       },
+  	"description": "x-orn:description",
+  	"get": "x-orn:Get",
+  	"smiles": "x-orn:Smiles",
+  	"parameters": "x-orn:OperationParameters",
+  	"responses":"x-orn:OperationResponses",
+    "properties": "x-orn:Properties",
+  	"200": "x-orn:StatusCode",
+    "application/json": "http://edamontology.org/media_type",
+    "content": "x-orn:Content",
+    "schema": "x-orn:Schema"
   }
 }
