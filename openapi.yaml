@@ -16,56 +16,54 @@ paths:
     get:
       summary: Returns the molecular weight (calculated with rdkit)
       parameters:
-        - smiles:
-            name: smiles
-            x-orn-@type: "x-orn:Smiles"
-            in: query
-            description: Compound structure notated using SMILES notation
-            required: true
-            schema:
-              type: string
+        - name: smiles
+          x-orn-@type: "x-orn:Smiles"
+          in: query
+          description: Compound structure notated using SMILES notation
+          required: true
+          schema:
+            type: string
       responses:
         '200':
-          molWeight:
-            description: The molecular weight (caluclated with rdkit)
-            content:
-              application/json-ld:
-                schema:
-                  type: object
-                  properties:
-                    "@context":
-                      type: object
-                      description: The Json-LD context
-                    "@id":
-                      type: string
-                      description: The Json-LD id of the prediction
-                    "@type":
-                      type: string
-                      description: The Json-LD type of this value
-                    smiles:
-                      type: string
-                      description: Compound structure notated using (canonical) SMILES notation
-                      x-orn-ontology-term: 'http://edamontology.org/format_1196'
-                    molWeight:
-                      type: number
-                      description: The molecular weight (caluclated with rdkit)
-              application/json:
-                schema:
-                  type: object
-                  x-orn:@context: "https://chemidconvert/v2/context.json"
-                  properties:
-                    "@id":
-                      type: string
-                      description: The Json-LD id of the prediction
-                    "@type":
-                      type: string
-                      description: The Json-LD type of this value
-                    smiles:
-                      type: string
-                      description: Compound structure notated using (canonical) SMILES notation
-                    molWeight:
-                      type: number
-                      description: The molecular weight (caluclated with rdkit)
+          description: The molecular weight (caluclated with rdkit)
+          content:
+            application/json-ld:
+              schema:
+                type: object
+                properties:
+                  "@context":
+                    type: object
+                    description: The Json-LD context
+                  "@id":
+                    type: string
+                    description: The Json-LD id of the prediction
+                  "@type":
+                    type: string
+                    description: The Json-LD type of this value
+                  smiles:
+                    type: string
+                    description: Compound structure notated using (canonical) SMILES notation
+                    x-orn-ontology-term: 'http://edamontology.org/format_1196'
+                  molWeight:
+                    type: number
+                    description: The molecular weight (caluclated with rdkit)
+            application/json:
+              schema:
+                type: object
+                x-orn:@context: "https://chemidconvert/v2/context.json"
+                properties:
+                  "@id":
+                    type: string
+                    description: The Json-LD id of the prediction
+                  "@type":
+                    type: string
+                    description: The Json-LD type of this value
+                  smiles:
+                    type: string
+                    description: Compound structure notated using (canonical) SMILES notation
+                  molWeight:
+                    type: number
+                    description: The molecular weight (caluclated with rdkit)
         default:
           description: Unexpected error
           content:
@@ -82,8 +80,7 @@ paths:
       tags:
         - 'SMILES, InChI'
       parameters:
-        - smiles:
-          name: smiles
+        - name: smiles
           in: query
           description: Compound structure notated using SMILES notation
           required: true
