@@ -2,7 +2,6 @@
   "x-orn": "http://openrisknet.org/schema/",
     "x-orn-@id": "@id",
     "x-orn-@type":"@type",
-    "x-orn-@context": "@context",
     "title": "x-orn:title",
     "info": "x-orn:info",
     "paths":
