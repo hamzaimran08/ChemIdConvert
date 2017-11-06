@@ -12,11 +12,15 @@
     "get": "x-orn:Get",
     "smiles": "x-orn:Smiles",
     "parameters": "x-orn:OperationParameters",
-    "responses":"x-orn:OperationResponses",
+    "responses":
+      {"@id": "x-orn:OperationResponses",
+                "@container": "@index"
+      },
     "properties": "x-orn:Properties",
-    "200": "x-orn:StatusCode",
-    "application/json": "http://edamontology.org/media_type",
-    "content": "x-orn:Content",
+    "content":
+      {"@id": "x-orn:Content",
+       "@container": "@index"
+      },
     "schema": "x-orn:Schema"
   },
   "openapi": "3.0.0",

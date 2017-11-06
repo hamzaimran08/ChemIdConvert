@@ -40,9 +40,17 @@ paths:
                     type: string
                     description: Compound structure notated using (canonical) SMILES notation
                   molWeight:
-                    x-orn-@type: 'x-orn:Prediction'
-                    type: number
+                    x-orn-@type:
+                    - "x-orn:Prediction"
+                    - "x-orn:molecularMass"
+                    type: object
+                    properties:
+                      weightInMol:
+                        type: float
+                      weightInMg:
+                        type: float
                     description: The molecular weight (caluclated with rdkit)
+
         default:
           description: Unexpected error
           content:
