@@ -8,7 +8,7 @@ info:
 host: "chemidconvert.cloud.douglasconnect.com"
 basePath: "/v1"
 schemes:
-- "http"
+- "https"
 produces:
 - "application/json"
 paths:
