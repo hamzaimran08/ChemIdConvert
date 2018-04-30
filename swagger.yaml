@@ -1,5 +1,16 @@
 # ChemIdConvert - Chemical identifier conversion service
 swagger: '2.0'
+'x-orn-@context':
+  '@vocab': 'http://openrisknet.org/schema#'
+  x-orn: 'http://openrisknet.org/schema#'
+  x-orn-@id: '@id'
+  x-orn-@type: '@type'
+  smiles: 'http://semanticscience.org/resource/CHEMINF_000018'
+  inchi: 'http://semanticscience.org/resource/CHEMINF_000113'
+  inchikey: 'http://semanticscience.org/resource/CHEMINF_000059'
+  cas: 'http://semanticscience.org/resource/CHEMINF_000446'
+x-orn-@id: 'https://chemidconvert/v2'
+x-orn-@type: 'x-orn:Service'
 info:
   title: ChemIdConvert - Chemical identifier conversion service
   description: This REST Api allows you to submit chemical identifiers in one format and translate it into another format (e.g. SMILES -> InChi)
