@@ -1,7 +1,7 @@
 from rdkit import Chem
 import rdkit.Chem.inchi
 from rdkit.Chem.Descriptors import MolWt
-from urllib2 import HTTPError
+from urllib.error import HTTPError
 import cirpy
 import re
 from werkzeug.contrib.cache import SimpleCache
