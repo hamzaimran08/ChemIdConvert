@@ -709,7 +709,9 @@ responses:
       type: object
       properties:
         cas:
-          type: string
+          type: array
+          items:
+            type: string
           description: Compound structure notated using a CAS number
   names:
     description: The converted chemical names (trivial names, synonyms, systematic names, registry numbers, ...)
@@ -717,8 +719,10 @@ responses:
       type: object
       properties:
         names:
-          type: string
-          description: Compound structure notated using a CAS number
+          type: array
+          items:
+            type: string
+          description: A list of possble names
   molWeight:
     description: The molecular weight (caluclated with rdkit)
     schema:

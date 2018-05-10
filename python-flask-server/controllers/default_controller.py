@@ -20,10 +20,10 @@ inchikey_to_inchi_cache = SimpleCache()
 inchikey_to_names_cache = SimpleCache()
 smiles_to_cas_cache = SimpleCache()
 smiles_to_names_cache = SimpleCache()
-names_to_inchi_cache = SimpleCache()
-names_to_inchikey_cache = SimpleCache()
-names_to_smiles_cache = SimpleCache()
-names_to_case_cache = SimpleCache()
+name_to_inchi_cache = SimpleCache()
+name_to_inchikey_cache = SimpleCache()
+name_to_smiles_cache = SimpleCache()
+name_to_cas_cache = SimpleCache()
 
 
 caches = {}
@@ -43,6 +43,7 @@ caches['stdinchikey']['names'] = inchikey_to_names_cache
 caches['smiles'] = {}
 caches['smiles']['cas'] = smiles_to_cas_cache
 caches['smiles']['names'] = smiles_to_names_cache
+caches['name'] = {}
 caches['name']['smiles'] = name_to_smiles_cache
 caches['name']['stdinchi'] = name_to_inchi_cache
 caches['name']['stdinchikey'] = name_to_inchikey_cache
@@ -129,7 +130,8 @@ def resolve_via_cirpy(identifier, target, source):
         converted = caches[source][target].get(identifier)
         if converted is None:
             sourcehint = 'cas_number' if source == 'cas' else source
-            converted = cirpy.resolve(identifier, target, [sourcehint])
+            sourcehints = ['name_by_opsin', 'name_by_cir'] if sourcehint == 'name' else [sourcehint]
+            converted = cirpy.resolve(identifier, target, sourcehints)
             caches[source][target].set(identifier, converted)
         return converted
     except HTTPError as err:
@@ -237,7 +239,7 @@ def inchikey_to_smiles_get(inchikey):
 
 def name_to_smiles_get(name):
     try:
-        smiles = resolve_via_cirpy(name, 'smiles', 'name_by_opsin')
+        smiles = resolve_via_cirpy(name, 'smiles', 'name')
         return {"smiles": smiles}
     except CirpyError as err:
         return (err.message, err.code)
@@ -245,7 +247,7 @@ def name_to_smiles_get(name):
 
 def name_to_inchi_get(name):
     try:
-        inchi = resolve_via_cirpy(name, 'stdinchi', 'name_by_opsin')
+        inchi = resolve_via_cirpy(name, 'stdinchi', 'name')
         return {"inchi": inchi}
     except CirpyError as err:
         return (err.message, err.code)
@@ -253,7 +255,7 @@ def name_to_inchi_get(name):
 
 def name_to_inchikey_get(name):
     try:
-        inchikey = resolve_via_cirpy(name, 'stdinchikey', 'name_by_opsin')
+        inchikey = resolve_via_cirpy(name, 'stdinchikey', 'name')
         return {"inchikey": inchikey}
     except CirpyError as err:
         return (err.message, err.code)
@@ -261,7 +263,7 @@ def name_to_inchikey_get(name):
 
 def name_to_cas_get(name):
     try:
-        cas = resolve_via_cirpy(name, 'cas', 'name_by_opsin')
+        cas = resolve_via_cirpy(name, 'cas', 'name')
         return {"cas": cas}
     except CirpyError as err:
         return (err.message, err.code)
