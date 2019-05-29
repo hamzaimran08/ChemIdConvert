@@ -1,6 +1,15 @@
 openapi: 3.0.0
-x-orn-@id: 'https://chemidconvert/v2'
-x-orn-@type: 'x-orn:Service'
+'x-orn-@context':
+    '@vocab': 'http://openrisknet.org/schema#'
+    cas: 'http://semanticscience.org/resource/CHEMINF_000446'
+    inchi: 'http://semanticscience.org/resource/CHEMINF_000113'
+    inchikey: 'http://semanticscience.org/resource/CHEMINF_000059'
+    smiles: 'http://semanticscience.org/resource/CHEMINF_000018'
+    x-orn: 'http://openrisknet.org/schema#'
+    x-orn-@id: '@id'
+    x-orn-@type: '@type'
+'x-orn-@id': 'https://chemidconvert/v2'
+'x-orn-@type': 'x-orn:Service'
 servers:
   - url: 'https://chemidconvert/v2'
 info:
@@ -14,7 +23,7 @@ paths:
     x-orn:expects:
       x-orn-@id: "x-orn:Compound"
     x-orn:returns:
-      x-orn-@id: "x-orn:molecularMass"
+      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000088"
     get:
       summary: Returns the molecular weight (calculated with rdkit)
       parameters:
