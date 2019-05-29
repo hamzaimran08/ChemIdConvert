@@ -55,9 +55,9 @@ paths:
                     type: object
                     properties:
                       weightInMol:
-                        type: float
+                        type: number
                       weightInMg:
-                        type: float
+                        type: number
                     description: The molecular weight (caluclated with rdkit)
 
         default:
