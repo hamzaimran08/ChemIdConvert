@@ -1,0 +1,1372 @@
+openapi: 3.0.1
+x-orn-@id: http://chemidconvert.prod.openrisknet.org/v1
+x-orn-@type: x-orn:Service
+'x-orn-@context':
+  '@vocab': 'http://openrisknet.org/schema#'
+  x-orn: 'http://openrisknet.org/schema#'
+  x-orn-@id: '@id'
+  x-orn-@type: '@type'
+  smiles: 'http://semanticscience.org/resource/CHEMINF_000018'
+  inchi: 'http://semanticscience.org/resource/CHEMINF_000113'
+  inchikey: 'http://semanticscience.org/resource/CHEMINF_000059'
+  cas: 'http://semanticscience.org/resource/CHEMINF_000446'
+info:
+  title: ChemIdConvert - Chemical identifier conversion service
+  description: This REST Api allows you to submit chemical identifiers in one format
+    and translate it into another format (e.g. SMILES -> InChi)
+  version: 1.0.0
+servers:
+- url: http://chemidconvert.prod.openrisknet.org/v1
+paths:
+  /asSvg:
+    x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/asSvg"
+    x-orn-@type: "http://edamontology.org/data_1712" # Chemical structure image
+    x-orn:expects:
+      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000018" # Smiles
+    x-orn:returns:
+      x-orn-@id: "http://schema.org/image" # Image
+    get:
+      summary: Returns an svg text of the given molecule
+      parameters:
+      - name: smiles
+        x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000018" # Smiles
+        in: query
+        description: Compound structure notated using SMILES notation
+        required: true
+        schema:
+          type: string
+          format: smiles
+      - name: width
+        in: query
+        description: SVG image width
+        schema:
+          type: integer
+          default: 450
+      - name: height
+        in: query
+        description: SVG image height
+        schema:
+          type: integer
+          default: 450
+      responses:
+        200:
+          description: Successfully created an svg represenatation
+          content:
+            image/svg+xml:
+              schema:
+                type: string
+                description: The text representation of the svg of the molecule
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+  /molWeight:
+    x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/molWeight"
+    x-orn-@type: "http://purl.obolibrary.org/obo/MI_0660" # Prediction
+    x-orn:expects:
+      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000018" # Smiles
+    x-orn:returns:
+      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000088" # Molecular mass
+    get:
+      summary: Returns the molecular weight (calculated with rdkit)
+      parameters:
+      - name: smiles
+        x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000018" # Smiles
+        in: query
+        description: Compound structure notated using SMILES notation
+        required: true
+        schema:
+          type: string
+          format: smiles
+      responses:
+        200:
+          description: The molecular weight (caluclated with rdkit)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  smiles:
+                    type: string
+                    description: Compound structure notated using (canonical) SMILES
+                      notation
+                  molWeight:
+                    type: number
+                    description: The molecular weight (caluclated with rdkit)
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+  /smiles/to/inchi:
+    x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/smiles/to/inchi"
+    x-orn-@type: "http://edamontology.org/operation_3434 " # Conversion
+    x-orn:expects:
+      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000018" # Smiles
+    x-orn:returns:
+      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000113" # Inchi
+    get:
+      tags:
+      - SMILES
+      - InChI
+      summary: Converts from a SMILES format into InChI format
+      description: |
+        Converts from a SMILES format into InChI format. Only a single match is returned if there is an ambiguity in the conversion. The conversion is performed in process via rdkit.
+      parameters:
+      - name: smiles
+        x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000018" # Smiles
+        in: query
+        description: Compound structure notated using SMILES notation
+        required: true
+        schema:
+          type: string
+          format: smiles
+      responses:
+        200:
+          description: The converted InChI string
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  inchi:
+                    type: string
+                    description: Compound structure notated using InChI notation
+        400:
+          description: Invalid request (typically a mandatory parameter was missing
+            or malformed)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+  /inchi/to/smiles:
+    x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/inchi/to/smiles"
+    x-orn-@type: "http://edamontology.org/operation_3434 " # Conversion
+    x-orn:expects:
+      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000113" # Inchi
+    x-orn:returns:
+      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000018" # Smiles
+    get:
+      tags:
+      - SMILES
+      - InChI
+      summary: Converts from a InChI format into (canonical) SMILES format
+      description: |
+        Converts from InChI format into (canonical) SMILES. Only a single match is returned if there is an ambiguity in the conversion. The conversion is performed in process via rdkit.
+      parameters:
+      - name: inchi
+        x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000113"
+        in: query
+        description: Compound structure notated using InChI notation
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: The converted SMILES string
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  smiles:
+                    type: string
+                    description: Compound structure notated using (canonical) SMILES
+                      notation
+        400:
+          description: Invalid request (typically a mandatory parameter was missing
+            or malformed)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+  /inchi/to/inchikey:
+    x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/inchi/to/inchikey"
+    x-orn-@type: "http://edamontology.org/operation_3434 " # Conversion
+    x-orn:expects:
+      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000113" # Inchi
+    x-orn:returns:
+      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000059" # InchiKEY
+    get:
+      tags:
+      - InChI
+      - InChIKey
+      summary: Converts from a InChI format into InChIKey format
+      description: |
+        Converts from InChI format into InChIKey. The conversion is performed in process via rdkit.
+      parameters:
+      - name: inchi
+        x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000113"
+        in: query
+        description: Compound structure notated using InChI notation
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: The converted InChIKey string
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  inchikey:
+                    type: string
+                    description: Compound structure notated using InChIKey
+        400:
+          description: Invalid request (typically a mandatory parameter was missing
+            or malformed)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+  /inchikey/to/inchi:
+    x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/inchikey/to/inchi"
+    x-orn-@type: "http://edamontology.org/operation_3434 " # Conversion
+    x-orn:expects:
+      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000059" # InchiKEY
+    x-orn:returns:
+      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000113" # Inchi
+    get:
+      tags:
+      - InChI
+      - InChIKey
+      summary: Converts from a InChIKey format into InChI format
+      description: |
+        Converts from InChIKey format into InChI. The conversion is performed by using an external webservice and has relatively high latency.
+      parameters:
+      - name: inchikey
+        x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000059"
+        in: query
+        description: Compound structure notated using InChIKey notation
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: The converted InChI string
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  inchi:
+                    type: string
+                    description: Compound structure notated using InChI notation
+        400:
+          description: Invalid request (typically a mandatory parameter was missing
+            or malformed)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+        500:
+          description: Error in conversion by external webservice
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+        504:
+          description: Upstream service timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+  /smiles/to/inchikey:
+    x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/smiles/to/inchikey"
+    x-orn-@type: "http://edamontology.org/operation_3434 " # Conversion
+    x-orn:expects:
+      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000018" # Smiles
+    x-orn:returns:
+      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000059" # InchiKEY
+    get:
+      tags:
+      - SMILES
+      - InChIKey
+      summary: Converts from a SMILES format into InChIKey format
+      description: |
+        Converts from SMILES format into InChIKey. The conversion is performed in process via rdkit.
+      parameters:
+      - name: smiles
+        x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000018"
+        in: query
+        description: Compound structure notated using SMILES notation
+        required: true
+        schema:
+          type: string
+          format: smiles
+      responses:
+        200:
+          description: The converted InChIKey string
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  inchikey:
+                    type: string
+                    description: Compound structure notated using InChIKey
+        400:
+          description: Invalid request (typically a mandatory parameter was missing
+            or malformed)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+  /inchikey/to/smiles:
+    x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/inchikey/to/smiles"
+    x-orn-@type: "http://edamontology.org/operation_3434 " # Conversion
+    x-orn:expects:
+      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000059" # InchiKEY
+    x-orn:returns:
+      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000018" # Smiles
+    get:
+      tags:
+      - SMILES
+      - InChIKey
+      summary: Converts from a InChIKey format into (canonical) SMILES format
+      description: |
+        Converts from InChIKey format into (canonical) SMILES. The conversion is performed by using an external webservice and has relatively high latency.
+      parameters:
+      - name: inchikey
+        x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000059"
+        in: query
+        description: Compound structure notated using InChIKey notation
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: The converted SMILES string
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  smiles:
+                    type: string
+                    description: Compound structure notated using (canonical) SMILES
+                      notation
+        400:
+          description: Invalid request (typically a mandatory parameter was missing
+            or malformed)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+        500:
+          description: Error in conversion by external webservice
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+        504:
+          description: Upstream service timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+  /smiles/to/cas:
+    x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/smiles/to/cas"
+    x-orn-@type: "http://edamontology.org/operation_3434 " # Conversion
+    x-orn:expects:
+      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000018" # Smiles
+    x-orn:returns:
+      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000446" # Cas
+    get:
+      tags:
+      - SMILES
+      - CAS
+      summary: Converts from a SMILES format into a CAS number
+      description: |
+        Converts from a SMILES format into a CAS number. Only a single match is returned if there is an ambiguity in the conversion. The conversion is performed by using an external webservice and has relatively high latency.
+      parameters:
+      - name: smiles
+        x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000018"
+        in: query
+        description: Compound structure notated using SMILES notation
+        required: true
+        schema:
+          type: string
+          format: smiles
+      responses:
+        200:
+          description: The converted CAS number (3 groups of numbers separated by
+            dashes)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  cas:
+                    type: array
+                    description: Compound structure notated using a CAS number
+                    items:
+                      type: string
+        400:
+          description: Invalid request (typically a mandatory parameter was missing
+            or malformed)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+        500:
+          description: Error in conversion by external webservice
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+        504:
+          description: Upstream service timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+  /smiles/to/names:
+    x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/smiles/to/names"
+    x-orn-@type: "http://edamontology.org/operation_3434 " # Conversion
+    x-orn:expects:
+      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000018" # InchiKEY
+    x-orn:returns:
+      x-orn-@id: "http://edamontology.org/data_0990" # Compound Name
+    get:
+      tags:
+      - SMILES
+      - NAMES
+      summary: Converts from a SMILES format to a list of known names
+      description: |
+        Converts from a SMILES format into chemical names. The conversion is performed by using an external webservice and has relatively high latency.
+      parameters:
+      - name: smiles
+        x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000018"
+        in: query
+        description: Compound structure notated using SMILES notation
+        required: true
+        schema:
+          type: string
+          format: smiles
+      responses:
+        200:
+          description: The converted chemical names (trivial names, synonyms, systematic
+            names, registry numbers, ...)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  names:
+                    type: array
+                    description: A list of possble names
+                    items:
+                      type: string
+        400:
+          description: Invalid request (typically a mandatory parameter was missing
+            or malformed)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+        500:
+          description: Error in conversion by external webservice
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+        504:
+          description: Upstream service timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+  /cas/to/names:
+    x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/cas/to/names"
+    x-orn-@type: "http://edamontology.org/operation_3434 " # Conversion
+    x-orn:expects:
+      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000446" # InchiKEY
+    x-orn:returns:
+      x-orn-@id: "http://edamontology.org/data_0990" # Compound Name
+    get:
+      tags:
+      - CAS
+      - NAMES
+      summary: Converts from a CAS number to a list of known names
+      description: |
+        Converts from a CAS number into chemical names. The conversion is performed by using an external webservice and has relatively high latency.
+      parameters:
+      - name: cas
+        x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000446"
+        in: query
+        description: Compound structure notated as a CAS number (3 groups of numbers
+          separated by dashes)
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: The converted chemical names (trivial names, synonyms, systematic
+            names, registry numbers, ...)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  names:
+                    type: array
+                    description: A list of possble names
+                    items:
+                      type: string
+        400:
+          description: Invalid request (typically a mandatory parameter was missing
+            or malformed)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+        500:
+          description: Error in conversion by external webservice
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+        504:
+          description: Upstream service timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+  /inchi/to/names:
+    x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/inchi/to/names"
+    x-orn-@type: "http://edamontology.org/operation_3434 " # Conversion
+    x-orn:expects:
+      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000113" # InchiKEY
+    x-orn:returns:
+      x-orn-@id: "http://edamontology.org/data_0990" # Compound Name
+    get:
+      tags:
+      - INCHI
+      - NAMES
+      summary: Converts from a InChI format to a list of known names
+      description: |
+        Converts from a InChI format into chemical names. The conversion is performed by using an external webservice and has relatively high latency.
+      parameters:
+      - name: inchi
+        x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000113"
+        in: query
+        description: Compound structure notated using InChI notation
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: The converted chemical names (trivial names, synonyms, systematic
+            names, registry numbers, ...)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  names:
+                    type: array
+                    description: A list of possble names
+                    items:
+                      type: string
+        400:
+          description: Invalid request (typically a mandatory parameter was missing
+            or malformed)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+        500:
+          description: Error in conversion by external webservice
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+        504:
+          description: Upstream service timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+  /inchikey/to/names:
+    x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/inchikey/to/names"
+    x-orn-@type: "http://edamontology.org/operation_3434 " # Conversion
+    x-orn:expects:
+      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000059" # InchiKEY
+    x-orn:returns:
+      x-orn-@id: "http://edamontology.org/data_0990" # Compound Name
+    get:
+      tags:
+      - INCHIKEY
+      - NAMES
+      summary: Converts from an InChIKey format to a list of known names
+      description: |
+        Converts from a InChIKey format into chemical names. The conversion is performed by using an external webservice and has relatively high latency.
+      parameters:
+      - name: inchikey
+        x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000059"
+        in: query
+        description: Compound structure notated using InChIKey notation
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: The converted chemical names (trivial names, synonyms, systematic
+            names, registry numbers, ...)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  names:
+                    type: array
+                    description: A list of possble names
+                    items:
+                      type: string
+        400:
+          description: Invalid request (typically a mandatory parameter was missing
+            or malformed)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+        500:
+          description: Error in conversion by external webservice
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+        504:
+          description: Upstream service timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+  /cas/to/smiles:
+    x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/cas/to/smiles"
+    x-orn-@type: "http://edamontology.org/operation_3434 " # Conversion
+    x-orn:expects:
+      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000446" # InchiKEY
+    x-orn:returns:
+      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000018" # Compound Name
+    get:
+      tags:
+      - SMILES
+      - CAS
+      summary: Converts from a CAS number into (canonical) SMILES format
+      description: |
+        Converts from a CAS number into (canonical) SMILES. Only a single match is returned if there is an ambiguity in the conversion. The conversion is performed by using an external webservice and has relatively high latency.
+      parameters:
+      - name: cas
+        x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000446"
+        in: query
+        description: Compound structure notated as a CAS number (3 groups of numbers
+          separated by dashes)
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: The converted SMILES string
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  smiles:
+                    type: string
+                    description: Compound structure notated using (canonical) SMILES
+                      notation
+        400:
+          description: Invalid request (typically a mandatory parameter was missing
+            or malformed)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+        500:
+          description: Error in conversion by external webservice
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+        504:
+          description: Upstream service timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+  /inchi/to/cas:
+    x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/inchi/to/cas"
+    x-orn-@type: "http://edamontology.org/operation_3434 " # Conversion
+    x-orn:expects:
+      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000113" # InchiKEY
+    x-orn:returns:
+      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000446" # Compound Name
+    get:
+      tags:
+      - CAS
+      - InChI
+      summary: Converts from a InChI format into a CAS number
+      description: |
+        Converts from a InChI format into a CAS number. Only a single match is returned if there is an ambiguity in the conversion. The conversion is performed by using an external webservice and has relatively high latency.
+      parameters:
+      - name: inchi
+        x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000113"
+        in: query
+        description: Compound structure notated using InChI notation
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: The converted CAS number (3 groups of numbers separated by
+            dashes)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  cas:
+                    type: array
+                    description: Compound structure notated using a CAS number
+                    items:
+                      type: string
+        400:
+          description: Invalid request (typically a mandatory parameter was missing
+            or malformed)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+        500:
+          description: Error in conversion by external webservice
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+        504:
+          description: Upstream service timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+  /cas/to/inchi:
+    x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/cas/to/inchi"
+    x-orn-@type: "http://edamontology.org/operation_3434 " # Conversion
+    x-orn:expects:
+      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000446" # InchiKEY
+    x-orn:returns:
+      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000113" # Compound Name
+    get:
+      tags:
+      - CAS
+      - InChI
+      summary: Converts from a CAS number into InChI format
+      description: |
+        Converts from a CAS number into InChI. Only a single match is returned if there is an ambiguity in the conversion. The conversion is performed by using an external webservice and has relatively high latency.
+      parameters:
+      - name: cas
+        x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000446"
+        in: query
+        description: Compound structure notated as a CAS number (3 groups of numbers
+          separated by dashes)
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: The converted InChI string
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  inchi:
+                    type: string
+                    description: Compound structure notated using InChI notation
+        400:
+          description: Invalid request (typically a mandatory parameter was missing
+            or malformed)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+        500:
+          description: Error in conversion by external webservice
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+        504:
+          description: Upstream service timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+  /inchikey/to/cas:
+    x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/inchikey/to/cas"
+    x-orn-@type: "http://edamontology.org/operation_3434 " # Conversion
+    x-orn:expects:
+      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000059" # InchiKEY
+    x-orn:returns:
+      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000446" # Compound Name
+    get:
+      tags:
+      - CAS
+      - InChIKey
+      summary: Converts from a InChIKey format into a CAS number
+      description: |
+        Converts from a InChIKey format into a CAS number. Only a single match is returned if there is an ambiguity in the conversion. The conversion is performed by using an external webservice and has relatively high latency.
+      parameters:
+      - name: inchikey
+        x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000059"
+        in: query
+        description: Compound structure notated using InChIKey notation
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: The converted CAS number (3 groups of numbers separated by
+            dashes)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  cas:
+                    type: array
+                    description: Compound structure notated using a CAS number
+                    items:
+                      type: string
+        400:
+          description: Invalid request (typically a mandatory parameter was missing
+            or malformed)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+        500:
+          description: Error in conversion by external webservice
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+        504:
+          description: Upstream service timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+  /cas/to/inchikey:
+    x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/cas/to/inchikey"
+    x-orn-@type: "http://edamontology.org/operation_3434 " # Conversion
+    x-orn:expects:
+      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000446" # InchiKEY
+    x-orn:returns:
+      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000059" # Compound Name
+    get:
+      tags:
+      - CAS
+      - InChIKey
+      summary: Converts from a CAS number into InChIKey format
+      description: |
+        Converts from a CAS number into InChIKey. Only a single match is returned if there is an ambiguity in the conversion. The conversion is performed by using an external webservice and has relatively high latency.
+      parameters:
+      - name: cas
+        x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000446"
+        in: query
+        description: Compound structure notated as a CAS number (3 groups of numbers
+          separated by dashes)
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: The converted InChIKey string
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  inchikey:
+                    type: string
+                    description: Compound structure notated using InChIKey
+        400:
+          description: Invalid request (typically a mandatory parameter was missing
+            or malformed)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+        500:
+          description: Error in conversion by external webservice
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+        504:
+          description: Upstream service timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+  /name/to/inchikey:
+    x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/name/to/inchikey"
+    x-orn-@type: "http://edamontology.org/operation_3434 " # Conversion
+    x-orn:expects:
+      x-orn-@id: "http://edamontology.org/data_0990" # InchiKEY
+    x-orn:returns:
+      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000059" # Compound Name
+    get:
+      tags:
+      - NAME
+      - InChIKey
+      summary: Converts from a compound name into InChIKey format
+      description: |
+        Converts from a compound name into InChIKey. Only a single match is returned if there is an ambiguity in the conversion. The conversion is performed by using an external webservice and has relatively high latency.
+      parameters:
+      - name: name
+        x-orn-@id: "http://edamontology.org/data_0990"
+        in: query
+        description: Compound structure notated as a CAS number (3 groups of numbers
+          separated by dashes)
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: The converted InChIKey string
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  inchikey:
+                    type: string
+                    description: Compound structure notated using InChIKey
+        400:
+          description: Invalid request (typically a mandatory parameter was missing
+            or malformed)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+        500:
+          description: Error in conversion by external webservice
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+        504:
+          description: Upstream service timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+  /name/to/inchi:
+    x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/name/to/inchi"
+    x-orn-@type: "http://edamontology.org/operation_3434 " # Conversion
+    x-orn:expects:
+      x-orn-@id: "http://edamontology.org/data_0990" # InchiKEY
+    x-orn:returns:
+      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000113" # Compound Name
+    get:
+      tags:
+      - NAME
+      - InChI
+      summary: Converts from a compound name into InChI format
+      description: |
+        Converts from a compound name into InChI. Only a single match is returned if there is an ambiguity in the conversion. The conversion is performed by using an external webservice and has relatively high latency.
+      parameters:
+      - name: name
+        x-orn-@id: "http://edamontology.org/data_0990"
+        in: query
+        description: Compound structure notated as a CAS number (3 groups of numbers
+          separated by dashes)
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: The converted InChI string
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  inchi:
+                    type: string
+                    description: Compound structure notated using InChI notation
+        400:
+          description: Invalid request (typically a mandatory parameter was missing
+            or malformed)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+        500:
+          description: Error in conversion by external webservice
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+        504:
+          description: Upstream service timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+  /name/to/smiles:
+    x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/name/to/smiles"
+    x-orn-@type: "http://edamontology.org/operation_3434 " # Conversion
+    x-orn:expects:
+      x-orn-@id: "http://edamontology.org/data_0990" # InchiKEY
+    x-orn:returns:
+      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000018" # Compound Name
+    get:
+      tags:
+      - NAME
+      - SMILES
+      summary: Converts from a compound name into Smiles format
+      description: |
+        Converts from a compound name into Smiles. Only a single match is returned if there is an ambiguity in the conversion. The conversion is performed by using an external webservice and has relatively high latency.
+      parameters:
+      - name: name
+        x-orn-@id: "http://edamontology.org/data_0990"
+        in: query
+        description: Compound structure notated as a CAS number (3 groups of numbers
+          separated by dashes)
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: The converted SMILES string
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  smiles:
+                    type: string
+                    description: Compound structure notated using (canonical) SMILES
+                      notation
+        400:
+          description: Invalid request (typically a mandatory parameter was missing
+            or malformed)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+        500:
+          description: Error in conversion by external webservice
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+        504:
+          description: Upstream service timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+  /name/to/cas:
+    x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/name/to/cas"
+    x-orn-@type: "http://edamontology.org/operation_3434 " # Conversion
+    x-orn:expects:
+      x-orn-@id: "http://edamontology.org/data_0990" # InchiKEY
+    x-orn:returns:
+      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000446" # Compound Name
+    get:
+      tags:
+      - NAME
+      - CAS
+      summary: Converts from a compound name into CAS number
+      description: |
+        Converts from a compound name into CAS number. Only a single match is returned if there is an ambiguity in the conversion. The conversion is performed by using an external webservice and has relatively high latency.
+      parameters:
+      - name: name
+        x-orn-@id: "http://edamontology.org/data_0990"
+        in: query
+        description: Compound structure notated as a CAS number (3 groups of numbers
+          separated by dashes)
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: The converted CAS number (3 groups of numbers separated by
+            dashes)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  cas:
+                    type: array
+                    description: Compound structure notated using a CAS number
+                    items:
+                      type: string
+        400:
+          description: Invalid request (typically a mandatory parameter was missing
+            or malformed)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+        500:
+          description: Error in conversion by external webservice
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+        504:
+          description: Upstream service timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/simpleError'
+components:
+  schemas:
+    simpleError:
+      type: string
+  responses:
+    cas:
+      description: The converted CAS number (3 groups of numbers separated by dashes)
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              cas:
+                type: array
+                description: Compound structure notated using a CAS number
+                items:
+                  type: string
+    inchi:
+      description: The converted InChI string
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              inchi:
+                type: string
+                description: Compound structure notated using InChI notation
+    inchikey:
+      description: The converted InChIKey string
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              inchikey:
+                type: string
+                description: Compound structure notated using InChIKey
+    molWeight:
+      description: The molecular weight (caluclated with rdkit)
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              smiles:
+                type: string
+                description: Compound structure notated using (canonical) SMILES notation
+              molWeight:
+                type: number
+                description: The molecular weight (caluclated with rdkit)
+    names:
+      description: The converted chemical names (trivial names, synonyms, systematic
+        names, registry numbers, ...)
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              names:
+                type: array
+                description: A list of possble names
+                items:
+                  type: string
+    smiles:
+      description: The converted SMILES string
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              smiles:
+                type: string
+                description: Compound structure notated using (canonical) SMILES notation
+  parameters:
+    smiles:
+      name: smiles
+      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000018"
+      in: query
+      description: Compound structure notated using SMILES notation
+      required: true
+      schema:
+        type: string
+        format: smiles
+    inchi:
+      name: inchi
+      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000113"
+      in: query
+      description: Compound structure notated using InChI notation
+      required: true
+      schema:
+        type: string
+    inchikey:
+      name: inchikey
+      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000059"
+      in: query
+      description: Compound structure notated using InChIKey notation
+      required: true
+      schema:
+        type: string
+    cas:
+      name: cas
+      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000446"
+      in: query
+      description: Compound structure notated as a CAS number (3 groups of numbers
+        separated by dashes)
+      required: true
+      schema:
+        type: string
+    name:
+      name: name
+      x-orn-@id: "http://edamontology.org/data_0990"
+      in: query
+      description: Compound structure notated as a CAS number (3 groups of numbers
+        separated by dashes)
+      required: true
+      schema:
+        type: string
