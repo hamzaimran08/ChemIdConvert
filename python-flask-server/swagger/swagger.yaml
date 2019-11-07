@@ -24,13 +24,13 @@ produces:
 - "application/json"
 paths:
   /asSvg:
-    x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/asSvg"
-    x-orn-@type: "http://edamontology.org/data_1712" # Chemical structure image
-    x-orn:expects:
-      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000018" # Smiles
-    x-orn:returns:
-      x-orn-@id: "http://schema.org/image" # Image
     get:
+      x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/asSvg"
+      x-orn-@type: "http://edamontology.org/data_1712" # Chemical structure image
+      x-orn:expects:
+        x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000018" # Smiles
+      x-orn:returns:
+        x-orn-@id: "http://schema.org/image" # Image
       summary: Returns an svg text of the given molecule
       operationId: "controllers.default_controller.as_svg_get"
       produces:
@@ -60,13 +60,13 @@ paths:
           schema:
             $ref: '#/definitions/simpleError'
   /molWeight:
-    x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/molWeight"
-    x-orn-@type: "http://purl.obolibrary.org/obo/MI_0660" # Prediction
-    x-orn:expects:
-      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000018" # Smiles
-    x-orn:returns:
-      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000088" # Molecular mass
     get:
+      x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/molWeight"
+      x-orn-@type: "http://purl.obolibrary.org/obo/MI_0660" # Prediction
+      x-orn:expects:
+        x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000018" # Smiles
+      x-orn:returns:
+        x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000088" # Molecular mass
       summary: "Returns the molecular weight (calculated with rdkit)"
       operationId: "controllers.default_controller.mol_weight_get"
       parameters:
@@ -88,13 +88,13 @@ paths:
             $ref: "#/definitions/simpleError"
 
   /smiles/to/inchi:
-    x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/smiles/to/inchi"
-    x-orn-@type: "http://edamontology.org/operation_3434" # Conversion
-    x-orn:expects:
-      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000018"
-    x-orn:returns:
-      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000113"
     get:
+      x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/smiles/to/inchi"
+      x-orn-@type: "http://edamontology.org/operation_3434" # Conversion
+      x-orn:expects:
+        x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000018"
+      x-orn:returns:
+        x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000113"
       tags:
       - SMILES
       - InChI
@@ -127,13 +127,13 @@ paths:
             $ref: "#/definitions/simpleError"
 
   /inchi/to/smiles:
-    x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/inchi/to/smiles"
-    x-orn-@type: "http://edamontology.org/operation_3434" # Conversion
-    x-orn:expects:
-      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000113" # Inchi
-    x-orn:returns:
-      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000018" # Smiles
     get:
+      x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/inchi/to/smiles"
+      x-orn-@type: "http://edamontology.org/operation_3434" # Conversion
+      x-orn:expects:
+        x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000113" # Inchi
+      x-orn:returns:
+        x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000018" # Smiles
       tags:
       - SMILES
       - InChI
@@ -165,13 +165,13 @@ paths:
             $ref: "#/definitions/simpleError"
 
   /inchi/to/inchikey:
-    x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/inchi/to/inchikey"
-    x-orn-@type: "http://edamontology.org/operation_3434" # Conversion
-    x-orn:expects:
-      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000113" # Inchi
-    x-orn:returns:
-      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000059" # InchiKEY
     get:
+      x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/inchi/to/inchikey"
+      x-orn-@type: "http://edamontology.org/operation_3434" # Conversion
+      x-orn:expects:
+        x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000113" # Inchi
+      x-orn:returns:
+        x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000059" # InchiKEY
       tags:
       - InChI
       - InChIKey
@@ -202,13 +202,13 @@ paths:
             $ref: "#/definitions/simpleError"
 
   /inchikey/to/inchi:
-    x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/inchikey/to/inchi"
-    x-orn-@type: "http://edamontology.org/operation_3434" # Conversion
-    x-orn:expects:
-      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000059" # InchiKEY
-    x-orn:returns:
-      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000113" # Inchi
     get:
+      x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/inchikey/to/inchi"
+      x-orn-@type: "http://edamontology.org/operation_3434" # Conversion
+      x-orn:expects:
+      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000059" # InchiKEY
+      x-orn:returns:
+      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000113" # Inchi
       tags:
       - InChI
       - InChIKey
@@ -247,13 +247,13 @@ paths:
             $ref: "#/definitions/simpleError"
 
   /smiles/to/inchikey:
-    x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/smiles/to/inchikey"
-    x-orn-@type: "http://edamontology.org/operation_3434" # Conversion
-    x-orn:expects:
-      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000018" # Smiles
-    x-orn:returns:
-      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000059" # InchiKEY
     get:
+      x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/smiles/to/inchikey"
+      x-orn-@type: "http://edamontology.org/operation_3434" # Conversion
+      x-orn:expects:
+        x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000018" # Smiles
+      x-orn:returns:
+        x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000059" # InchiKEY
       tags:
       - SMILES
       - InChIKey
@@ -285,13 +285,13 @@ paths:
             $ref: "#/definitions/simpleError"
 
   /inchikey/to/smiles:
-    x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/inchikey/to/smiles"
-    x-orn-@type: "http://edamontology.org/operation_3434" # Conversion
-    x-orn:expects:
-      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000059" # InchiKEY
-    x-orn:returns:
-      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000018" # Smiles
     get:
+      x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/inchikey/to/smiles"
+      x-orn-@type: "http://edamontology.org/operation_3434" # Conversion
+      x-orn:expects:
+        x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000059" # InchiKEY
+      x-orn:returns:
+        x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000018" # Smiles
       tags:
       - SMILES
       - InChIKey
@@ -330,13 +330,13 @@ paths:
             $ref: "#/definitions/simpleError"
 
   /smiles/to/cas:
-    x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/smiles/to/cas"
-    x-orn-@type: "http://edamontology.org/operation_3434" # Conversion
-    x-orn:expects:
-      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000018" # Smiles
-    x-orn:returns:
-      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000446" # Cas
     get:
+      x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/smiles/to/cas"
+      x-orn-@type: "http://edamontology.org/operation_3434" # Conversion
+      x-orn:expects:
+        x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000018" # Smiles
+      x-orn:returns:
+        x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000446" # Cas
       tags:
       - SMILES
       - CAS
@@ -378,13 +378,13 @@ paths:
             $ref: "#/definitions/simpleError"
 
   /smiles/to/names:
-    x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/smiles/to/names"
-    x-orn-@type: "http://edamontology.org/operation_3434" # Conversion
-    x-orn:expects:
-      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000018" # Smiles
-    x-orn:returns:
-      x-orn-@id: "http://edamontology.org/data_0990" # Compound Name
     get:
+      x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/smiles/to/names"
+      x-orn-@type: "http://edamontology.org/operation_3434" # Conversion
+      x-orn:expects:
+        x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000018" # Smiles
+      x-orn:returns:
+        x-orn-@id: "http://edamontology.org/data_0990" # Compound Name
       summary: Converts from a SMILES format to a list of known names
       operationId: "controllers.default_controller.smiles_to_names_get"
       description: >
@@ -416,13 +416,13 @@ paths:
             $ref: '#/definitions/simpleError'
 
   /cas/to/names:
-    x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/cas/to/names"
-    x-orn-@type: "http://edamontology.org/operation_3434" # Conversion
-    x-orn:expects:
-      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000446" # Cas
-    x-orn:returns:
-      x-orn-@id: "http://edamontology.org/data_0990" # Compound Name
     get:
+      x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/cas/to/names"
+      x-orn-@type: "http://edamontology.org/operation_3434" # Conversion
+      x-orn:expects:
+        x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000446" # Cas
+      x-orn:returns:
+        x-orn-@id: "http://edamontology.org/data_0990" # Compound Name
       summary: Converts from a CAS number to a list of known names
       operationId: "controllers.default_controller.cas_to_names_get"
       description: >
@@ -454,13 +454,13 @@ paths:
             $ref: '#/definitions/simpleError'
 
   /inchi/to/names:
-    x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/inchi/to/names"
-    x-orn-@type: "http://edamontology.org/operation_3434" # Conversion
-    x-orn:expects:
-      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000113" # InchiKEY
-    x-orn:returns:
-      x-orn-@id: "http://edamontology.org/data_0990" # Compound Name
     get:
+      x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/inchi/to/names"
+      x-orn-@type: "http://edamontology.org/operation_3434" # Conversion
+      x-orn:expects:
+        x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000113" # InchiKEY
+      x-orn:returns:
+        x-orn-@id: "http://edamontology.org/data_0990" # Compound Name
       summary: Converts from a InChI format to a list of known names
       operationId: "controllers.default_controller.inchi_to_names_get"
       description: >
@@ -492,13 +492,13 @@ paths:
             $ref: '#/definitions/simpleError'
 
   /inchikey/to/names:
-    x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/inchikey/to/names"
-    x-orn-@type: "http://edamontology.org/operation_3434" # Conversion
-    x-orn:expects:
-      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000059" # InchiKEY
-    x-orn:returns:
-      x-orn-@id: "http://edamontology.org/data_0990" # Compound Name
     get:
+      x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/inchikey/to/names"
+      x-orn-@type: "http://edamontology.org/operation_3434" # Conversion
+      x-orn:expects:
+        x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000059" # InchiKEY
+      x-orn:returns:
+        x-orn-@id: "http://edamontology.org/data_0990" # Compound Name
       summary: Converts from an InChIKey format to a list of known names
       operationId: "controllers.default_controller.inchikey_to_names_get"
       description: >
@@ -530,13 +530,13 @@ paths:
             $ref: '#/definitions/simpleError'
 
   /cas/to/smiles:
-    x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/cas/to/smiles"
-    x-orn-@type: "http://edamontology.org/operation_3434" # Conversion
-    x-orn:expects:
-      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000446" # Cas
-    x-orn:returns:
-      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000018" # Smiles
     get:
+      x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/cas/to/smiles"
+      x-orn-@type: "http://edamontology.org/operation_3434" # Conversion
+      x-orn:expects:
+        x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000446" # Cas
+      x-orn:returns:
+        x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000018" # Smiles
       tags:
       - SMILES
       - CAS
@@ -577,13 +577,13 @@ paths:
             $ref: "#/definitions/simpleError"
 
   /inchi/to/cas:
-    x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/inchi/to/cas"
-    x-orn-@type: "http://edamontology.org/operation_3434" # Conversion
-    x-orn:expects:
-      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000113" # InchiKEY
-    x-orn:returns:
-      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000446" # Cas
     get:
+      x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/inchi/to/cas"
+      x-orn-@type: "http://edamontology.org/operation_3434" # Conversion
+      x-orn:expects:
+        x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000113" # InchiKEY
+      x-orn:returns:
+        x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000446" # Cas
       tags:
       - CAS
       - InChI
@@ -624,13 +624,13 @@ paths:
             $ref: "#/definitions/simpleError"
 
   /cas/to/inchi:
-    x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/cas/to/inchi"
-    x-orn-@type: "http://edamontology.org/operation_3434" # Conversion
-    x-orn:expects:
-      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000446" # Cas
-    x-orn:returns:
-      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000113" # Inchi
     get:
+      x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/cas/to/inchi"
+      x-orn-@type: "http://edamontology.org/operation_3434" # Conversion
+      x-orn:expects:
+        x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000446" # Cas
+      x-orn:returns:
+        x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000113" # Inchi
       tags:
       - CAS
       - InChI
@@ -671,13 +671,13 @@ paths:
             $ref: "#/definitions/simpleError"
 
   /inchikey/to/cas:
-    x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/inchikey/to/cas"
-    x-orn-@type: "http://edamontology.org/operation_3434" # Conversion
-    x-orn:expects:
-      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000059" # InchiKEY
-    x-orn:returns:
-      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000446" # Cas
     get:
+      x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/inchikey/to/cas"
+      x-orn-@type: "http://edamontology.org/operation_3434" # Conversion
+      x-orn:expects:
+        x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000059" # InchiKEY
+      x-orn:returns:
+        x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000446" # Cas
       tags:
       - CAS
       - InChIKey
@@ -718,13 +718,13 @@ paths:
             $ref: "#/definitions/simpleError"
 
   /cas/to/inchikey:
-    x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/cas/to/inchikey"
-    x-orn-@type: "http://edamontology.org/operation_3434" # Conversion
-    x-orn:expects:
-      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000446" # Cas
-    x-orn:returns:
-      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000059" # Inchikey
     get:
+      x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/cas/to/inchikey"
+      x-orn-@type: "http://edamontology.org/operation_3434" # Conversion
+      x-orn:expects:
+        x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000446" # Cas
+      x-orn:returns:
+        x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000059" # Inchikey
       tags:
       - CAS
       - InChIKey
@@ -765,13 +765,13 @@ paths:
             $ref: "#/definitions/simpleError"
 
   /name/to/inchikey:
-    x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/name/to/inchikey"
-    x-orn-@type: "http://edamontology.org/operation_3434" # Conversion
-    x-orn:expects:
-      x-orn-@id: "http://edamontology.org/data_0990" # InchiKEY
-    x-orn:returns:
-      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000059" # Inchikey
     get:
+      x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/name/to/inchikey"
+      x-orn-@type: "http://edamontology.org/operation_3434" # Conversion
+      x-orn:expects:
+        x-orn-@id: "http://edamontology.org/data_0990" # InchiKEY
+      x-orn:returns:
+        x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000059" # Inchikey
       summary: Converts from a compound name into InChIKey format
       operationId: "controllers.default_controller.name_to_inchikey_get"
       description: >
@@ -803,13 +803,13 @@ paths:
           schema:
             $ref: '#/definitions/simpleError'
   /name/to/inchi:
-    x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/name/to/inchi"
-    x-orn-@type: "http://edamontology.org/operation_3434" # Conversion
-    x-orn:expects:
-      x-orn-@id: "http://edamontology.org/data_0990" # InchiKEY
-    x-orn:returns:
-      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000113" # Inchi
     get:
+      x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/name/to/inchi"
+      x-orn-@type: "http://edamontology.org/operation_3434" # Conversion
+      x-orn:expects:
+        x-orn-@id: "http://edamontology.org/data_0990" # InchiKEY
+      x-orn:returns:
+        x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000113" # Inchi
       summary: Converts from a compound name into InChI format
       operationId: "controllers.default_controller.name_to_inchi_get"
       description: >
@@ -841,13 +841,13 @@ paths:
           schema:
             $ref: '#/definitions/simpleError'
   /name/to/smiles:
-    x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/name/to/smiles"
-    x-orn-@type: "http://edamontology.org/operation_3434" # Conversion
-    x-orn:expects:
-      x-orn-@id: "http://edamontology.org/data_0990" # InchiKEY
-    x-orn:returns:
-      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000018" # Smiles
     get:
+      x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/name/to/smiles"
+      x-orn-@type: "http://edamontology.org/operation_3434" # Conversion
+      x-orn:expects:
+        x-orn-@id: "http://edamontology.org/data_0990" # InchiKEY
+      x-orn:returns:
+        x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000018" # Smiles
       summary: Converts from a compound name into Smiles format
       operationId: "controllers.default_controller.name_to_smiles_get"
       description: >
@@ -879,13 +879,13 @@ paths:
           schema:
             $ref: '#/definitions/simpleError'
   /name/to/cas:
-    x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/name/to/cas"
-    x-orn-@type: "http://edamontology.org/operation_3434" # Conversion
-    x-orn:expects:
-      x-orn-@id: "http://edamontology.org/data_0990" # InchiKEY
-    x-orn:returns:
-      x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000446" # Cas
     get:
+      x-orn-@id: "http://chemidconvert.prod.openrisknet.org/v1/name/to/cas"
+      x-orn-@type: "http://edamontology.org/operation_3434" # Conversion
+      x-orn:expects:
+        x-orn-@id: "http://edamontology.org/data_0990" # InchiKEY
+      x-orn:returns:
+        x-orn-@id: "http://semanticscience.org/resource/CHEMINF_000446" # Cas
       summary: Converts from a compound name into CAS number
       operationId: "controllers.default_controller.name_to_cas_get"
       description: >
