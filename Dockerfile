@@ -1,4 +1,4 @@
-FROM continuumio/miniconda3:4.8.2
+FROM continuumio/miniconda3:master
 MAINTAINER Daniel Bachler <daniel@douglasconnect.com>
 
 RUN apt-get update && apt-get install -y libfontconfig1 libxrender1
